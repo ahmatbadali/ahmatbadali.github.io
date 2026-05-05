@@ -9,7 +9,7 @@ let settings = {
     matrixText: 'HAPPYBIRTHDAY',
     matrixColor1: '#ff69b4', // Màu pink mẫu
     matrixColor2: '#ff1493', // Màu pink mẫu
-    sequence: 'HAPPY|BIRTHDAY|TO|ADEK CANTIK|BY MAS A|❤',
+    sequence: 'HAPPY|BIRTHDAY|TO|ADEK CANTIK|❤',
     sequenceColor: '#ff69b4', // Màu pink mẫu
     gift: './image/happy3.gif',
     enableBook: true,
@@ -34,7 +34,7 @@ let settings = {
         // --- Lembar 3 (data-page="2") ---
         { 
             image: './image/theend.jpg', // Menggantikan tbutvj.png (Index 4)
-            content: 'As long as you’re smiling, I’m happy. Stay happy, my love.' 
+            content: 'I hope all your birthday wishes and dreams come true, and if can be even better.' 
         }
     ],
     enableBook: true,
@@ -349,7 +349,7 @@ function initializeDefaultSettings() {
         matrixText: 'HAPPYBIRTHDAY',
         matrixColor1: '#ff69b4', // Màu pink mẫu
         matrixColor2: '#ff1493', // Màu pink mẫu
-        sequence: 'HAPPY|BIRTHDAY|TO|ADEK CANTIK|BY MAS A|❤',
+        sequence: 'HAPPY|BIRTHDAY|TO|ADEK CANTIK|❤',
         sequenceColor: '#ff69b4', // Màu pink mẫu
         gift: './image/happy3.gif',
         enableBook: true,
@@ -378,7 +378,7 @@ function initializeDefaultSettings() {
             // --- Lembar 3 (data-page="2") ---
             { 
                 image: './image/photos/b5.png', // Menggantikan tbutvj.png (Index 4)
-                content: 'As long as you’re smiling, I’m happy. Stay happy, my love.' 
+                content: 'I hope all your birthday wishes and dreams come true, and if can be even better.' 
             }
         ]
     };
