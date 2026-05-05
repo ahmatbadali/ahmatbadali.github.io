@@ -26,9 +26,9 @@ let settings = {
         { 
             image: './image/photos/b2.png', // Menggantikan fjr3qh.png (Index 2)
             content: 'Happy Birthday Adek Cantik 💗<br>by Mas dali' 
-            document.querySelector('.content-text').innerHTML = data.content;
+           
         },
-
+ document.querySelector('.content-text').innerHTML = data.content;
         { 
             image: './image/photos/b3.png', // Menggantikan 8u5tf7.png (Index 3)
         },
@@ -371,8 +371,9 @@ function initializeDefaultSettings() {
             { 
                 image: './image/photos/b2.png', // Menggantikan fjr3qh.png (Index 2)
                 content: 'Happy Birthday Adek Cantik 💗<br>by Mas dali' 
-                document.querySelector('.content-text').innerHTML = data.content;
+             
             },
+            document.querySelector('.content-text').innerHTML = data.content;
             { 
                 image: './image/photos/b3.png', // Menggantikan 8u5tf7.png (Index 3)
             },
