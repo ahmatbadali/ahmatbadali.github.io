@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id" x-data="app()" :class="{'dark': dark}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RDAP Full Detail Lookup oleh Ahmat Badali. Menampilkan struktur data pendaftaran domain & IP berdasarkan standar ICANN RDAP Protocol secara cepat dan akurat.">
+  <meta name="author" content="Ahmat Badali">
+  <title>RDAP Full Detail Lookup — Ahmat Badali</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['PT Sans', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          colors: {
+            accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+            'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+            'accent-2': 'rgb(var(--accent-2-rgb) / <alpha-value>)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --accent-rgb: 59 111 245;
+      --accent-light-rgb: 125 168 255;
+      --accent-2-rgb: 165 202 255;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{font-family:'DM Sans',sans-serif}
+    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+    body{transition:background-color .3s,color .3s}
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")
+    }
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgb(var(--accent-rgb));border-radius:99px}
+    .glass-touch{
+      position:relative;
+      transition:transform .28s cubic-bezier(.4,0,.2,1),background-color .35s,border-color .35s,box-shadow .35s,backdrop-filter .35s;
+    }
+    .glass-touch:hover,.glass-touch:active,.glass-touch.touched{
+      background-image:linear-gradient(135deg, rgb(var(--accent-rgb) / .16), rgb(var(--accent-2-rgb) / .26));
+      background-color:transparent!important;
+      backdrop-filter:blur(16px) saturate(180%);
+      -webkit-backdrop-filter:blur(16px) saturate(180%);
+      border-color:rgb(var(--accent-2-rgb) / .65)!important;
+      box-shadow:0 10px 34px rgb(var(--accent-rgb) / .16),inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .shimmer{position:relative;overflow:hidden}
+    .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+    .shimmer:hover::after{left:160%}
+    [x-cloak]{display:none!important}
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased min-h-screen flex flex-col justify-between">
+
+<!-- Header / Navigasi Portofolio -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="font-display font-bold text-xl tracking-tight">
+      <span class="text-zinc-900 dark:text-white">ahmat</span><span class="text-accent">badali</span>
+    </a>
+
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="inline-flex items-center gap-2 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">
+        <i class="fa-solid fa-arrow-left text-xs"></i> Kembali ke Utama
+      </a>
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Mode terang':'Mode gelap'">
+        <span x-show="!dark">☾</span>
+        <span x-show="dark" x-cloak>☀</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Main Area -->
+<main class="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16 w-full flex-grow">
+  
+  <!-- Title Section -->
+  <div class="mb-8">
+    <p class="text-xs font-medium text-accent tracking-widest uppercase mb-2">Web Utilities & Network Tools</p>
+    <h1 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-3">
+      RDAP Full Detail Lookup
+    </h1>
+    <p class="text-zinc-500 dark:text-zinc-400 text-sm md:text-base leading-relaxed">
+      Menampilkan seluruh struktur data pendaftaran domain atau IP address berdasarkan spesifikasi resmi <strong>ICANN RDAP Protocol</strong>.
+    </p>
+  </div>
+
+  <!-- Card Utama -->
+  <div class="glass-touch bg-white dark:bg-zinc-900/80 rounded-3xl p-6 sm:p-8 border border-zinc-200 dark:border-zinc-800 shadow-xl">
+    
+    <!-- Input Section -->
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-2">
+        <label for="targetInput" class="text-sm font-bold text-zinc-800 dark:text-zinc-200">Target Domain atau IP Address</label>
+      </div>
+
+      <!-- Tip Box -->
+      <div class="mb-3 p-3 rounded-xl bg-accent/10 border border-accent/20 text-accent text-xs flex items-start gap-2.5">
+        <i class="fa-solid fa-lightbulb text-sm mt-0.5"></i>
+        <span><strong>Tip:</strong> Masukkan nama domain (seperti <code class="px-1.5 py-0.5 rounded bg-accent/10 font-mono text-xs">google.com</code>) atau alamat IP (seperti <code class="px-1.5 py-0.5 rounded bg-accent/10 font-mono text-xs">8.8.8.8</code>).</span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2.5">
+        <input type="text" id="targetInput" class="w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none focus:border-accent transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="google.com atau 8.8.8.8">
+      </div>
+    </div>
+
+    <!-- Tombol Aksi Utama -->
+    <div class="flex flex-wrap gap-2.5 mb-6">
+      <button onclick="lookupWhois()" class="shimmer inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white text-sm font-medium px-5 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-magnifying-glass text-xs"></i> Generate Laporan RDAP Full
+      </button>
+      <button onclick="resetAll()" class="inline-flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-zinc-500 dark:text-zinc-400 text-sm font-medium px-4 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-trash-can text-xs"></i> Reset
+      </button>
+    </div>
+
+    <!-- Loading & Error Indicator -->
+    <div id="loadingMsg" class="hidden mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs sm:text-sm flex items-center gap-3 animate-pulse">
+      <i class="fa-solid fa-circle-notch fa-spin text-base"></i>
+      <span>Menghubungi server RDAP Registry & merestrukturisasi laporan...</span>
+    </div>
+
+    <div id="errorMsg" class="hidden mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-center gap-2">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span id="errorText"></span>
+    </div>
+
+    <!-- Output Section -->
+    <div>
+      <label for="outputResult" class="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-2">Hasil Laporan Lengkap (RDAP Protocol Standard):</label>
+      <pre id="outputResult" class="w-full h-96 p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-accent font-mono text-xs sm:text-sm focus:outline-none overflow-auto whitespace-pre-wrap break-all leading-relaxed">Masukkan domain di atas lalu klik "Generate Laporan RDAP Full".</pre>
+      
+      <!-- Tombol Copy -->
+      <div class="flex justify-end mt-4">
+        <button onclick="copyOutput()" class="inline-flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-colors">
+          <i class="fa-regular fa-copy"></i> Copy Laporan Lengkap
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Floating Glassmorphism Toast Alert -->
+<div id="toastAlert" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-white/20 dark:border-zinc-700/50 shadow-2xl shadow-black/10 text-zinc-900 dark:text-white transition-all duration-300 opacity-0 translate-y-5 pointer-events-none">
+  <div class="w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0">
+    <i id="toastIcon" class="fa-solid fa-check text-sm"></i>
+  </div>
+  <div>
+    <p id="toastTitle" class="text-xs font-bold leading-none mb-0.5">Berhasil!</p>
+    <p id="toastMsg" class="text-xs text-zinc-500 dark:text-zinc-400 leading-none">Laporan berhasil disalin ke clipboard.</p>
+  </div>
+</div>
+
+<!-- Footer Portofolio -->
+<footer class="border-t border-zinc-100 dark:border-zinc-900 relative z-10">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-400">© <span id="yr"></span> Ahmat Badali. Personal Tools.</p>
+    <p class="text-xs text-zinc-500">Mahasiswa Teknik Sipil • Universitas Nahdlatul Ulama Kalimantan Selatan</p>
+  </div>
+</footer>
+
+<script>
+// Logic App AlpineJS untuk Dark Mode
+function app() {
+  return {
+    dark: false,
+    init() {
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    }
+  }
+}
+
+// RDAP Lookup Engine
+async function lookupWhois() {
+  let target = document.getElementById('targetInput').value.trim();
+  const outputEl = document.getElementById('outputResult');
+  const errorEl = document.getElementById('errorMsg');
+  const errorText = document.getElementById('errorText');
+  const loadingEl = document.getElementById('loadingMsg');
+
+  errorEl.classList.add('hidden');
+  loadingEl.classList.add('hidden');
+
+  if (!target) {
+    showToast('Harap masukkan nama domain atau alamat IP!', true);
+    return;
+  }
+
+  target = target.replace(/^https?:\/\//i, '').split('/')[0].split(':')[0];
+
+  loadingEl.classList.remove('hidden');
+  outputEl.innerText = '';
+
+  try {
+    const isIp = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(target) || target.includes(':');
+    let apiUrl = isIp 
+      ? `https://rdap.org/ip/${encodeURIComponent(target)}`
+      : `https://rdap.org/domain/${encodeURIComponent(target)}`;
+
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Data tidak ditemukan dalam database RDAP Registry.');
+      }
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    outputEl.innerText = isIp ? formatIpRdap(data) : formatFullRdapReport(target, data);
+
+  } catch (err) {
+    outputEl.innerText = '';
+    errorText.innerText = `Error: ${err.message}`;
+    errorEl.classList.remove('hidden');
+  } finally {
+    loadingEl.classList.add('hidden');
+  }
+}
+
+// Parser vCard (Entity Info)
+function parseVcard(vcardArray) {
+  if (!vcardArray || !vcardArray[1]) return {};
+  const result = {};
+  vcardArray[1].forEach(item => {
+    const key = item[0];
+    const value = item[3];
+    if (key === 'fn') result.name = value;
+    if (key === 'org') result.org = value;
+    if (key === 'email') result.email = value;
+    if (key === 'tel') result.phone = value;
+    if (key === 'adr') {
+      const adrComp = item[3] || [];
+      result.address = adrComp.filter(Boolean).join(', ');
+    }
+  });
+  return result;
+}
+
+// Format Laporan Lengkap Gaya RDAP Client
+function formatFullRdapReport(domain, data) {
+  const domainName = data.ldhName || domain;
+  const handle = data.handle || 'N/A';
+  const rdapConformance = (data.rdapConformance || []).join(', ');
+
+  // Parse Entities (Registrar, Registrant, Admin, Tech)
+  let entitiesReport = [];
+  if (data.entities && data.entities.length > 0) {
+    data.entities.forEach((entity, index) => {
+      const roles = (entity.roles || []).join(', ').toUpperCase();
+      const vcard = parseVcard(entity.vcardArray);
+      
+      let entityStr = `[ENTITY #${index + 1}: ${roles || 'UNKNOWN'}]\n`;
+      entityStr += `  Handle / ID    : ${entity.handle || 'N/A'}\n`;
+      if (vcard.name)    entityStr += `  Nama           : ${vcard.name}\n`;
+      if (vcard.org)     entityStr += `  Organisasi     : ${vcard.org}\n`;
+      if (vcard.email)   entityStr += `  Email          : ${vcard.email}\n`;
+      if (vcard.phone)   entityStr += `  Telepon        : ${vcard.phone}\n`;
+      if (vcard.address) entityStr += `  Alamat         : ${vcard.address}\n`;
+
+      // Sub-entities / Public IDs (misal: IANA ID)
+      if (entity.publicIds) {
+        entity.publicIds.forEach(pid => {
+          entityStr += `  Public ID (${pid.type}): ${pid.identifier}\n`;
+        });
+      }
+      entitiesReport.push(entityStr);
+    });
+  }
+
+  // Events Timeline
+  let eventsReport = [];
+  if (data.events) {
+    data.events.forEach(e => {
+      const action = e.eventAction ? e.eventAction.toUpperCase() : 'EVENT';
+      const date = e.eventDate || 'N/A';
+      const actor = e.eventActor ? ` (by ${e.eventActor})` : '';
+      eventsReport.push(`  - ${action.padEnd(20)}: ${date}${actor}`);
+    });
+  }
+
+  // Nameservers & IP Addresses
+  let nsReport = [];
+  if (data.nameservers) {
+    data.nameservers.forEach(ns => {
+      let nsStr = `  - ${ns.ldhName || 'N/A'}`;
+      if (ns.ipAddresses) {
+        const v4 = ns.ipAddresses.v4 ? `IPv4: ${ns.ipAddresses.v4.join(', ')}` : '';
+        const v6 = ns.ipAddresses.v6 ? `IPv6: ${ns.ipAddresses.v6.join(', ')}` : '';
+        const ips = [v4, v6].filter(Boolean).join(' | ');
+        if (ips) nsStr += ` (${ips})`;
+      }
+      nsReport.push(nsStr);
+    });
+  }
+
+  // Status (EPP Codes)
+  let statusReport = [];
+  if (data.status) {
+    statusReport = data.status.map(st => `  - ${st}`);
+  }
+
+  // Secure DNS (DNSSEC)
+  let dnssecStatus = 'Unsigned / No Data';
+  if (data.secureDNS) {
+    dnssecStatus = data.secureDNS.delegationSigned ? 'Signed (Delegation Signed)' : 'Unsigned';
+  }
+
+  // Links / References
+  let linksReport = [];
+  if (data.links) {
+    data.links.forEach(l => {
+      if (l.href) linksReport.push(`  - [${l.rel || 'self'}] ${l.href}`);
+    });
+  }
+
+  // Notice & Remarks
+  let noticesReport = [];
+  if (data.notices) {
+    data.notices.forEach(n => {
+      if (n.title) noticesReport.push(`  - ${n.title}: ${(n.description || []).join(' ')}`);
+    });
+  }
+
+  return `================================================================================
+LAPORAN PROTOKOL RDAP LENGKAP (CLIENT.RDAP.ORG FORMAT)
+================================================================================
+Domain Name       : ${domainName}
+Registry Handle   : ${handle}
+RDAP Conformance  : ${rdapConformance || 'rdap_level_0'}
+
+--- 1. EVENT TIMELINE & RIWAYAT ---
+${eventsReport.length > 0 ? eventsReport.join('\n') : '  - Tidak ada data event'}
+
+--- 2. STATUS DOMAIN (EPP STATUS) ---
+${statusReport.length > 0 ? statusReport.join('\n') : '  - Status Normal / Active'}
+
+--- 3. ENTITIES & CONTACT ROLES (REGISTRAR / REGISTRANT / TECH) ---
+${entitiesReport.length > 0 ? entitiesReport.join('\n') : '  - Data Kontak Dilindungi / Tidak Tersedia'}
+
+--- 4. NAME SERVERS ---
+${nsReport.length > 0 ? nsReport.join('\n') : '  - Tidak ada data Name Server'}
+
+--- 5. KEAMANAN DNS (DNSSEC) ---
+  Status DNSSEC   : ${dnssecStatus}
+
+--- 6. CATATAN & REMARKS REGISTRY ---
+${noticesReport.length > 0 ? noticesReport.join('\n') : '  - Tidak ada catatan khusus'}
+
+--- 7. LINK REFERENSI RDAP ---
+${linksReport.length > 0 ? linksReport.join('\n') : '  - Tidak ada link referensi'}
+================================================================================`;
+}
+
+// Format IP RDAP
+function formatIpRdap(data) {
+  return `================================================================================
+LAPORAN RDAP IP ADDRESS
+================================================================================
+IP Network Handle : ${data.handle || 'N/A'}
+IP Range          : ${data.startAddress || 'N/A'} - ${data.endAddress || 'N/A'}
+IP Version        : ${data.ipVersion || 'N/A'}
+Network Name      : ${data.name || 'N/A'}
+Type              : ${data.type || 'N/A'}
+Country           : ${data.country || 'N/A'}
+
+--- TIMELINE ---
+${(data.events || []).map(e => `  - ${(e.eventAction || '').toUpperCase()}: ${e.eventDate}`).join('\n') || '  - Tidak ada data'}
+
+--- ENTITIES / ORG ---
+${(data.entities || []).map(e => `  - Role: ${(e.roles || []).join(', ')} | Handle: ${e.handle}`).join('\n') || '  - Tidak ada data'}
+================================================================================`;
+}
+
+// Listener Enter
+document.getElementById('targetInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') lookupWhois();
+});
+
+function resetAll() {
+  document.getElementById('targetInput').value = '';
+  document.getElementById('outputResult').innerText = 'Masukkan domain di atas lalu klik "Generate Laporan RDAP Full".';
+  document.getElementById('errorMsg').classList.add('hidden');
+  document.getElementById('loadingMsg').classList.add('hidden');
+}
+
+// Toast Alert Glassmorphism
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toastAlert');
+  const toastIcon = document.getElementById('toastIcon');
+  const toastTitle = document.getElementById('toastTitle');
+  const toastMsg = document.getElementById('toastMsg');
+
+  if (isError) {
+    toastIcon.className = 'fa-solid fa-xmark text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-red-500/20 text-red-500 flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Gagal!';
+  } else {
+    toastIcon.className = 'fa-solid fa-check text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Berhasil!';
+  }
+
+  toastMsg.innerText = message;
+
+  toast.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+  toast.classList.add('opacity-100', 'translate-y-0');
+
+  setTimeout(() => {
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    toast.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+  }, 3000);
+}
+
+function copyOutput() {
+  const outputEl = document.getElementById('outputResult');
+  const textToCopy = outputEl.innerText;
+  if (!textToCopy || textToCopy.startsWith('Masukkan domain')) {
+    showToast('Laporan RDAP masih kosong!', true);
+    return;
+  }
+
+  navigator.clipboard.writeText(textToCopy)
+    .then(() => showToast('Laporan RDAP berhasil disalin!'))
+    .catch(() => showToast('Gagal menyalin teks.', true));
+}
+</script>
+
+</body>
+</html>
