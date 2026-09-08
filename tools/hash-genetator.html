@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id" x-data="app()" :class="{'dark': dark}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Online Hash Generator oleh Ahmat Badali. Tool hashing teks dan file berbasis browser dengan dukungan MD5, SHA-1, SHA-256, SHA-512, SHA-3, dan HMAC.">
+  <meta name="author" content="Ahmat Badali">
+  <title>Online Hash Generator — Ahmat Badali</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- CryptoJS CDN untuk kompatibilitas MD5, SHA-3 & HMAC -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['PT Sans', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          colors: {
+            accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+            'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+            'accent-2': 'rgb(var(--accent-2-rgb) / <alpha-value>)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --accent-rgb: 59 111 245;
+      --accent-light-rgb: 125 168 255;
+      --accent-2-rgb: 165 202 255;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{font-family:'DM Sans',sans-serif}
+    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+    body{transition:background-color .3s,color .3s}
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")
+    }
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgb(var(--accent-rgb));border-radius:99px}
+    .glass-touch{
+      position:relative;
+      transition:transform .28s cubic-bezier(.4,0,.2,1),background-color .35s,border-color .35s,box-shadow .35s,backdrop-filter .35s;
+    }
+    .glass-touch:hover,.glass-touch:active,.glass-touch.touched{
+      background-image:linear-gradient(135deg, rgb(var(--accent-rgb) / .16), rgb(var(--accent-2-rgb) / .26));
+      background-color:transparent!important;
+      backdrop-filter:blur(16px) saturate(180%);
+      -webkit-backdrop-filter:blur(16px) saturate(180%);
+      border-color:rgb(var(--accent-2-rgb) / .65)!important;
+      box-shadow:0 10px 34px rgb(var(--accent-rgb) / .16),inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .shimmer{position:relative;overflow:hidden}
+    .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+    .shimmer:hover::after{left:160%}
+    [x-cloak]{display:none!important}
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased min-h-screen flex flex-col justify-between">
+
+<!-- Header Navigasi -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="font-display font-bold text-xl tracking-tight">
+      <span class="text-zinc-900 dark:text-white">ahmat</span><span class="text-accent">badali</span>
+    </a>
+
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="inline-flex items-center gap-2 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">
+        <i class="fa-solid fa-arrow-left text-xs"></i> Kembali ke Utama
+      </a>
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Mode terang':'Mode gelap'">
+        <span x-show="!dark">☾</span>
+        <span x-show="dark" x-cloak>☀</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Main Content -->
+<main class="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16 w-full flex-grow">
+  
+  <div class="mb-8">
+    <p class="text-xs font-medium text-accent tracking-widest uppercase mb-2">Cryptography Tools</p>
+    <h1 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-3">
+      Online Hash Generator
+    </h1>
+    <p class="text-zinc-500 dark:text-zinc-400 text-sm md:text-base leading-relaxed">
+      Enkripsi dan buat checksum pesan atau file menggunakan berbagai algoritma cryptographic hash (MD5, SHA-1, SHA-256, SHA-512, SHA-3) serta dukungan HMAC / Salt secara real-time.
+    </p>
+  </div>
+
+  <div class="glass-touch bg-white dark:bg-zinc-900/80 rounded-3xl p-6 sm:p-8 border border-zinc-200 dark:border-zinc-800 shadow-xl">
+    
+    <!-- Tab Mode: Text / File -->
+    <div class="flex border-b border-zinc-200 dark:border-zinc-800 mb-6">
+      <button id="tabTextBtn" onclick="switchTab('text')" class="pb-3 px-4 text-sm font-bold border-b-2 border-accent text-accent transition-colors">
+        <i class="fa-solid fa-font mr-2"></i> Teks / String
+      </button>
+      <button id="tabFileBtn" onclick="switchTab('file')" class="pb-3 px-4 text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors">
+        <i class="fa-solid fa-file-arrow-up mr-2"></i> File Checksum
+      </button>
+    </div>
+
+    <!-- Mode 1: Input Teks -->
+    <div id="textInputContainer" class="mb-6">
+      <label for="textInput" class="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-2">Input Teks</label>
+      <textarea id="textInput" rows="4" oninput="generateAllHashes()" class="w-full p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none focus:border-accent transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Ketik atau tempel teks di sini..."></textarea>
+    </div>
+
+    <!-- Mode 2: Input File -->
+    <div id="fileInputContainer" class="mb-6 hidden">
+      <label class="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-2">Unggah File</label>
+      <div class="flex items-center justify-center w-full">
+        <label for="fileInput" class="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-2xl cursor-pointer bg-zinc-50 dark:bg-zinc-950 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <i class="fa-solid fa-cloud-arrow-up text-3xl text-accent mb-2"></i>
+            <p class="mb-1 text-sm text-zinc-500 dark:text-zinc-400"><span class="font-semibold">Klik untuk memilih file</span> atau drag & drop</p>
+            <p id="fileNameDisplay" class="text-xs font-mono text-accent mt-1">Belum ada file dipilih</p>
+          </div>
+          <input id="fileInput" type="file" class="hidden" onchange="handleFileSelect(event)" />
+        </label>
+      </div>
+    </div>
+
+    <!-- Opsi Tambahan: Secret Key (HMAC / Salt) & Lettercase -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div>
+        <label for="hmacKey" class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">Secret Key / Salt (Opsional HMAC)</label>
+        <input type="text" id="hmacKey" oninput="generateAllHashes()" class="w-full p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-900 dark:text-zinc-100 font-mono text-xs focus:outline-none focus:border-accent transition-all" placeholder="Masukkan kuncinya jika menggunakan HMAC">
+      </div>
+      <div>
+        <label for="caseOption" class="block text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">Format Output Huruf</label>
+        <select id="caseOption" onchange="generateAllHashes()" class="w-full p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-900 dark:text-zinc-100 text-xs focus:outline-none focus:border-accent transition-all">
+          <option value="lower">lowercase (contoh: 5d41402abc4b2a76b9719d911017c592)</option>
+          <option value="upper">UPPERCASE (contoh: 5D41402ABC4B2A76B9719D911017C592)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tombol Aksi -->
+    <div class="flex flex-wrap gap-2.5 mb-8">
+      <button onclick="clearAll()" class="inline-flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-zinc-500 dark:text-zinc-400 text-sm font-medium px-4 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-trash-can text-xs"></i> Bersihkan Semua
+      </button>
+    </div>
+
+    <!-- Output List Algoritma Hash -->
+    <div class="space-y-4">
+      <h3 class="text-sm font-bold text-zinc-800 dark:text-zinc-200">Hasil Generated Hash:</h3>
+
+      <!-- MD5 -->
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-bold text-accent tracking-wider uppercase">MD5</span>
+          <button onclick="copyHash('hashMD5')" class="text-xs text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+        </div>
+        <p id="hashMD5" class="font-mono text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 break-all">e10adc3949ba59abbe56e057f20f883e</p>
+      </div>
+
+      <!-- SHA-1 -->
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-bold text-accent tracking-wider uppercase">SHA-1</span>
+          <button onclick="copyHash('hashSHA1')" class="text-xs text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+        </div>
+        <p id="hashSHA1" class="font-mono text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 break-all">7c4a8d09ca3762af61e59520943dc26494f8941b</p>
+      </div>
+
+      <!-- SHA-256 -->
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-bold text-accent tracking-wider uppercase">SHA-256</span>
+          <button onclick="copyHash('hashSHA256')" class="text-xs text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+        </div>
+        <p id="hashSHA256" class="font-mono text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 break-all">8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92</p>
+      </div>
+
+      <!-- SHA-512 -->
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-bold text-accent tracking-wider uppercase">SHA-512</span>
+          <button onclick="copyHash('hashSHA512')" class="text-xs text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+        </div>
+        <p id="hashSHA512" class="font-mono text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 break-all">f71dbe52628a3f83a77ab494817525c65710ee80c644be934825d19d67923702a24c295b95f190e22709a3411b93f2f845d064371d3a54d31e9c52222d42d385</p>
+      </div>
+
+      <!-- SHA-3 -->
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-bold text-accent tracking-wider uppercase">SHA-3 (512-bit)</span>
+          <button onclick="copyHash('hashSHA3')" class="text-xs text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+            <i class="fa-regular fa-copy"></i> Copy
+          </button>
+        </div>
+        <p id="hashSHA3" class="font-mono text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 break-all">a3a9235882c3c9233f81e3a6a161494921f0ecf62f3c05f03765e905a5d2039535eb0ad1d8820f4c39c7667ff4691461f364e7c7a33cf37422f281270b22a6f2</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Glassmorphism Toast Alert -->
+<div id="toastAlert" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-white/20 dark:border-zinc-700/50 shadow-2xl shadow-black/10 text-zinc-900 dark:text-white transition-all duration-300 opacity-0 translate-y-5 pointer-events-none">
+  <div class="w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0">
+    <i id="toastIcon" class="fa-solid fa-check text-sm"></i>
+  </div>
+  <div>
+    <p id="toastTitle" class="text-xs font-bold leading-none mb-0.5">Berhasil!</p>
+    <p id="toastMsg" class="text-xs text-zinc-500 dark:text-zinc-400 leading-none">Pesan toast.</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="border-t border-zinc-100 dark:border-zinc-900 relative z-10">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-400">© <span id="yr"></span> Ahmat Badali. Personal Tools.</p>
+    <p class="text-xs text-zinc-500">Mahasiswa Teknik Sipil • Universitas Nahdlatul Ulama Kalimantan Selatan</p>
+  </div>
+</footer>
+
+<script>
+function app() {
+  return {
+    dark: false,
+    init() {
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    }
+  }
+}
+
+let activeTab = 'text';
+let fileDataWordMap = null;
+
+function switchTab(type) {
+  activeTab = type;
+  const tabTextBtn = document.getElementById('tabTextBtn');
+  const tabFileBtn = document.getElementById('tabFileBtn');
+  const textInputContainer = document.getElementById('textInputContainer');
+  const fileInputContainer = document.getElementById('fileInputContainer');
+
+  if (type === 'text') {
+    tabTextBtn.className = 'pb-3 px-4 text-sm font-bold border-b-2 border-accent text-accent transition-colors';
+    tabFileBtn.className = 'pb-3 px-4 text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors';
+    textInputContainer.classList.remove('hidden');
+    fileInputContainer.classList.add('hidden');
+  } else {
+    tabFileBtn.className = 'pb-3 px-4 text-sm font-bold border-b-2 border-accent text-accent transition-colors';
+    tabTextBtn.className = 'pb-3 px-4 text-sm font-bold border-b-2 border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors';
+    fileInputContainer.classList.remove('hidden');
+    textInputContainer.classList.add('hidden');
+  }
+  generateAllHashes();
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  document.getElementById('fileNameDisplay').innerText = `${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const arrayBuffer = e.target.result;
+    fileDataWordMap = CryptoJS.lib.WordArray.create(arrayBuffer);
+    generateAllHashes();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function generateAllHashes() {
+  const hmacKey = document.getElementById('hmacKey').value.trim();
+  const isUpper = document.getElementById('caseOption').value === 'upper';
+
+  let inputSource = null;
+
+  if (activeTab === 'text') {
+    inputSource = document.getElementById('textInput').value;
+  } else {
+    inputSource = fileDataWordMap;
+  }
+
+  if (inputSource === null || inputSource === '') {
+    updateOutputs({ md5: '', sha1: '', sha256: '', sha512: '', sha3: '' });
+    return;
+  }
+
+  let md5Hash, sha1Hash, sha256Hash, sha512Hash, sha3Hash;
+
+  if (hmacKey) {
+    // Mode HMAC
+    md5Hash = CryptoJS.HmacMD5(inputSource, hmacKey).toString();
+    sha1Hash = CryptoJS.HmacSHA1(inputSource, hmacKey).toString();
+    sha256Hash = CryptoJS.HmacSHA256(inputSource, hmacKey).toString();
+    sha512Hash = CryptoJS.HmacSHA512(inputSource, hmacKey).toString();
+    sha3Hash = CryptoJS.HmacSHA3(inputSource, hmacKey).toString();
+  } else {
+    // Mode Hash Standar
+    md5Hash = CryptoJS.MD5(inputSource).toString();
+    sha1Hash = CryptoJS.SHA1(inputSource).toString();
+    sha256Hash = CryptoJS.SHA256(inputSource).toString();
+    sha512Hash = CryptoJS.SHA512(inputSource).toString();
+    sha3Hash = CryptoJS.SHA3(inputSource, { outputLength: 512 }).toString();
+  }
+
+  const format = str => isUpper ? str.toUpperCase() : str.toLowerCase();
+
+  updateOutputs({
+    md5: format(md5Hash),
+    sha1: format(sha1Hash),
+    sha256: format(sha256Hash),
+    sha512: format(sha512Hash),
+    sha3: format(sha3Hash)
+  });
+}
+
+function updateOutputs(data) {
+  document.getElementById('hashMD5').innerText = data.md5 || '-';
+  document.getElementById('hashSHA1').innerText = data.sha1 || '-';
+  document.getElementById('hashSHA256').innerText = data.sha256 || '-';
+  document.getElementById('hashSHA512').innerText = data.sha512 || '-';
+  document.getElementById('hashSHA3').innerText = data.sha3 || '-';
+}
+
+function clearAll() {
+  document.getElementById('textInput').value = '';
+  document.getElementById('hmacKey').value = '';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileNameDisplay').innerText = 'Belum ada file dipilih';
+  fileDataWordMap = null;
+  updateOutputs({ md5: '', sha1: '', sha256: '', sha512: '', sha3: '' });
+}
+
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toastAlert');
+  const toastIcon = document.getElementById('toastIcon');
+  const toastTitle = document.getElementById('toastTitle');
+  const toastMsg = document.getElementById('toastMsg');
+
+  if (isError) {
+    toastIcon.className = 'fa-solid fa-xmark text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-red-500/20 text-red-500 flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Gagal!';
+  } else {
+    toastIcon.className = 'fa-solid fa-check text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Berhasil!';
+  }
+
+  toastMsg.innerText = message;
+  toast.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+  toast.classList.add('opacity-100', 'translate-y-0');
+
+  setTimeout(() => {
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    toast.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+  }, 3000);
+}
+
+function copyHash(elementId) {
+  const text = document.getElementById(elementId).innerText;
+  if (!text || text === '-') {
+    showToast('Hash masih kosong!', true);
+    return;
+  }
+
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('Hash berhasil disalin ke clipboard!'))
+    .catch(() => showToast('Gagal menyalin hash.', true));
+}
+</script>
+
+</body>
+</html>
