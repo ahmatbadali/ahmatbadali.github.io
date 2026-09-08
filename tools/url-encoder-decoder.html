@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id" x-data="app()" :class="{'dark': dark}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="URL Encoder / Decoder Online oleh Ahmat Badali. Tool aman, cepat, dan bekerja langsung di browser Anda.">
+  <meta name="author" content="Ahmat Badali">
+  <title>URL Encoder & Decoder — Ahmat Badali</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['PT Sans', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          colors: {
+            accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+            'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+            'accent-2': 'rgb(var(--accent-2-rgb) / <alpha-value>)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --accent-rgb: 59 111 245;
+      --accent-light-rgb: 125 168 255;
+      --accent-2-rgb: 165 202 255;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{font-family:'DM Sans',sans-serif}
+    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+    body{transition:background-color .3s,color .3s}
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")
+    }
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgb(var(--accent-rgb));border-radius:99px}
+    .glass-touch{
+      position:relative;
+      transition:transform .28s cubic-bezier(.4,0,.2,1),background-color .35s,border-color .35s,box-shadow .35s,backdrop-filter .35s;
+    }
+    .glass-touch:hover,.glass-touch:active,.glass-touch.touched{
+      background-image:linear-gradient(135deg, rgb(var(--accent-rgb) / .16), rgb(var(--accent-2-rgb) / .26));
+      background-color:transparent!important;
+      backdrop-filter:blur(16px) saturate(180%);
+      -webkit-backdrop-filter:blur(16px) saturate(180%);
+      border-color:rgb(var(--accent-2-rgb) / .65)!important;
+      box-shadow:0 10px 34px rgb(var(--accent-rgb) / .16),inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .shimmer{position:relative;overflow:hidden}
+    .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+    .shimmer:hover::after{left:160%}
+    [x-cloak]{display:none!important}
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased min-h-screen flex flex-col justify-between">
+
+<!-- Header / Navigasi Portofolio -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="index.html" class="font-display font-bold text-xl tracking-tight">
+      <span class="text-zinc-900 dark:text-white">ahmat</span><span class="text-accent">badali</span>
+    </a>
+
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="inline-flex items-center gap-2 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">
+        <i class="fa-solid fa-arrow-left text-xs"></i> Kembali ke Utama
+      </a>
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Mode terang':'Mode gelap'">
+        <span x-show="!dark">☾</span>
+        <span x-show="dark" x-cloak>☀</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Main Area -->
+<main class="relative z-10 max-w-4xl mx-auto px-6 pt-28 pb-16 w-full flex-grow">
+  
+  <!-- Title Section -->
+  <div class="mb-8">
+    <p class="text-xs font-medium text-accent tracking-widest uppercase mb-2">Web Utilities & Tools</p>
+    <h1 class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-3">
+      URL Encoder / Decoder
+    </h1>
+    <p class="text-zinc-500 dark:text-zinc-400 text-sm md:text-base leading-relaxed">
+      Transformasi dan encode/decode URL payload secara instan langsung di browser Anda untuk keperluan testing, debugging, dan analisis keamanan.
+    </p>
+  </div>
+
+  <!-- Card Utama -->
+  <div class="glass-touch bg-white dark:bg-zinc-900/80 rounded-3xl p-6 sm:p-8 border border-zinc-200 dark:border-zinc-800 shadow-xl">
+    
+    <!-- Input Section -->
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-2">
+        <label for="inputText" class="text-sm font-bold text-zinc-800 dark:text-zinc-200">Input URL / Text</label>
+      </div>
+
+      <!-- Tip Box -->
+      <div class="mb-3 p-3 rounded-xl bg-accent/10 border border-accent/20 text-accent text-xs flex items-start gap-2.5">
+        <i class="fa-solid fa-lightbulb text-sm mt-0.5"></i>
+        <span><strong>Tip:</strong> Gunakan <em>Encode All (Component)</em> untuk meng-encode nilai parameter, atau <em>Encode URI (Full URL)</em> jika ingin mempertahankan struktur URL.</span>
+      </div>
+
+      <textarea id="inputText" class="w-full h-32 p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none focus:border-accent transition-all resize-y placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Ketik atau tempel URL / teks di sini..."></textarea>
+    </div>
+
+    <!-- Tombol Aksi Utama -->
+    <div class="flex flex-wrap gap-2.5 mb-6">
+      <button onclick="processURL('encodeComponent')" class="shimmer inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white text-sm font-medium px-5 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-code text-xs"></i> Encode All (Component)
+      </button>
+      <button onclick="processURL('encodeURI')" class="shimmer inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white text-sm font-medium px-5 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-link text-xs"></i> Encode Full URL
+      </button>
+      <button onclick="processURL('decode')" class="shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-200 text-sm font-medium px-5 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-unlock text-xs"></i> Decode URL
+      </button>
+      <button onclick="swapInputOutput()" class="inline-flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-sm font-medium px-4 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-arrows-rotate text-xs"></i> Tukar
+      </button>
+      <button onclick="resetAll()" class="inline-flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 text-zinc-500 dark:text-zinc-400 text-sm font-medium px-4 py-2.5 rounded-full transition-colors">
+        <i class="fa-solid fa-trash-can text-xs"></i> Reset
+      </button>
+    </div>
+
+    <!-- Opsi / Fitur Tambahan -->
+    <div class="bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800/80 rounded-2xl p-4 mb-6 space-y-3">
+      <label class="flex items-center gap-3 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 cursor-pointer select-none">
+        <input type="checkbox" id="optSpaceAsPlus" class="w-4 h-4 rounded border-zinc-300 dark:border-zinc-700 text-accent focus:ring-accent accent-accent cursor-pointer">
+        <span>Encode spasi menjadi karakter <code class="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-accent font-mono text-xs">+</code> (bukan <code class="px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-accent font-mono text-xs">%20</code>)</span>
+      </label>
+
+      <label class="flex items-center gap-3 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 cursor-pointer select-none">
+        <input type="checkbox" id="optLiveMode" class="w-4 h-4 rounded border-zinc-300 dark:border-zinc-700 text-accent focus:ring-accent accent-accent cursor-pointer">
+        <span>Mode Otomatis (Proses instan saat mengetik)</span>
+      </label>
+    </div>
+
+    <!-- Output Section -->
+    <div>
+      <label for="outputText" class="block text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-2">Hasil Output</label>
+      <textarea id="outputText" readonly class="w-full h-32 p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-zinc-900 dark:text-zinc-100 font-mono text-sm focus:outline-none resize-y placeholder:text-zinc-400 dark:placeholder:text-zinc-600" placeholder="Hasil akan muncul di sini..."></textarea>
+      
+      <!-- Pesan Error -->
+      <div id="errorMsg" class="hidden mt-3 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-center gap-2">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="errorText"></span>
+      </div>
+
+      <!-- Tombol Copy -->
+      <div class="flex justify-end mt-4">
+        <button onclick="copyOutput()" class="inline-flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white text-xs font-semibold px-5 py-2.5 rounded-full transition-colors">
+          <i class="fa-regular fa-copy"></i> Copy Output
+        </button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Floating Glassmorphism Toast Alert -->
+<div id="toastAlert" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-white/20 dark:border-zinc-700/50 shadow-2xl shadow-black/10 text-zinc-900 dark:text-white transition-all duration-300 opacity-0 translate-y-5 pointer-events-none">
+  <div class="w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0">
+    <i id="toastIcon" class="fa-solid fa-check text-sm"></i>
+  </div>
+  <div>
+    <p id="toastTitle" class="text-xs font-bold leading-none mb-0.5">Berhasil!</p>
+    <p id="toastMsg" class="text-xs text-zinc-500 dark:text-zinc-400 leading-none">Output berhasil disalin ke clipboard.</p>
+  </div>
+</div>
+
+<!-- Footer Portofolio -->
+<footer class="border-t border-zinc-100 dark:border-zinc-900 relative z-10">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-400">© <span id="yr"></span> Ahmat Badali. Personal Tools.</p>
+    <p class="text-xs text-zinc-500">Mahasiswa Teknik Sipil • Universitas Nahdlatul Ulama Kalimantan Selatan</p>
+  </div>
+</footer>
+
+<script>
+// Logic App AlpineJS untuk Dark Mode
+function app() {
+  return {
+    dark: false,
+    init() {
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    }
+  }
+}
+
+let lastMode = 'encodeComponent';
+
+// Fungsi Eksekusi Utama URL Encoder / Decoder
+function processURL(mode) {
+  lastMode = mode;
+  const input = document.getElementById('inputText').value;
+  const outputEl = document.getElementById('outputText');
+  const errorEl = document.getElementById('errorMsg');
+  const errorText = document.getElementById('errorText');
+  const spaceAsPlus = document.getElementById('optSpaceAsPlus').checked;
+
+  errorEl.classList.add('hidden');
+
+  if (!input) {
+    outputEl.value = '';
+    return;
+  }
+
+  try {
+    let result = '';
+
+    if (mode === 'encodeComponent') {
+      result = encodeURIComponent(input);
+      if (spaceAsPlus) {
+        result = result.replace(/%20/g, '+');
+      }
+    } else if (mode === 'encodeURI') {
+      result = encodeURI(input);
+      if (spaceAsPlus) {
+        result = result.replace(/%20/g, '+');
+      }
+    } else if (mode === 'decode') {
+      let formattedInput = input.replace(/\+/g, '%20');
+      result = decodeURIComponent(formattedInput);
+    }
+
+    outputEl.value = result;
+  } catch (e) {
+    outputEl.value = '';
+    errorText.innerText = 'Gagal memproses URL: Terdapat karakter atau format persen (%) yang tidak valid.';
+    errorEl.classList.remove('hidden');
+  }
+}
+
+// Live Mode Event Listener
+document.getElementById('inputText').addEventListener('input', function() {
+  if (document.getElementById('optLiveMode').checked) {
+    processURL(lastMode);
+  }
+});
+
+document.getElementById('optSpaceAsPlus').addEventListener('change', function() {
+  if (document.getElementById('inputText').value) {
+    processURL(lastMode);
+  }
+});
+
+// Tukar Input & Output
+function swapInputOutput() {
+  const inputEl = document.getElementById('inputText');
+  const outputEl = document.getElementById('outputText');
+  
+  const temp = inputEl.value;
+  inputEl.value = outputEl.value;
+  outputEl.value = temp;
+
+  document.getElementById('errorMsg').classList.add('hidden');
+  if (document.getElementById('optLiveMode').checked) {
+    processURL(lastMode);
+  }
+}
+
+// Reset All
+function resetAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputText').value = '';
+  document.getElementById('errorMsg').classList.add('hidden');
+}
+
+// Toast Alert Glassmorphism
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toastAlert');
+  const toastIcon = document.getElementById('toastIcon');
+  const toastTitle = document.getElementById('toastTitle');
+  const toastMsg = document.getElementById('toastMsg');
+
+  if (isError) {
+    toastIcon.className = 'fa-solid fa-xmark text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-red-500/20 text-red-500 flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Gagal!';
+  } else {
+    toastIcon.className = 'fa-solid fa-check text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Berhasil!';
+  }
+
+  toastMsg.innerText = message;
+
+  toast.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+  toast.classList.add('opacity-100', 'translate-y-0');
+
+  setTimeout(() => {
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    toast.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+  }, 3000);
+}
+
+// Copy Output
+function copyOutput() {
+  const outputEl = document.getElementById('outputText');
+  if (!outputEl.value) {
+    showToast('Teks output masih kosong!', true);
+    return;
+  }
+
+  navigator.clipboard.writeText(outputEl.value)
+    .then(() => showToast('Output berhasil disalin ke clipboard!'))
+    .catch(() => showToast('Gagal menyalin teks.', true));
+}
+</script>
+
+</body>
+</html>
