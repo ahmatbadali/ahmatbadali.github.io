@@ -178,6 +178,17 @@
   </div>
 </main>
 
+<!-- Floating Glassmorphism Toast Alert -->
+<div id="toastAlert" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-white/20 dark:border-zinc-700/50 shadow-2xl shadow-black/10 text-zinc-900 dark:text-white transition-all duration-300 opacity-0 translate-y-5 pointer-events-none">
+  <div class="w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0">
+    <i id="toastIcon" class="fa-solid fa-check text-sm"></i>
+  </div>
+  <div>
+    <p id="toastTitle" class="text-xs font-bold leading-none mb-0.5">Berhasil!</p>
+    <p id="toastMsg" class="text-xs text-zinc-500 dark:text-zinc-400 leading-none">Output berhasil disalin ke clipboard.</p>
+  </div>
+</div>
+
 <!-- Footer Portofolio -->
 <footer class="border-t border-zinc-100 dark:border-zinc-900 relative z-10">
   <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -284,13 +295,44 @@ function resetAll() {
   document.getElementById('errorMsg').classList.add('hidden');
 }
 
+// Fungsi Toast Alert Glassmorphism
+function showToast(message, isError = false) {
+  const toast = document.getElementById('toastAlert');
+  const toastIcon = document.getElementById('toastIcon');
+  const toastTitle = document.getElementById('toastTitle');
+  const toastMsg = document.getElementById('toastMsg');
+
+  if (isError) {
+    toastIcon.className = 'fa-solid fa-xmark text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-red-500/20 text-red-500 flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Gagal!';
+  } else {
+    toastIcon.className = 'fa-solid fa-check text-sm';
+    toastIcon.parentElement.className = 'w-8 h-8 rounded-xl bg-accent/20 text-accent flex items-center justify-center shrink-0';
+    toastTitle.innerText = 'Berhasil!';
+  }
+
+  toastMsg.innerText = message;
+
+  toast.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+  toast.classList.add('opacity-100', 'translate-y-0');
+
+  setTimeout(() => {
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    toast.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+  }, 3000);
+}
+
 function copyOutput() {
   const outputEl = document.getElementById('outputText');
-  if (!outputEl.value) return;
+  if (!outputEl.value) {
+    showToast('Teks output masih kosong!', true);
+    return;
+  }
 
   navigator.clipboard.writeText(outputEl.value)
-    .then(() => alert('Output berhasil disalin!'))
-    .catch(() => alert('Gagal menyalin teks.'));
+    .then(() => showToast('Output berhasil disalin ke clipboard!'))
+    .catch(() => showToast('Gagal menyalin teks.', true));
 }
 </script>
 
