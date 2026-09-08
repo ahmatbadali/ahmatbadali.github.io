@@ -1,4 +1,300 @@
-tod
-jjjjjjjppppp
-ppp
-ppppp
+<!DOCTYPE html>
+<html lang="id" x-data="app()" :class="{'dark': dark}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kumpulan tools cyber security & pentesting: Base64 Encoder/Decoder, URL Encoder/Decoder, Hash Generator, RDAP Lookup, NMAP Scanner, dan Subdomain Lookup — semua berjalan langsung di browser.">
+  <title>SecToolbox — Cyber Security & Pentesting Tools</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['PT Sans', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          colors: {
+            accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+            'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+            'accent-2': 'rgb(var(--accent-2-rgb) / <alpha-value>)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --accent-rgb: 59 111 245;
+      --accent-light-rgb: 125 168 255;
+      --accent-2-rgb: 165 202 255;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{font-family:'DM Sans',sans-serif}
+    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+    body{transition:background-color .3s,color .3s}
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")
+    }
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgb(var(--accent-rgb));border-radius:99px}
+
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
+
+    .shimmer{position:relative;overflow:hidden}
+    .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+    .shimmer:hover::after{left:160%}
+
+    .card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s}
+    .card-h:hover{transform:translateY(-6px)}
+
+    /* Kartu kaca dasar (base state) */
+    .glass-card{
+      background:rgba(240,246,255,.7);
+      backdrop-filter:blur(12px) saturate(160%);
+      -webkit-backdrop-filter:blur(12px) saturate(160%);
+      border:1px solid rgba(191,219,254,.6);
+      box-shadow:0 8px 32px 0 rgba(59,111,245,.06);
+    }
+    .dark .glass-card{
+      background:rgba(24,24,27,.7);
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow:0 8px 32px 0 rgba(0,0,0,.37);
+    }
+
+    /* Efek sentuh/hover glassmorphism dua tone */
+    .glass-touch{
+      position:relative;
+      transition:transform .28s cubic-bezier(.4,0,.2,1),background-color .35s,border-color .35s,box-shadow .35s,backdrop-filter .35s;
+    }
+    .glass-touch:hover,.glass-touch:active,.glass-touch.touched{
+      background-image:linear-gradient(135deg, rgba(219,234,254,.85), rgba(191,219,254,.55))!important;
+      backdrop-filter:blur(18px) saturate(180%);
+      -webkit-backdrop-filter:blur(18px) saturate(180%);
+      border-color:rgba(59,111,245,.45)!important;
+      box-shadow:0 12px 28px rgba(59,111,245,.16),inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .dark .glass-touch:hover,.dark .glass-touch:active,.dark .glass-touch.touched{
+      background-image:linear-gradient(135deg, rgb(var(--accent-rgb) / .2), rgb(var(--accent-2-rgb) / .3))!important;
+      background-color:transparent!important;
+      border-color:rgb(var(--accent-2-rgb) / .65)!important;
+      box-shadow:0 12px 32px rgb(var(--accent-rgb) / .2),inset 0 1px 0 rgba(255,255,255,.25);
+    }
+
+    /* Tombol 3D agak cekung ke dalam */
+    .btn-3d-inset{
+      box-shadow:inset 2px 2px 5px rgba(0,0,0,.12),inset -2px -2px 5px rgba(255,255,255,.8),0 1px 2px rgba(0,0,0,.05);
+      transition:all .2s ease;
+    }
+    .btn-3d-inset:active{
+      box-shadow:inset 3px 3px 6px rgba(0,0,0,.2),inset -2px -2px 4px rgba(255,255,255,.9);
+      transform:translateY(1px);
+    }
+    .dark .btn-3d-inset{
+      box-shadow:inset 3px 3px 6px rgba(0,0,0,.7),inset -2px -2px 5px rgba(255,255,255,.05);
+    }
+    .dark .btn-3d-inset:active{
+      box-shadow:inset 4px 4px 8px rgba(0,0,0,.85),inset -1px -1px 3px rgba(255,255,255,.1);
+    }
+
+    [x-cloak]{display:none!important}
+    .scroll-reveal{opacity:0;transform:translateY(30px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
+    .scroll-reveal.show{opacity:1;transform:translateY(0)}
+
+    .parallax-blob{will-change:transform}
+
+    .tool-icon{
+      width:3.25rem;height:3.25rem;border-radius:1rem;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg, rgb(var(--accent-rgb) / .16), rgb(var(--accent-2-rgb) / .28));
+      color:rgb(var(--accent-rgb));font-size:1.35rem;
+    }
+    .dark .tool-icon{color:rgb(var(--accent-2-rgb))}
+  </style>
+</head>
+
+<body class="bg-blue-50/30 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+
+<div class="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-transparent">
+  <div id="scrollProgress" class="h-full w-0 bg-gradient-to-r from-accent to-accent-2 transition-[width] duration-150 ease-out"></div>
+</div>
+
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  :class="sc ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm shadow-black/5' : ''">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="font-display font-bold text-xl tracking-tight flex items-center gap-2">
+      <span class="tool-icon !w-9 !h-9 !rounded-xl !text-base"><i class="fa-solid fa-shield-halved"></i></span>
+      <span class="text-zinc-900 dark:text-white">sec<span class="text-accent">toolbox</span></span>
+    </a>
+
+    <button @click="dark=!dark" class="btn-3d-inset glass-touch w-10 h-10 flex items-center justify-center rounded-full border border-blue-200/60 dark:border-zinc-800 bg-blue-50/50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200" :aria-label="dark?'Mode terang':'Mode gelap'">
+      <span x-show="!dark"><i class="fa-solid fa-moon text-sm"></i></span>
+      <span x-show="dark" x-cloak><i class="fa-solid fa-sun text-sm text-amber-400"></i></span>
+    </button>
+  </nav>
+</header>
+
+<main>
+
+<section class="relative min-h-[60vh] flex items-center pt-16 overflow-hidden">
+  <div class="parallax-blob absolute top-1/4 right-0 w-96 h-96 bg-accent/15 rounded-full blur-3xl"></div>
+  <div class="parallax-blob absolute bottom-0 left-0 w-64 h-64 bg-accent-2/30 dark:bg-accent-2/10 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 w-full text-center">
+    <p class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4">Cyber Security Toolkit</p>
+    <h1 class="reveal d1 font-display font-bold text-4xl md:text-6xl leading-[1.1] tracking-tight text-zinc-900 dark:text-white mb-6">
+      Kumpulan Tools untuk<br class="hidden md:block"> Cyber Security & Pentesting
+    </h1>
+    <p class="reveal d2 text-lg text-zinc-600 dark:text-zinc-400 font-light leading-relaxed max-w-2xl mx-auto">
+      Tools recon, analisis, dan utilitas encoding yang umum dipakai dalam aktivitas cyber security maupun pentesting — semua jalan langsung di website, cepat dan ringan tanpa instalasi.
+    </p>
+    <p class="reveal d3 text-xs text-zinc-500 dark:text-zinc-500 mt-6 flex items-center justify-center gap-2">
+      <i class="fa-solid fa-circle-info"></i> Gunakan hanya pada sistem milik sendiri atau yang sudah mendapat izin resmi.
+    </p>
+  </div>
+</section>
+
+<section id="tools" class="scroll-reveal pb-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <a href="base64-encoder-decoder.html" class="reveal d1 card-h glass-card glass-touch group rounded-2xl p-7 flex flex-col">
+        <div class="tool-icon mb-5"><i class="fa-solid fa-code"></i></div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">Base64 Encoder / Decoder</h3>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex-1">Encode dan decode string Base64 dengan cepat — berguna saat analisis payload, cookie, atau data yang dienkode saat testing.</p>
+        <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">Buka tools <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i></span>
+      </a>
+
+      <a href="url-encoder-decoder.html" class="reveal d2 card-h glass-card glass-touch group rounded-2xl p-7 flex flex-col">
+        <div class="tool-icon mb-5"><i class="fa-solid fa-link"></i></div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">URL Encoder / Decoder</h3>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex-1">Encode dan decode URL untuk keperluan crafting parameter, analisis request, atau membaca karakter yang di-escape.</p>
+        <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">Buka tools <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i></span>
+      </a>
+
+      <a href="hash-generator.html" class="reveal d3 card-h glass-card glass-touch group rounded-2xl p-7 flex flex-col">
+        <div class="tool-icon mb-5"><i class="fa-solid fa-fingerprint"></i></div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">Hash Generator</h3>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex-1">Generate hash MD5, SHA-1, hingga SHA-256 dari teks — dipakai untuk verifikasi integritas file atau analisis credential.</p>
+        <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">Buka tools <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i></span>
+      </a>
+
+      <a href="rdap-lookup.html" class="reveal d4 card-h glass-card glass-touch group rounded-2xl p-7 flex flex-col">
+        <div class="tool-icon mb-5"><i class="fa-solid fa-globe"></i></div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">RDAP Lookup</h3>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex-1">Cek data registrasi domain atau IP lewat protokol RDAP — langkah umum di tahap reconnaissance (OSINT).</p>
+        <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">Buka tools <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i></span>
+      </a>
+
+      <a href="nmap-scanner.html" class="reveal d5 card-h glass-card glass-touch group rounded-2xl p-7 flex flex-col">
+        <div class="tool-icon mb-5"><i class="fa-solid fa-network-wired"></i></div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">NMAP Scanner</h3>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex-1">Pindai port dan service jaringan target untuk kebutuhan enumeration dan audit keamanan saat pentest.</p>
+        <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">Buka tools <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i></span>
+      </a>
+
+      <a href="subdomain-lookup.html" class="reveal d6 card-h glass-card glass-touch group rounded-2xl p-7 flex flex-col">
+        <div class="tool-icon mb-5"><i class="fa-solid fa-sitemap"></i></div>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">Subdomain Lookup</h3>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed flex-1">Temukan daftar subdomain yang terhubung dengan sebuah domain utama.</p>
+        <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent">Buka tools <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-blue-100 dark:border-zinc-900">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-500 dark:text-zinc-400">© <span id="yr"></span> Ahmat Badali. Cyber Security & Pentesting Toolkit.</p>
+    <p class="text-xs text-zinc-500">Mahasiswa Teknik Sipil • Universitas Nahdlatul Ulama Kalimantan Selatan</p>
+  </div>
+</footer>
+
+<script>
+function app() {
+  return {
+    dark: false,
+    sc: false,
+    init() {
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+      const scrollObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            scrollObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+
+      document.getElementById('yr').textContent = new Date().getFullYear();
+
+      // Dukungan sentuh untuk efek glassmorphism di perangkat mobile
+      document.querySelectorAll('.glass-touch').forEach(el => {
+        el.addEventListener('touchstart', () => el.classList.add('touched'), { passive: true });
+        el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('touched'), 500));
+      });
+
+      // Bar progres & parallax lembut dekorasi hero
+      const progressBar = document.getElementById('scrollProgress');
+      const heroBlobs = document.querySelectorAll('.parallax-blob');
+      let ticking = false;
+
+      const onScroll = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        if (progressBar) progressBar.style.width = pct + '%';
+
+        heroBlobs.forEach((el, i) => {
+          const speed = i % 2 === 0 ? 0.12 : -0.08;
+          el.style.transform = `translateY(${scrollTop * speed}px)`;
+        });
+        ticking = false;
+      };
+
+      window.addEventListener('scroll', () => {
+        this.sc = window.scrollY > 20;
+        if (!ticking) {
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+  }
+}
+</script>
+
+</body>
+</html>
