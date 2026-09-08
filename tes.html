@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id" x-data="app()" :class="{'dark': dark}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biodata dan portfolio pribadi Ahmat Badali, mahasiswa Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan.">
+  <meta name="author" content="Ahmat Badali">
+  <meta property="og:title" content="Ahmat Badali — Personal Portfolio">
+  <meta property="og:description" content="Biodata, pendidikan, pengalaman, keahlian, dan prestasi Ahmat Badali.">
+  <meta property="og:type" content="website">
+  <title>Ahmat Badali — Personal Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['PT Sans', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          colors: {
+            accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
+            'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
+            'accent-2': 'rgb(var(--accent-2-rgb) / <alpha-value>)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --accent-rgb: 59 111 245;
+      --accent-light-rgb: 125 168 255;
+      --accent-2-rgb: 165 202 255;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{font-family:'DM Sans',sans-serif}
+    h1,h2,h3,h4,h5,h6{font-family:'PT Sans',sans-serif}
+    body{transition:background-color .3s,color .3s}
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")
+    }
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgb(var(--accent-rgb));border-radius:99px}
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+    .nl{position:relative}
+    .nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:currentColor;transition:width .22s cubic-bezier(.4,0,.2,1)}
+    .nl:hover::after,.nl.on::after{width:100%}
+    .shimmer{position:relative;overflow:hidden}
+    .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+    .shimmer:hover::after{left:160%}
+    .pf{overflow:hidden;background:#d4d4d8}
+    .pf img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+    .card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s}
+    .card-h:hover{transform:translateY(-4px)}
+    .glass-touch{
+      position:relative;
+      transition:transform .28s cubic-bezier(.4,0,.2,1),background-color .35s,border-color .35s,box-shadow .35s,backdrop-filter .35s;
+    }
+    .parallax-blob{will-change:transform}
+    .glass-touch:hover,.glass-touch:active,.glass-touch.touched{
+      background-image:linear-gradient(135deg, rgb(var(--accent-rgb) / .16), rgb(var(--accent-2-rgb) / .26));
+      background-color:transparent!important;
+      backdrop-filter:blur(16px) saturate(180%);
+      -webkit-backdrop-filter:blur(16px) saturate(180%);
+      border-color:rgb(var(--accent-2-rgb) / .65)!important;
+      box-shadow:0 10px 34px rgb(var(--accent-rgb) / .16),inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    [x-cloak]{display:none!important}
+    .scroll-reveal{opacity:0;transform:translateY(30px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
+    .scroll-reveal.show{opacity:1;transform:translateY(0)}
+    .scroll-reveal.left{transform:translateX(-35px)}
+    .scroll-reveal.right{transform:translateX(35px)}
+    .scroll-reveal.show.left,.scroll-reveal.show.right{transform:translateX(0)}
+    .icon-link{transition:transform .28s cubic-bezier(.22,1,.36,1),background-color .28s,border-color .28s,color .28s}
+    .icon-link:hover{transform:translateY(-5px) scale(1.04)}
+    .icon-link i{transition:transform .28s cubic-bezier(.22,1,.36,1)}
+    .icon-link:hover i{transform:scale(1.12)}
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+
+<div class="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-transparent">
+  <div id="scrollProgress" class="h-full w-0 bg-gradient-to-r from-accent to-accent-2 transition-[width] duration-150 ease-out"></div>
+</div>
+
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  :class="sc ? 'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5' : ''">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#hero" class="font-display font-bold text-xl tracking-tight">
+      <span class="text-zinc-900 dark:text-white">ahmat</span><span class="text-accent">badali</span>
+    </a>
+
+    <ul class="hidden md:flex items-center gap-7 text-sm" role="list">
+      <li><a href="#about" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Tentang</a></li>
+      <li><a href="#education" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Pendidikan</a></li>
+      <li><a href="#experience" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Pengalaman</a></li>
+      <li><a href="#skills" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Keahlian</a></li>
+      <li><a href="#tools" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Tools</a></li>
+      <li><a href="#achievements" class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Prestasi</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <button @click="dark=!dark" class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors" :aria-label="dark?'Mode terang':'Mode gelap'">
+        <span x-show="!dark">☾</span>
+        <span x-show="dark" x-cloak>☀</span>
+      </button>
+      <a href="#contact" class="hidden md:inline-flex items-center shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors">Kontak</a>
+      <button @click="mm=!mm" class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800" aria-label="Toggle menu">
+        <span x-show="!mm">☰</span><span x-show="mm" x-cloak>✕</span>
+      </button>
+    </div>
+  </nav>
+
+  <div x-show="mm" x-cloak class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium">
+      <li><a href="#about" @click="mm=false">Tentang Saya</a></li>
+      <li><a href="#education" @click="mm=false">Pendidikan</a></li>
+      <li><a href="#experience" @click="mm=false">Pengalaman</a></li>
+      <li><a href="#skills" @click="mm=false">Keahlian</a></li>
+      <li><a href="#tools" @click="mm=false">Tools</a></li>
+      <li><a href="#achievements" @click="mm=false">Prestasi</a></li>
+      <li><a href="#contact" @click="mm=false" class="text-accent">Kontak</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+  <div class="parallax-blob absolute top-1/4 right-0 w-96 h-96 bg-accent/12 rounded-full blur-3xl"></div>
+  <div class="parallax-blob absolute bottom-1/4 left-0 w-64 h-64 bg-accent-2/25 dark:bg-accent-2/10 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <p class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4">Personal Portfolio</p>
+        <h1 class="reveal d1 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6">
+          Halo, saya <span class="text-accent">Ahmat Badali</span>
+        </h1>
+        <p class="reveal d2 text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed max-w-xl mb-8">
+          Mahasiswa <strong class="font-medium text-zinc-700 dark:text-zinc-300">Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan</strong> dan saat ini bekerja di bidang <strong class="font-medium text-zinc-700 dark:text-zinc-300">Keamanan</strong>, dengan semangat untuk terus belajar, berkembang, dan menghadapi tantangan baru.
+        </p>
+        <div class="reveal d3 flex flex-wrap gap-4">
+          <a href="#about" class="shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">Lihat Biodata ↓</a>
+          <a href="#experience" class="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Pengalaman Saya</a>
+        </div>
+        <div class="reveal d4 flex gap-8 mt-14 pt-8 border-t border-zinc-100 dark:border-zinc-900">
+          <div><p class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white">Mahasiswa</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Teknik Sipil</p></div>
+          <div><p class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white">3</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Bidang pengalaman</p></div>
+          <div><p class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white">Aktif</p><p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Belajar & berkembang</p></div>
+        </div>
+      </div>
+
+      <div class="reveal d2 flex justify-center md:justify-end">
+        <div class="relative w-80 sm:w-[22rem] md:w-[25rem] aspect-[4/5]">
+          <div class="absolute -inset-5 rounded-[2.75rem] bg-gradient-to-br from-accent/35 via-accent-light/15 to-transparent blur-2xl -z-10"></div>
+          <div class="pf w-full h-full rounded-[2rem] ring-1 ring-white/20 dark:ring-white/10 shadow-2xl shadow-accent/20">
+            <img src="https://ahmatbadali.github.io/img/Pas-foto-kemaja-formal.jpg" alt="Ahmat Badali" loading="eager">
+          </div>
+          <div class="glass-touch absolute -bottom-5 -left-5 bg-accent/90 border border-white/20 text-white font-display font-bold text-sm px-5 py-3 rounded-2xl shadow-lg">Civil Engineering Student</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="scroll-reveal py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div>
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Tentang Saya</p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-6">Mengenal Ahmat Badali</h2>
+      </div>
+      <div class="reveal d2 text-zinc-500 dark:text-zinc-400 leading-relaxed space-y-5">
+        <p>Saya adalah pribadi yang memiliki semangat untuk terus belajar, berkembang, dan menghadapi tantangan baru. Saya terbiasa bekerja secara individu maupun dalam tim dengan mengutamakan disiplin, tanggung jawab, dan komunikasi yang baik.</p>
+        <p>Saat ini saya menempuh pendidikan sebagai mahasiswa Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan. Selain fokus pada pendidikan, saya juga memiliki pengalaman dalam bidang pelayanan, operasional outlet, logistik, serta saat ini bekerja di bidang keamanan.</p>
+        <p>Saya percaya bahwa kerja keras, kedisiplinan, dan kemauan untuk terus belajar merupakan fondasi penting untuk mencapai tujuan dan berkembang secara profesional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="scroll-reveal py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Pendidikan</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Perjalanan Pendidikan</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <article class="reveal d1 card-h glass-touch bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800">
+        <p class="text-xs text-accent font-medium tracking-widest uppercase mb-4">Saat ini</p>
+        <h3 class="font-display font-bold text-2xl text-white mb-3">Universitas Nahdlatul Ulama Kalimantan Selatan</h3>
+        <p class="text-zinc-400 leading-relaxed">Mahasiswa Teknik Sipil yang terus mengembangkan pengetahuan akademik dan kemampuan untuk menghadapi tantangan di masa depan.</p>
+      </article>
+
+      <article class="reveal d2 card-h glass-touch bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+        <p class="text-xs text-accent font-medium tracking-widest uppercase mb-4">Pendidikan Sebelumnya</p>
+        <h3 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-3">SMA Negeri 1 Aluh-Aluh</h3>
+        <p class="text-zinc-500 dark:text-zinc-400 leading-relaxed">Lulusan jurusan Ilmu Pengetahuan Alam (IPA) dengan pengalaman aktif dalam kegiatan dan prestasi di lingkungan sekolah.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="scroll-reveal py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Pengalaman</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Pengalaman Kerja</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <article class="reveal d1 card-h glass-touch bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800 hover:border-accent">
+        <span class="inline-flex text-xs bg-white/10 text-accent px-3 py-1 rounded-full mb-5">Pekerjaan Saat Ini</span>
+        <h3 class="font-display font-bold text-xl text-white mb-2">Petugas Keamanan & Koordinator Lapangan</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">Bertugas menjaga keamanan dan ketertiban lingkungan, melakukan pengawasan lapangan, berkoordinasi dengan personel, serta membantu mengatur dan memastikan kegiatan operasional di lapangan berjalan dengan baik.</p>
+      </article>
+
+      <article class="reveal d2 card-h glass-touch bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+        <span class="inline-flex text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full mb-5">Outlet</span>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">Staff Outlet — Roti'O</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Bertugas sebagai Baker dan Barista, melayani pelanggan, membantu produksi roti dan minuman, mengelola stok, serta menjaga kebersihan area kerja.</p>
+      </article>
+
+      <article class="reveal d3 card-h glass-touch bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800 hover:border-accent">
+        <span class="inline-flex text-xs bg-zinc-800 text-accent px-3 py-1 rounded-full mb-5">Logistik</span>
+        <h3 class="font-display font-bold text-xl text-white mb-2">Warehouse Worker — J&T Express</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">Melakukan penyortiran paket, membantu proses loading dan unloading, memastikan kondisi barang, serta menjaga kerapian area gudang.</p>
+      </article>
+
+      <article class="reveal d4 card-h glass-touch bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+        <span class="inline-flex text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-3 py-1 rounded-full mb-5">Pergudangan</span>
+        <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2">Clerk Logistik — Indogrosir</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Mendukung kegiatan operasional logistik melalui proses helper, picking, scanning, dan pengecekan barang.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="scroll-reveal py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Keahlian</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Kemampuan Saya</h2>
+    </div>
+
+    <div class="reveal d2 flex flex-wrap gap-3">
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Komunikasi</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Kerja Sama Tim</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Kepemimpinan</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Manajemen Stok</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Pelayanan Pelanggan</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Operasional Gudang</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Picking & Scanning</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Pengembangan Web Dasar</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Dasar Teknologi Informasi (IT)</span>
+      <span class="px-5 py-3 rounded-full border border-zinc-200 dark:border-zinc-800">Disiplin & Manajemen Waktu</span>
+    </div>
+  </div>
+</section>
+
+<!-- SEKSI TOOLS DITAMBAHKAN -->
+<section id="tools" class="scroll-reveal py-24 bg-zinc-50 dark:bg-zinc-900/40">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Tools & Software</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Perangkat Kerja</h2>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <div class="reveal d1 glass-touch bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
+        <i class="fa-solid fa-compass-drafting text-3xl text-accent mb-3"></i>
+        <h3 class="font-bold text-sm text-zinc-900 dark:text-white">AutoCAD</h3>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Desain 2D/3D</p>
+      </div>
+
+      <div class="reveal d2 glass-touch bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
+        <i class="fa-solid fa-building text-3xl text-accent mb-3"></i>
+        <h3 class="font-bold text-sm text-zinc-900 dark:text-white">SAP2000</h3>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Analisis Struktur</p>
+      </div>
+
+      <div class="reveal d3 glass-touch bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
+        <i class="fa-solid fa-file-excel text-3xl text-accent mb-3"></i>
+        <h3 class="font-bold text-sm text-zinc-900 dark:text-white">Ms. Excel</h3>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Perhitungan / RAB</p>
+      </div>
+
+      <div class="reveal d4 glass-touch bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
+        <i class="fa-solid fa-file-word text-3xl text-accent mb-3"></i>
+        <h3 class="font-bold text-sm text-zinc-900 dark:text-white">Ms. Word</h3>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Dokumentasi</p>
+      </div>
+
+      <div class="reveal d1 glass-touch bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
+        <i class="fa-solid fa-code text-3xl text-accent mb-3"></i>
+        <h3 class="font-bold text-sm text-zinc-900 dark:text-white">VS Code</h3>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Web Editor</p>
+      </div>
+
+      <div class="reveal d2 glass-touch bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
+        <i class="fa-brands fa-git-alt text-3xl text-accent mb-3"></i>
+        <h3 class="font-bold text-sm text-zinc-900 dark:text-white">Git & GitHub</h3>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Version Control</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements" class="scroll-reveal py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="mb-14">
+      <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Prestasi</p>
+      <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Pencapaian Saya</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="reveal d1 bg-white dark:bg-zinc-900 glass-touch rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800">
+        <p class="text-accent font-bold text-sm mb-2">01</p>
+        <h3 class="font-display font-bold text-xl mb-2">Konsisten dalam Akademik</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400">Masuk 10 besar di kelas selama 5 semester.</p>
+      </div>
+      <div class="reveal d2 bg-white dark:bg-zinc-900 glass-touch rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800">
+        <p class="text-accent font-bold text-sm mb-2">02</p>
+        <h3 class="font-display font-bold text-xl mb-2">Duta Kebersihan Sekolah</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400">Juara 1 dan terpilih sebagai Duta Kebersihan Sekolah.</p>
+      </div>
+      <div class="reveal d3 bg-white dark:bg-zinc-900 glass-touch rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800">
+        <p class="text-accent font-bold text-sm mb-2">03</p>
+        <h3 class="font-display font-bold text-xl mb-2">Fashion Show Kreatif</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400">Berprestasi dalam kompetisi fashion show kreatif dari barang bekas.</p>
+      </div>
+      <div class="reveal d4 bg-white dark:bg-zinc-900 glass-touch rounded-2xl p-7 border border-zinc-100 dark:border-zinc-800">
+        <p class="text-accent font-bold text-sm mb-2">04</p>
+        <h3 class="font-display font-bold text-xl mb-2">Juara 1 Presentasi Karya</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400">Juara 1 kompetisi presentasi karya tingkat Kabupaten Banjar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hobbies" class="scroll-reveal py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="reveal bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-14">
+      <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Minat & Hobi</p>
+      <h2 class="font-display font-bold text-4xl md:text-5xl text-white mb-8">Tetap aktif, terus berkembang.</h2>
+      <div class="flex flex-wrap gap-4">
+        <span class="px-6 py-3 rounded-full bg-white/10 text-white border border-white/10">🏃 Running</span>
+        <span class="px-6 py-3 rounded-full bg-white/10 text-white border border-white/10">🏊 Swimming</span>
+        <span class="px-6 py-3 rounded-full bg-white/10 text-white border border-white/10">🏋️ Gym</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="scroll-reveal py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-16 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl"></div>
+      <div class="relative z-10">
+        <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Kontak & Lokasi</p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">Mari terhubung.</h2>
+        <p class="reveal d2 text-zinc-400 leading-relaxed max-w-2xl mb-10">Silakan hubungi atau kunjungi media sosial saya melalui tautan di bawah ini.</p>
+
+        <div class="reveal d3 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a href="mailto:ahmtbadali@gmail.com" class="icon-link glass-touch group rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 hover:border-accent/60 transition-all">
+            <div class="text-2xl mb-3"><i class="fa-solid fa-envelope"></i></div>
+            <p class="text-xs text-zinc-500 mb-1">Email</p>
+            <p class="text-white font-medium text-sm break-all">ahmtbadali@gmail.com</p>
+          </a>
+
+          <a href="https://www.instagram.com/ahmatbadali._/" target="_blank" rel="noopener noreferrer" class="icon-link glass-touch group rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 hover:border-accent/60 transition-all">
+            <div class="text-2xl mb-3"><i class="fa-brands fa-instagram"></i></div>
+            <p class="text-xs text-zinc-500 mb-1">Instagram</p>
+            <p class="text-white font-medium">@ahmatbadali._</p>
+          </a>
+
+          <a href="https://www.tiktok.com/@ahmatbadali" target="_blank" rel="noopener noreferrer" class="icon-link glass-touch group rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 hover:border-accent/60 transition-all">
+            <div class="text-2xl mb-3"><i class="fa-brands fa-tiktok"></i></div>
+            <p class="text-xs text-zinc-500 mb-1">TikTok</p>
+            <p class="text-white font-medium">@ahmatbadali</p>
+          </a>
+
+          <a href="https://www.google.com/maps/search/?api=1&query=Kalimantan+Selatan+Indonesia" target="_blank" rel="noopener noreferrer" class="icon-link glass-touch group rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/10 hover:border-accent/60 transition-all">
+            <div class="text-2xl mb-3"><i class="fa-solid fa-location-dot"></i></div>
+            <p class="text-xs text-zinc-500 mb-1">Lokasi</p>
+            <p class="text-white font-medium text-sm">Kalimantan Selatan, Indonesia</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-zinc-100 dark:border-zinc-900">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-zinc-400">© <span id="yr"></span> Ahmat Badali. Personal Portfolio.</p>
+    <p class="text-xs text-zinc-500">Mahasiswa Teknik Sipil • Universitas Nahdlatul Ulama Kalimantan Selatan</p>
+  </div>
+</footer>
+
+<script>
+function app() {
+  return {
+    dark: false,
+    mm: false,
+    sc: false,
+    init() {
+      this.dark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      this.$watch('dark', v => localStorage.setItem('theme', v ? 'dark' : 'light'));
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+      const scrollObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            scrollObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+
+      document.getElementById('yr').textContent = new Date().getFullYear();
+
+      document.querySelectorAll('.glass-touch').forEach(el => {
+        el.addEventListener('touchstart', () => el.classList.add('touched'), { passive: true });
+        el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('touched'), 500));
+      });
+
+      const progressBar = document.getElementById('scrollProgress');
+      const heroBlobs = document.querySelectorAll('.parallax-blob');
+      let ticking = false;
+
+      const onScroll = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        if (progressBar) progressBar.style.width = pct + '%';
+
+        heroBlobs.forEach((el, i) => {
+          const speed = i % 2 === 0 ? 0.12 : -0.08;
+          el.style.transform = `translateY(${scrollTop * speed}px)`;
+        });
+        ticking = false;
+      };
+
+      window.addEventListener('scroll', () => {
+        this.sc = window.scrollY > 20;
+        if (!ticking) {
+          window.requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+  }
+}
+</script>
+
+</body>
+</html>
+
