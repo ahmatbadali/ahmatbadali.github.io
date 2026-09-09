@@ -195,7 +195,7 @@
           Halo, saya <span class="text-accent">Ahmat Badali</span>
         </h1>
         <p class="reveal d2 text-lg md:text-xl text-zinc-600 dark:text-zinc-400 font-light leading-relaxed max-w-xl mb-8">
-          Mahasiswa <strong class="font-medium text-zinc-800 dark:text-zinc-200">Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan</strong> dan saat ini bekerja di bidang <strong class="font-medium text-zinc-800 dark:text-zinc-200">Keamanan</strong>, dengan minat mendalam di bidang <strong class="font-medium text-zinc-800 dark:text-zinc-200">Cyber Security & Pentesting</strong> serta sedikit keahlian dasar di bidang IT (<strong class="font-medium text-zinc-800 dark:text-zinc-200">Web Dev</strong>).
+          Mahasiswa <strong class="font-medium text-zinc-800 dark:text-zinc-200">Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan</strong> dan saat ini bekerja di bidang <strong class="font-medium text-zinc-800 dark:text-zinc-200">Keamanan</strong>, dengan semangat untuk terus belajar, berkembang, dan menghadapi tantangan baru.
         </p>
         <div class="reveal d3 flex flex-wrap gap-4">
           <a href="#about" class="btn-3d-inset glass-touch inline-flex items-center gap-2 bg-blue-100/80 dark:bg-zinc-800 border border-blue-200/80 dark:border-zinc-700 text-zinc-900 dark:text-white font-medium px-7 py-3.5 rounded-full hover:bg-blue-200/50 transition-colors text-sm">Lihat Biodata ↓</a>
@@ -231,7 +231,7 @@
       <div class="reveal d2 text-zinc-600 dark:text-zinc-400 leading-relaxed space-y-5">
         <p>Saya adalah pribadi yang punya semangat tinggi buat terus belajar, berkembang, dan siap menghadapi tantangan baru. Saya terbiasa bekerja secara mandiri maupun dalam tim dengan mengutamakan kedisiplinan, tanggung jawab, dan komunikasi yang lancar.</p>
         <p>Saat ini saya sedang menempuh pendidikan sebagai mahasiswa Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan. Selain fokus di dunia perkuliahan, saya juga punya pengalaman kerja di bidang pelayanan, operasional outlet, logistik, hingga saat ini aktif bekerja di bidang keamanan.</p>
-        <p>Di luar aktivitas utama tersebut, saya memiliki minat mendalam di bidang <strong>Cyber Security & Pentesting</strong> serta menguasai sedikit keahlian dasar di bidang IT seperti pengembangan web (<strong>Web Dev</strong>).</p>
+        <p>Saya percaya kalau kerja keras, kedisiplinan, dan rasa ingin tahu yang tinggi adalah kunci utama buat mencapai tujuan dan berkembang secara profesional.</p>
       </div>
     </div>
   </div>
@@ -303,8 +303,6 @@
     </div>
 
     <div class="reveal d2 flex flex-wrap gap-3">
-      <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Cyber Security & Pentesting</span>
-      <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Web Dev Dasar (HTML/CSS/JS)</span>
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Komunikasi</span>
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Kerja Sama Tim</span>
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Kepemimpinan</span>
@@ -312,6 +310,8 @@
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Pelayanan Pelanggan</span>
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Operasional Gudang</span>
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Picking & Scanning</span>
+      <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Pengembangan Web Dasar</span>
+      <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Dasar Teknologi Informasi (IT)</span>
       <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">Disiplin & Manajemen Waktu</span>
     </div>
   </div>
@@ -363,15 +363,15 @@
   </div>
 </section>
 
-<!-- Kotak Rekomendasi Tools Cyber Security & Pentesting -->
-<section id="tools-recommendation" class="scroll-reveal py-24">
+<!-- Kotak Rekomendasi Tools Cyber Security & Pentesting (Berubah-ubah setiap halaman dimuat) -->
+<section id="tools-recommendation" class="scroll-reveal py-24" x-data="randomTool()">
   <div class="max-w-6xl mx-auto px-6">
     <div class="reveal card-h glass-card glass-touch rounded-3xl p-10 md:p-14">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
         <div>
-          <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Keamanan & Utilitas Siber</p>
+          <p class="text-xs font-medium text-accent tracking-widest uppercase mb-3">Cyber Security & Pentesting Tools</p>
           <h2 class="font-display font-bold text-3xl md:text-4xl text-zinc-900 dark:text-white mb-3">Ahmat Badali Tools</h2>
-          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">Kumpulan perangkat digital, utilitas, serta tools online pilihan di bidang <strong>Cyber Security & Pentesting</strong> yang saya kembangkan dan gunakan untuk eksperimen keamanan serta analisis sistem.</p>
+          <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">Kumpulan perangkat digital, utilitas, serta tools online pilihan di bidang keamanan siber yang saya kembangkan untuk eksplorasi dan kebutuhan teknis.</p>
         </div>
         <a href="https://ahmatbadali.github.io/tools/" target="_blank" rel="noopener noreferrer" class="btn-3d-inset glass-touch inline-flex items-center gap-3 bg-accent text-white font-medium px-8 py-4 rounded-full hover:bg-accent-light transition-colors text-sm shrink-0">
           <span>Buka Semua Tools</span>
@@ -379,21 +379,27 @@
         </a>
       </div>
 
-      <!-- Menampilkan salah satu contoh rekomendasi tools -->
+      <!-- Menampilkan salah satu rekomendasi tools secara acak -->
       <div class="border-t border-blue-100 dark:border-zinc-800/80 pt-8 mt-6">
-        <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-4">Featured Tool Rekomendasi:</p>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="glass-card glass-touch p-5 rounded-2xl flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 mt-1">
-              <i class="fa-solid fa-shield-halved text-lg"></i>
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Featured Tool Pilihan Hari Ini:</p>
+          <span class="text-[11px] bg-accent/10 text-accent font-medium px-3 py-1 rounded-full" x-text="tool.category"></span>
+        </div>
+        <div class="grid sm:grid-cols-1 gap-4">
+          <div class="glass-card glass-touch p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 mt-1 sm:mt-0">
+                <i :class="tool.icon" class="text-lg"></i>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-zinc-900 dark:text-white text-base mb-1" x-text="tool.name"></h3>
+                <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed" x-text="tool.desc"></p>
+              </div>
             </div>
-            <div>
-              <h3 class="font-display font-bold text-zinc-900 dark:text-white text-base mb-1">Port Scanner & Net Utility</h3>
-              <p class="text-xs text-zinc-600 dark:text-zinc-400 mb-3 leading-relaxed">Alat bantu praktis untuk memindai port terbuka dan mengecek keamanan jaringan secara cepat.</p>
-              <a href="https://ahmatbadali.github.io/tools/" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-accent hover:underline inline-flex items-center gap-1.5">
-                Coba Tool <i class="fa-solid fa-chevron-right text-[10px]"></i>
-              </a>
-            </div>
+            <a :href="tool.url" target="_blank" rel="noopener noreferrer" class="btn-3d-inset glass-touch inline-flex items-center gap-2 bg-blue-100/70 dark:bg-zinc-800 border border-blue-200/80 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-medium px-5 py-2.5 rounded-xl hover:bg-blue-200/50 transition-colors shrink-0 self-end sm:self-center">
+              <span>Coba Tool</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -450,6 +456,55 @@
 </footer>
 
 <script>
+function randomTool() {
+  const tools = [
+    {
+      name: 'NMAP Scanner',
+      category: 'Network Pentesting',
+      url: '/tools/nmap-scanner.html',
+      icon: 'fa-solid fa-network-wired',
+      desc: 'Utilitas pemindaian port dan audit keamanan jaringan secara cepat.'
+    },
+    {
+      name: 'RDAP Lookup',
+      category: 'Reconnaissance',
+      url: '/tools/rdap-lookup.html',
+      icon: 'fa-solid fa-globe',
+      desc: 'Melakukan query data registrasi IP, ASN, dan domain secara langsung.'
+    },
+    {
+      name: 'Base64 Encoder/Decoder',
+      category: 'Data Utility',
+      url: '/tools/base64-encoder-decoder.html',
+      icon: 'fa-solid fa-code',
+      desc: 'Mengonversi teks atau payload menjadi format Base64 dan sebaliknya.'
+    },
+    {
+      name: 'URL Encoder/Decoder',
+      category: 'Web Security',
+      url: '/tools/url-encoder-decoder.html',
+      icon: 'fa-solid fa-link',
+      desc: 'Alat bantu untuk encoding dan decoding karakter khusus pada URL.'
+    },
+    {
+      name: 'Hash Generator',
+      category: 'Cryptographic Tool',
+      url: '/tools/hash-generator.html',
+      icon: 'fa-solid fa-key',
+      desc: 'Menghasilkan string hash enkripsi seperti MD5, SHA-256, dan lainnya.'
+    },
+    {
+      name: 'Subdomain Lookup',
+      category: 'Reconnaissance',
+      url: '/tools/subdomain-lookup.html',
+      icon: 'fa-solid fa-magnifying-glass-chart',
+      desc: 'Mencari dan memetakan daftar subdomain target untuk analisis keamanan.'
+    }
+  ];
+  const selected = tools[Math.floor(Math.random() * tools.length)];
+  return { tool: selected };
+}
+
 function app() {
   return {
     dark: false,
