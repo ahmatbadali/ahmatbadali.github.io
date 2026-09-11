@@ -300,6 +300,7 @@
                 const subs = [];
                 if (Array.isArray(data)) {
                     data.forEach(item => {
+                        // Mengambil langsung dari properti dns_names yang dihasilkan dari expand=dns_names
                         if (item.dns_names && Array.isArray(item.dns_names)) {
                             subs.push(...item.dns_names);
                         }
@@ -422,4 +423,3 @@ ${subdomains.map((sub, i) => `${(i + 1).toString().padStart(4, ' ')}. ${sub}`).j
 
 </body>
 </html>
-
