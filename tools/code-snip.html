@@ -238,32 +238,55 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 }
 .toast.show{opacity:1;transform:translateY(0)}
 @media(max-width:820px){
-  .header{height:58px;padding:0 12px}.header-actions .reset{display:none}
-  .layout{min-height:calc(100vh - 58px)}
+  html,body{width:100%;min-width:0;overflow-x:hidden}
+  .app{width:100%;min-width:0}
+  .header{height:58px;padding:0 12px}
+  .header-actions{gap:6px}
+  .header-actions .reset,.header-actions .secondary{display:none}
+  .header-actions .primary{padding:8px 11px}
+  .layout{width:100%;min-width:0;min-height:calc(100vh - 58px)}
   .sidebar{display:none}
-  .mobile-bar{
-    display:flex;height:50px;align-items:center;gap:8px;padding:7px 10px;
-    border-bottom:1px solid var(--line);overflow:auto;background:#0e1520
-  }
-  .mobile-bar button,.mobile-bar select{flex:0 0 auto}
-  .mobile-bar select{width:135px;padding:7px 8px}
-  .toolbar{height:48px;padding:0 10px}
-  .editor-wrap{padding:10px}.editor{min-height:300px;max-height:46vh}
-  .preview-area{padding:14px;min-height:320px}
-  .export-frame{padding:30px 16px;min-width:100%}
-  .code-card{width:100%;max-width:none}
+  .workspace{width:100%;min-width:0;max-width:100%;overflow:hidden}
+  .mobile-bar{display:block;width:100%;height:58px;padding:8px 10px;border-bottom:1px solid var(--line);background:#0e1520;overflow:hidden}
+  .mobile-scroll{width:100%;height:42px;display:flex;align-items:center;gap:8px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .mobile-scroll::-webkit-scrollbar{display:none}
+  .mobile-action,.mobile-scroll select{flex:0 0 auto;height:40px;white-space:nowrap}
+  .mobile-scroll select{width:142px;min-width:142px;padding:7px 10px}
+  .toolbar{height:50px;width:100%;padding:0 10px}
+  .toolbar-left{min-width:0;overflow:hidden}
+  .filename{max-width:42vw}
+  .toolbar .btn{height:40px}
+  .editor-wrap{width:100%;padding:10px;overflow:hidden}
+  .editor{width:100%;min-width:0;min-height:300px;max-height:48vh}
+  .preview-area{width:100%;min-width:100%;max-width:none;min-height:420px;padding:0;margin:0;display:block;overflow-x:hidden;overflow-y:auto}
+  .export-frame{width:100%;min-width:100%;max-width:none;min-height:420px;padding:28px 12px;margin:0;display:flex;align-items:center;justify-content:center}
+  .code-card{flex:0 1 100%;width:100%;min-width:0;max-width:none}
+  .preview-code{width:100%;min-width:0}
   .preview-highlight,.preview-lines{font-size:12px;line-height:1.55}
-  .preview-highlight{padding:14px}.preview-lines{padding:14px 9px 14px 12px}
+  .preview-highlight{padding:14px;min-width:0}
+  .preview-lines{padding:14px 9px 14px 12px}
+  .drawer{align-items:flex-end}
+  .drawer-panel{left:0;right:0;top:auto;bottom:0;width:100%;max-width:none;height:min(88vh,760px);max-height:88vh;border-left:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:18px 14px calc(22px + env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .drawer-head{position:sticky;top:-18px;z-index:2;padding:8px 0 14px;background:#101824}
+  .drawer .row{display:grid;grid-template-columns:1fr 110px}
+  .drawer .section{padding-bottom:16px;margin-bottom:16px}
+  .drawer .window-style-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .drawer .swatches{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media(max-width:560px){.window-style-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:480px){
   .brand{font-size:15px}.brand-mark{width:27px;height:27px}
-  .header-actions .secondary{display:none}
+  .header-actions .primary{font-size:12px;padding:8px 9px}
   .editor{min-height:260px}
   #code,#highlight,.lines{font-size:12px;line-height:1.5}
   #code,#highlight{padding:13px}.lines{padding:13px 8px 13px 0;flex-basis:38px}
   .window-bar{height:38px}.dot{width:9px;height:9px}
-  .preview-code{min-width:0}
+  .preview-area,.export-frame{min-height:390px}
+  .export-frame{padding:22px 8px}
+  .code-card{border-radius:10px}
+  .preview-lines{padding-left:9px;padding-right:7px}
+  .preview-highlight{padding:12px}
+  .window-title{margin:0 16px}
 }
 .drawer{
   position:fixed;inset:0;background:#0009;z-index:80;display:none
@@ -363,9 +386,14 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
 <main class="workspace">
   <div class="mobile-bar">
-    <button class="btn" id="settingsBtn">⚙ Settings</button>
-    <select id="mobileLanguage"></select>
-    <button class="btn" id="mobilePng">PNG</button>
+    <div class="mobile-scroll">
+      <button class="btn mobile-action" id="settingsBtn">⚙ Settings</button>
+      <select id="mobileLanguage" aria-label="Language"></select>
+      <button class="btn mobile-action" id="mobileCopy">Copy</button>
+      <button class="btn mobile-action" id="mobileFormat">Format</button>
+      <button class="btn mobile-action" id="mobileReset">Reset</button>
+      <button class="btn primary mobile-action" id="mobilePng">Export PNG</button>
+    </div>
   </div>
 
   <div class="toolbar">
@@ -614,7 +642,11 @@ async function exportPNG(){
   const base=(state.filename||"snippet").replace(/\.[^/.]+$/,"").replace(/[^\w.-]+/g,"-")||"snippet";
   a.download=base+".png";a.href=canvas.toDataURL("image/png");a.click();toast("PNG berhasil dibuat");
 }
-$("pngBtn").addEventListener("click",exportPNG);$("mobilePng").addEventListener("click",exportPNG);
+$("pngBtn").addEventListener("click",exportPNG);
+$("mobilePng").addEventListener("click",exportPNG);
+$("mobileCopy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("code").value);toast("Kode berhasil disalin")}catch(e){$("code").select();document.execCommand("copy");toast("Kode berhasil disalin")}});
+$("mobileFormat").addEventListener("click",()=>$("formatBtn").click());
+$("mobileReset").addEventListener("click",()=>$("resetBtn").click());
 
 $("settingsBtn").addEventListener("click",()=>$("drawer").classList.add("open"));
 $("closeDrawer").addEventListener("click",()=>$("drawer").classList.remove("open"));
