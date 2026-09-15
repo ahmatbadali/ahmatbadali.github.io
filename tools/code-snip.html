@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Code snippet generator inspired by Carbon">
+<title>CodeSnap — Code Snippet Generator</title>
+
+<!-- Syntax Highlighting -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/cpp.min.js"></script>
+
+<!-- PNG Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --app-bg: #111111;
+    --panel: #181818;
+    --panel-2: #202020;
+    --border: #303030;
+    --text: #eeeeee;
+    --muted: #999999;
+    --accent: #7c5cff;
+    --input: #252525;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: var(--app-bg);
+    color: var(--text);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    height: 62px;
+    border-bottom: 1px solid #292929;
+    background: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.brand-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 5px 20px rgba(139, 92, 246, .25);
+}
+
+.brand small {
+    color: #777;
+    font-size: 11px;
+    font-weight: 500;
+    margin-left: 2px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button,
+select,
+input {
+    font: inherit;
+}
+
+.btn {
+    height: 36px;
+    border: 1px solid #333;
+    background: #1c1c1c;
+    color: #ddd;
+    padding: 0 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.btn:hover {
+    background: #272727;
+    border-color: #444;
+}
+
+.btn.primary {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #8b5cf6;
+}
+
+.icon-btn {
+    width: 36px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.app {
+    display: flex;
+    min-height: calc(100vh - 62px);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    border-right: 1px solid #292929;
+    background: #151515;
+    padding: 18px;
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    margin-bottom: 23px;
+}
+
+.sidebar-title {
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: #777;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.control {
+    margin-bottom: 13px;
+}
+
+.control label {
+    display: flex;
+    justify-content: space-between;
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.control label span {
+    color: #666;
+}
+
+select,
+.text-input {
+    width: 100%;
+    height: 37px;
+    background: #222;
+    border: 1px solid #343434;
+    border-radius: 7px;
+    color: #ddd;
+    padding: 0 10px;
+    outline: none;
+}
+
+select:focus,
+.text-input:focus {
+    border-color: #6d4aff;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: #8b5cf6;
+}
+
+.range-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.range-row input {
+    flex: 1;
+}
+
+.range-value {
+    width: 42px;
+    color: #aaa;
+    font-size: 11px;
+    text-align: right;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #aaa;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.checkbox-row input {
+    accent-color: #8b5cf6;
+}
+
+.color-row {
+    display: flex;
+    gap: 7px;
+}
+
+.color-input {
+    width: 42px;
+    height: 37px;
+    padding: 3px;
+    border: 1px solid #343434;
+    border-radius: 7px;
+    background: #222;
+    cursor: pointer;
+}
+
+.color-text {
+    flex: 1;
+}
+
+/* =========================
+   EDITOR
+========================= */
+
+.workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.editor-bar {
+    height: 48px;
+    border-bottom: 1px solid #292929;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    background: #161616;
+}
+
+.editor-tabs {
+    display: flex;
+    gap: 3px;
+}
+
+.tab {
+    padding: 7px 11px;
+    border-radius: 6px;
+    color: #777;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #252525;
+    color: #ddd;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.editor-actions button {
+    height: 31px;
+    padding: 0 10px;
+    font-size: 11px;
+}
+
+/* =========================
+   EDITOR AREA
+========================= */
+
+.editor-container {
+    height: 300px;
+    border-bottom: 1px solid #292929;
+    position: relative;
+    background: #0e0e0e;
+    overflow: hidden;
+}
+
+.editor-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    overflow: auto;
+}
+
+.line-numbers {
+    width: 52px;
+    flex-shrink: 0;
+    padding: 18px 12px 18px 0;
+    text-align: right;
+    color: #4b4b4b;
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    user-select: none;
+    background: #101010;
+    border-right: 1px solid #1d1d1d;
+}
+
+.code-editor {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}
+
+.code-editor pre,
+.code-editor textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 18px 20px;
+    border: 0;
+    outline: 0;
+    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    white-space: pre;
+    tab-size: 4;
+}
+
+.code-editor pre {
+    pointer-events: none;
+    overflow: visible;
+    color: #eee;
+}
+
+.code-editor pre code {
+    font-family: inherit;
+    background: transparent !important;
+}
+
+.code-editor textarea {
+    resize: none;
+    overflow: auto;
+    background: transparent;
+    color: transparent;
+    caret-color: white;
+    z-index: 2;
+    -webkit-text-fill-color: transparent;
+}
+
+.code-editor textarea::selection {
+    background: rgba(124, 92, 255, .3);
+}
+
+.placeholder {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    color: #444;
+    pointer-events: none;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview-area {
+    flex: 1;
+    min-height: 400px;
+    overflow: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(124, 92, 255, .07), transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, .05), transparent 35%),
+        #111;
+}
+
+/* checkerboard */
+.preview-area.transparent {
+    background-color: #151515;
+    background-image:
+        linear-gradient(45deg, #1c1c1c 25%, transparent 25%),
+        linear-gradient(-45deg, #1c1c1c 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #1c1c1c 75%),
+        linear-gradient(-45deg, transparent 75%, #1c1c1c 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+/* =========================
+   CODE CARD
+========================= */
+
+.code-card {
+    position: relative;
+    max-width: 100%;
+    min-width: 300px;
+    background: #282c34;
+    border-radius: 11px;
+    overflow: hidden;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.35),
+        0 10px 25px rgba(0,0,0,.25);
+    transform-origin: center;
+}
+
+.window-bar {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    position: relative;
+}
+
+.window-dots {
+    display: flex;
+    gap: 7px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red {
+    background: #ff5f57;
+}
+
+.dot.yellow {
+    background: #febc2e;
+}
+
+.dot.green {
+    background: #28c840;
+}
+
+.window-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.42);
+    font-size: 11px;
+    font-family: monospace;
+}
+
+.card-code {
+    display: flex;
+    padding: 0 0 5px 0;
+}
+
+.preview-lines {
+    padding: 15px 12px 15px 15px;
+    color: rgba(255,255,255,.25);
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    text-align: right;
+    user-select: none;
+}
+
+.preview-code {
+    padding: 15px 22px 15px 12px;
+    overflow: visible;
+    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #abb2bf;
+    margin: 0;
+    white-space: pre;
+}
+
+.preview-code code {
+    font-family: inherit;
+    background: transparent !important;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    background: #272727;
+    border: 1px solid #414141;
+    color: #eee;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: .25s;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-controls {
+    display: none;
+}
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 235px;
+        min-width: 235px;
+    }
+
+    .preview-area {
+        padding: 30px;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 0 12px;
+    }
+
+    .brand small {
+        display: none;
+    }
+
+    .header-actions .hide-mobile {
+        display: none;
+    }
+
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-controls {
+        display: flex;
+        overflow-x: auto;
+        gap: 7px;
+        padding: 9px;
+        border-bottom: 1px solid #292929;
+        background: #151515;
+    }
+
+    .mobile-controls select,
+    .mobile-controls button {
+        min-width: max-content;
+        width: auto;
+        height: 34px;
+        font-size: 11px;
+    }
+
+    .editor-container {
+        height: 270px;
+    }
+
+    .preview-area {
+        min-height: 450px;
+        padding: 25px 15px;
+        justify-content: flex-start;
+    }
+
+    .code-card {
+        transform: scale(.85);
+        transform-origin: center;
+    }
+
+    .editor-bar {
+        padding: 0 9px;
+    }
+
+    .editor-actions button {
+        padding: 0 7px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div class="brand">
+        <div class="brand-icon">&lt;/&gt;</div>
+        <span>CodeSnap</span>
+        <small>Code Snippet Generator</small>
+    </div>
+
+    <div class="header-actions">
+
+        <button class="btn icon-btn hide-mobile"
+                onclick="copyCode()"
+                title="Copy code">
+            ⧉
+        </button>
+
+        <button class="btn hide-mobile"
+                onclick="resetAll()">
+            Reset
+        </button>
+
+        <button class="btn primary"
+                onclick="downloadPNG()">
+            Export PNG
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                Code
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Language
+                </label>
+
+                <select id="language">
+                    <option value="javascript">JavaScript</option>
+                    <option value="xml">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="json">JSON</option>
+                    <option value="python">Python</option>
+                    <option value="php">PHP</option>
+                    <option value="bash">Bash</option>
+                    <option value="sql">SQL</option>
+                    <option value="java">Java</option>
+                    <option value="cpp">C++</option>
+                    <option value="plaintext">Plain Text</option>
+                </select>
+
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Font
+                </label>
+
+                <select id="font">
+                    <option value="JetBrains Mono">JetBrains Mono</option>
+                    <option value="Fira Code">Fira Code</option>
+                    <option value="Consolas">Consolas</option>
+                    <option value="monospace">Monospace</option>
+                </select>
+
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Font Size
+                    <span id="fontSizeValue">13px</span>
+                </label>
+
+                <div class="range-row">
+
+                    <input
+                        type="range"
+                        id="fontSize"
+                        min="10"
+                        max="24"
+                        value="13">
+
+                    <span class="range-value"
+                          id="fontSizeValue2">
+                        13
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                Theme
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Code Theme
+                </label>
+
+                <select id="theme">
+
+                    <option value="atom-one-dark">
+                        Atom One Dark
+                    </option>
+
+                    <option value="github-dark">
+                        GitHub Dark
+                    </option>
+
+                    <option value="monokai">
+                        Monokai
+                    </option>
+
+                    <option value="tokyo-night-dark">
+                        Tokyo Night
+                    </option>
+
+                    <option value="dracula">
+                        Dracula
+                    </option>
+
+                    <option value="vs2015">
+                        VS 2015
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                Background
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Background
+                </label>
+
+                <select id="background">
+
+                    <option value="gradient">
+                        Purple Gradient
+                    </option>
+
+                    <option value="sunset">
+                        Sunset
+                    </option>
+
+                    <option value="ocean">
+                        Ocean
+                    </option>
+
+                    <option value="dark">
+                        Dark
+                    </option>
+
+                    <option value="light">
+                        Light
+                    </option>
+
+                    <option value="transparent">
+                        Transparent
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                Window
+            </div>
+
+            <label class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="windowControls"
+                    checked>
+
+                Window controls
+
+            </label>
+
+            <br>
+
+            <label class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="lineNumbers"
+                    checked>
+
+                Line numbers
+
+            </label>
+
+            <br>
+
+            <label class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="windowTitle">
+
+                Show title
+
+            </label>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="sidebar-title">
+                Spacing
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Padding
+                    <span id="paddingValue">32px</span>
+                </label>
+
+                <input
+                    type="range"
+                    id="padding"
+                    min="10"
+                    max="100"
+                    value="32">
+
+            </div>
+
+            <div class="control">
+
+                <label>
+                    Radius
+                    <span id="radiusValue">11px</span>
+                </label>
+
+                <input
+                    type="range"
+                    id="radius"
+                    min="0"
+                    max="30"
+                    value="11">
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         WORKSPACE
+    ========================= -->
+
+    <main class="workspace">
+
+
+        <!-- MOBILE SETTINGS -->
+
+        <div class="mobile-controls">
+
+            <select id="mobileLanguage">
+                <option value="javascript">JavaScript</option>
+                <option value="xml">HTML</option>
+                <option value="css">CSS</option>
+                <option value="json">JSON</option>
+                <option value="python">Python</option>
+                <option value="php">PHP</option>
+                <option value="bash">Bash</option>
+                <option value="sql">SQL</option>
+                <option value="java">Java</option>
+                <option value="cpp">C++</option>
+            </select>
+
+            <select id="mobileTheme">
+                <option value="atom-one-dark">Atom One Dark</option>
+                <option value="github-dark">GitHub Dark</option>
+                <option value="monokai">Monokai</option>
+                <option value="dracula">Dracula</option>
+            </select>
+
+            <select id="mobileBackground">
+                <option value="gradient">Gradient</option>
+                <option value="sunset">Sunset</option>
+                <option value="ocean">Ocean</option>
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+            </select>
+
+        </div>
+
+
+        <!-- EDITOR BAR -->
+
+        <div class="editor-bar">
+
+            <div class="editor-tabs">
+
+                <div class="tab active">
+                    snippet.js
+                </div>
+
+            </div>
+
+            <div class="editor-actions">
+
+                <button class="btn"
+                        onclick="copyCode()">
+                    Copy
+                </button>
+
+                <button class="btn"
+                        onclick="formatCode()">
+                    Format
+                </button>
+
+                <button class="btn"
+                        onclick="downloadSVG()">
+                    SVG
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDITOR -->
+
+        <section class="editor-container">
+
+            <div class="editor-wrap">
+
+                <div
+                    class="line-numbers"
+                    id="editorLines">
+                </div>
+
+                <div class="code-editor">
+
+                    <pre id="highlighted">
+<code class="language-javascript"></code>
+                    </pre>
+
+                    <textarea
+                        id="codeInput"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        autocomplete="off"
+                        autocorrect="off"></textarea>
+
+                    <div
+                        class="placeholder"
+                        id="placeholder">
+                        Paste or type your code here...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PREVIEW -->
+
+        <section
+            class="preview-area"
+            id="previewArea">
+
+            <div
+                class="code-card"
+                id="codeCard">
+
+                <div
+                    class="window-bar"
+                    id="windowBar">
+
+                    <div
+                        class="window-dots"
+                        id="windowDots">
+
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+
+                    </div>
+
+                    <div
+                        class="window-title"
+                        id="windowTitlePreview">
+                        snippet.js
+                    </div>
+
+                </div>
+
+
+                <div class="card-code">
+
+                    <div
+                        class="preview-lines"
+                        id="previewLines">
+                    </div>
+
+                    <pre
+                        class="preview-code"
+                        id="previewCode"><code></code></pre>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div class="toast" id="toast">
+    Copied to clipboard
+</div>
+
+
+<script>
+/* =========================================================
+   DEFAULT CODE
+========================================================= */
+
+const defaultCode = `const cyberind = {
+    name: "Cyberind",
+    website: "cyberind.my.id",
+    since: 2018
+};
+
+console.log("Hello, Cyberind!");`;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const codeInput = document.getElementById("codeInput");
+const highlighted = document.querySelector("#highlighted code");
+
+const previewCode =
+    document.querySelector("#previewCode code");
+
+const editorLines =
+    document.getElementById("editorLines");
+
+const previewLines =
+    document.getElementById("previewLines");
+
+const placeholder =
+    document.getElementById("placeholder");
+
+const codeCard =
+    document.getElementById("codeCard");
+
+const previewArea =
+    document.getElementById("previewArea");
+
+const windowBar =
+    document.getElementById("windowBar");
+
+const windowDots =
+    document.getElementById("windowDots");
+
+const windowTitlePreview =
+    document.getElementById("windowTitlePreview");
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+codeInput.value = defaultCode;
+
+updateAll();
+
+
+/* =========================================================
+   UPDATE
+========================================================= */
+
+function updateAll() {
+
+    const code = codeInput.value;
+
+    placeholder.style.display =
+        code.length ? "none" : "block";
+
+    updateHighlight();
+
+    updateLineNumbers();
+
+    updatePreview();
+
+    updateStyles();
+
+}
+
+
+/* =========================================================
+   HIGHLIGHT
+========================================================= */
+
+function updateHighlight() {
+
+    const code = codeInput.value;
+
+    const language =
+        document.getElementById("language").value;
+
+    let highlightedCode;
+
+    try {
+
+        if (language === "plaintext") {
+
+            highlightedCode =
+                escapeHTML(code);
+
+        } else {
+
+            highlightedCode =
+                hljs.highlight(
+                    code,
+                    {
+                        language: language
+                    }
+                ).value;
+
+        }
+
+    } catch (error) {
+
+        highlightedCode =
+            escapeHTML(code);
+
+    }
+
+    highlighted.innerHTML =
+        highlightedCode || " ";
+
+    previewCode.innerHTML =
+        highlightedCode || " ";
+
+    highlighted.className =
+        "language-" + language;
+
+    previewCode.className =
+        "language-" + language;
+
+}
+
+
+/* =========================================================
+   LINE NUMBERS
+========================================================= */
+
+function updateLineNumbers() {
+
+    const code = codeInput.value;
+
+    const count =
+        Math.max(1, code.split("\n").length);
+
+    let html = "";
+
+    for (let i = 1; i <= count; i++) {
+
+        html += i + "<br>";
+
+    }
+
+    editorLines.innerHTML = html;
+    previewLines.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+function updatePreview() {
+
+    const title =
+        document.querySelector(".tab").textContent;
+
+    windowTitlePreview.textContent =
+        title.trim() || "snippet.js";
+
+}
+
+
+/* =========================================================
+   STYLES
+========================================================= */
+
+function updateStyles() {
+
+    const font =
+        document.getElementById("font").value;
+
+    const fontSize =
+        document.getElementById("fontSize").value;
+
+    const padding =
+        document.getElementById("padding").value;
+
+    const radius =
+        document.getElementById("radius").value;
+
+    codeCard.style.borderRadius =
+        radius + "px";
+
+    codeCard.style.padding =
+        "0";
+
+    previewCode.style.fontFamily =
+        `"${font}", monospace`;
+
+    previewCode.style.fontSize =
+        fontSize + "px";
+
+    previewLines.style.fontSize =
+        fontSize + "px";
+
+    previewLines.style.lineHeight =
+        "1.65";
+
+    const codeArea =
+        codeCard.querySelector(".card-code");
+
+    codeArea.style.paddingBottom =
+        "5px";
+
+    codeArea.style.paddingTop =
+        "0";
+
+    previewCode.style.paddingTop =
+        Math.max(10, padding / 2) + "px";
+
+    previewCode.style.paddingBottom =
+        Math.max(10, padding / 2) + "px";
+
+    previewCode.style.paddingRight =
+        Math.max(15, padding / 1.5) + "px";
+
+    previewLines.style.paddingTop =
+        Math.max(10, padding / 2) + "px";
+
+    previewLines.style.paddingBottom =
+        Math.max(10, padding / 2) + "px";
+
+    updateBackground();
+
+    updateWindow();
+
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+function updateBackground() {
+
+    const background =
+        document.getElementById("background").value;
+
+    previewArea.classList.remove("transparent");
+
+    switch (background) {
+
+        case "gradient":
+
+            previewArea.style.background =
+                "linear-gradient(135deg,#667eea 0%,#764ba2 100%)";
+
+            break;
+
+        case "sunset":
+
+            previewArea.style.background =
+                "linear-gradient(135deg,#ff9966,#ff5e62)";
+
+            break;
+
+        case "ocean":
+
+            previewArea.style.background =
+                "linear-gradient(135deg,#2193b0,#6dd5ed)";
+
+            break;
+
+        case "dark":
+
+            previewArea.style.background =
+                "#101010";
+
+            break;
+
+        case "light":
+
+            previewArea.style.background =
+                "#eeeeee";
+
+            break;
+
+        case "transparent":
+
+            previewArea.style.background = "";
+
+            previewArea.classList.add("transparent");
+
+            break;
+
+    }
+
+}
+
+
+/* =========================================================
+   WINDOW
+========================================================= */
+
+function updateWindow() {
+
+    const controls =
+        document.getElementById("windowControls").checked;
+
+    const numbers =
+        document.getElementById("lineNumbers").checked;
+
+    const title =
+        document.getElementById("windowTitle").checked;
+
+    windowDots.style.display =
+        controls ? "flex" : "none";
+
+    windowBar.style.display =
+        (controls || title) ? "flex" : "none";
+
+    previewLines.style.display =
+        numbers ? "block" : "none";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   CODE INPUT
+========================================================= */
+
+codeInput.addEventListener("input", updateAll);
+
+codeInput.addEventListener("scroll", function () {
+
+    highlighted.parentElement.scrollTop =
+        codeInput.scrollTop;
+
+    highlighted.parentElement.scrollLeft =
+        codeInput.scrollLeft;
+
+    editorLines.scrollTop =
+        codeInput.scrollTop;
+
+});
+
+
+/* =========================================================
+   TAB SUPPORT
+========================================================= */
+
+codeInput.addEventListener("keydown", function(e) {
+
+    if (e.key === "Tab") {
+
+        e.preventDefault();
+
+        const start =
+            this.selectionStart;
+
+        const end =
+            this.selectionEnd;
+
+        this.value =
+            this.value.substring(0, start) +
+            "    " +
+            this.value.substring(end);
+
+        this.selectionStart =
+            this.selectionEnd =
+            start + 4;
+
+        updateAll();
+
+    }
+
+});
+
+
+/* =========================================================
+   SETTINGS EVENTS
+========================================================= */
+
+document
+    .getElementById("language")
+    .addEventListener("change", function() {
+
+        document.querySelector(".tab").textContent =
+            getExtension(this.value);
+
+        updateAll();
+
+    });
+
+
+document
+    .getElementById("font")
+    .addEventListener("change", updateAll);
+
+
+document
+    .getElementById("theme")
+    .addEventListener("change", function() {
+
+        changeTheme(this.value);
+
+    });
+
+
+document
+    .getElementById("background")
+    .addEventListener("change", updateAll);
+
+
+document
+    .getElementById("windowControls")
+    .addEventListener("change", updateAll);
+
+
+document
+    .getElementById("lineNumbers")
+    .addEventListener("change", updateAll);
+
+
+document
+    .getElementById("windowTitle")
+    .addEventListener("change", updateAll);
+
+
+document
+    .getElementById("padding")
+    .addEventListener("input", function() {
+
+        document.getElementById("paddingValue").textContent =
+            this.value + "px";
+
+        updateAll();
+
+    });
+
+
+document
+    .getElementById("radius")
+    .addEventListener("input", function() {
+
+        document.getElementById("radiusValue").textContent =
+            this.value + "px";
+
+        updateAll();
+
+    });
+
+
+document
+    .getElementById("fontSize")
+    .addEventListener("input", function() {
+
+        document.getElementById("fontSizeValue").textContent =
+            this.value + "px";
+
+        document.getElementById("fontSizeValue2").textContent =
+            this.value;
+
+        updateAll();
+
+    });
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+document
+    .getElementById("mobileLanguage")
+    .addEventListener("change", function() {
+
+        document.getElementById("language").value =
+            this.value;
+
+        document.querySelector(".tab").textContent =
+            getExtension(this.value);
+
+        updateAll();
+
+    });
+
+
+document
+    .getElementById("mobileTheme")
+    .addEventListener("change", function() {
+
+        document.getElementById("theme").value =
+            this.value;
+
+        changeTheme(this.value);
+
+    });
+
+
+document
+    .getElementById("mobileBackground")
+    .addEventListener("change", function() {
+
+        document.getElementById("background").value =
+            this.value;
+
+        updateAll();
+
+    });
+
+
+/* =========================================================
+   EXTENSIONS
+========================================================= */
+
+function getExtension(language) {
+
+    const extensions = {
+
+        javascript: "snippet.js",
+        xml: "snippet.html",
+        css: "snippet.css",
+        json: "snippet.json",
+        python: "snippet.py",
+        php: "snippet.php",
+        bash: "snippet.sh",
+        sql: "snippet.sql",
+        java: "snippet.java",
+        cpp: "snippet.cpp",
+        plaintext: "snippet.txt"
+
+    };
+
+    return extensions[language] || "snippet.txt";
+
+}
+
+
+/* =========================================================
+   CHANGE THEME
+========================================================= */
+
+function changeTheme(theme) {
+
+    const old =
+        document.getElementById("hljs-theme");
+
+    if (old) old.remove();
+
+    const link =
+        document.createElement("link");
+
+    link.id = "hljs-theme";
+
+    link.rel = "stylesheet";
+
+    const themes = {
+
+        "atom-one-dark":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css",
+
+        "github-dark":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css",
+
+        "monokai":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/monokai.min.css",
+
+        "tokyo-night-dark":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/tokyo-night-dark.min.css",
+
+        "dracula":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/dracula.min.css",
+
+        "vs2015":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs2015.min.css"
+
+    };
+
+    link.href =
+        themes[theme] ||
+        themes["atom-one-dark"];
+
+    document.head.appendChild(link);
+
+    updateAll();
+
+}
+
+
+/* =========================================================
+   COPY CODE
+========================================================= */
+
+async function copyCode() {
+
+    try {
+
+        await navigator.clipboard.writeText(
+            codeInput.value
+        );
+
+        showToast("Code copied!");
+
+    } catch {
+
+        codeInput.select();
+
+        document.execCommand("copy");
+
+        showToast("Code copied!");
+
+    }
+
+}
+
+
+/* =========================================================
+   FORMAT CODE
+========================================================= */
+
+function formatCode() {
+
+    let code =
+        codeInput.value;
+
+    const language =
+        document.getElementById("language").value;
+
+    if (language === "json") {
+
+        try {
+
+            code =
+                JSON.stringify(
+                    JSON.parse(code),
+                    null,
+                    4
+                );
+
+        } catch {}
+
+    }
+
+    codeInput.value =
+        code;
+
+    updateAll();
+
+    showToast("Code updated");
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetAll() {
+
+    codeInput.value =
+        defaultCode;
+
+    document.getElementById("language").value =
+        "javascript";
+
+    document.getElementById("theme").value =
+        "atom-one-dark";
+
+    document.getElementById("background").value =
+        "gradient";
+
+    document.getElementById("font").value =
+        "JetBrains Mono";
+
+    document.getElementById("fontSize").value =
+        13;
+
+    document.getElementById("padding").value =
+        32;
+
+    document.getElementById("radius").value =
+        11;
+
+    document.getElementById("windowControls").checked =
+        true;
+
+    document.getElementById("lineNumbers").checked =
+        true;
+
+    document.getElementById("windowTitle").checked =
+        false;
+
+    document.getElementById("fontSizeValue").textContent =
+        "13px";
+
+    document.getElementById("fontSizeValue2").textContent =
+        "13";
+
+    document.getElementById("paddingValue").textContent =
+        "32px";
+
+    document.getElementById("radiusValue").textContent =
+        "11px";
+
+    document.querySelector(".tab").textContent =
+        "snippet.js";
+
+    updateAll();
+
+    showToast("Reset complete");
+
+}
+
+
+/* =========================================================
+   PNG EXPORT
+========================================================= */
+
+async function downloadPNG() {
+
+    showToast("Generating PNG...");
+
+    const card =
+        document.getElementById("codeCard");
+
+    try {
+
+        const canvas =
+            await html2canvas(card, {
+                backgroundColor: null,
+                scale: 3,
+                useCORS: true,
+                logging: false
+            });
+
+        const link =
+            document.createElement("a");
+
+        link.download =
+            "code-snippet.png";
+
+        link.href =
+            canvas.toDataURL("image/png");
+
+        link.click();
+
+        showToast("PNG downloaded!");
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToast("PNG export failed");
+
+    }
+
+}
+
+
+/* =========================================================
+   SVG EXPORT
+========================================================= */
+
+function downloadSVG() {
+
+    const code =
+        codeInput.value;
+
+    const language =
+        document.getElementById("language").value;
+
+    const fontSize =
+        parseInt(
+            document.getElementById("fontSize").value
+        );
+
+    const lines =
+        code.split("\n");
+
+    const lineHeight =
+        fontSize * 1.65;
+
+    const longest =
+        Math.max(
+            ...lines.map(line => line.length),
+            20
+        );
+
+    const width =
+        Math.max(
+            500,
+            longest * fontSize * .62 + 100
+        );
+
+    const height =
+        42 +
+        lines.length * lineHeight +
+        35;
+
+    const bg =
+        getSVGBackground();
+
+    const safeCode =
+        escapeHTML(code);
+
+    let codeLines = "";
+
+    lines.forEach((line, i) => {
+
+        codeLines += `
+        <text
+            x="65"
+            y="${70 + i * lineHeight}"
+            font-family="monospace"
+            font-size="${fontSize}"
+            fill="#abb2bf">${escapeHTML(line)}</text>`;
+
+    });
+
+    const svg = `
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="${width}"
+    height="${height}"
+    viewBox="0 0 ${width} ${height}">
+
+    <defs>
+        ${bg}
+    </defs>
+
+    <rect
+        width="100%"
+        height="100%"
+        rx="12"
+        fill="url(#background)"/>
+
+    <circle cx="18" cy="21" r="6" fill="#ff5f57"/>
+    <circle cx="38" cy="21" r="6" fill="#febc2e"/>
+    <circle cx="58" cy="21" r="6" fill="#28c840"/>
+
+    ${codeLines}
+
+</svg>`;
+
+    const blob =
+        new Blob(
+            [svg],
+            {
+                type: "image/svg+xml"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href =
+        url;
+
+    link.download =
+        "code-snippet.svg";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    showToast("SVG downloaded!");
+
+}
+
+
+/* =========================================================
+   SVG BACKGROUND
+========================================================= */
+
+function getSVGBackground() {
+
+    const background =
+        document.getElementById("background").value;
+
+    let colors;
+
+    switch (background) {
+
+        case "sunset":
+
+            colors = ["#ff9966", "#ff5e62"];
+
+            break;
+
+        case "ocean":
+
+            colors = ["#2193b0", "#6dd5ed"];
+
+            break;
+
+        case "dark":
+
+            colors = ["#111111", "#111111"];
+
+            break;
+
+        case "light":
+
+            colors = ["#eeeeee", "#eeeeee"];
+
+            break;
+
+        default:
+
+            colors = ["#667eea", "#764ba2"];
+
+    }
+
+    return `
+        <linearGradient
+            id="background"
+            x1="0"
+            y1="0"
+            x2="1"
+            y2="1">
+
+            <stop
+                offset="0%"
+                stop-color="${colors[0]}"/>
+
+            <stop
+                offset="100%"
+                stop-color="${colors[1]}"/>
+
+        </linearGradient>
+    `;
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 1800);
+
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener("keydown", function(e) {
+
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+
+        e.preventDefault();
+
+        downloadPNG();
+
+    }
+
+    if ((e.ctrlKey || e.metaKey) && e.key === "c") {
+
+        if (
+            document.activeElement !== codeInput
+        ) {
+            copyCode();
+        }
+
+    }
+
+});
+
+
+/* =========================================================
+   INITIAL THEME
+========================================================= */
+
+changeTheme("atom-one-dark");
+
+</script>
+
+</body>
+</html>
