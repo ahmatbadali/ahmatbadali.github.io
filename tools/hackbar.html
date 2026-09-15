@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web-Based Hackbar</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+        }
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 10px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            border: 1px solid #333;
+            background-color: #1e1e1e;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        /* URL Bar Section */
+        .url-bar-container {
+            display: flex;
+            background-color: #252525;
+            padding: 8px;
+            border-bottom: 1px solid #333;
+            gap: 5px;
+            align-items: center;
+        }
+        .url-bar-container input {
+            flex: 1;
+            background-color: #121212;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 6px 8px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        .btn-go {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .btn-go:hover { background-color: #444; }
+
+        /* Menu Bar Section */
+        .menu-bar {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+            padding: 5px;
+            gap: 5px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn, .menu-btn {
+            background-color: #2b2b2b;
+            color: #ccc;
+            border: 1px solid #404040;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .dropbtn:hover, .menu-btn:hover {
+            background-color: #3b3b3b;
+            color: #fff;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #222;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
+            z-index: 10;
+            border: 1px solid #444;
+        }
+        .dropdown-content a {
+            color: #ddd;
+            padding: 8px 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 12px;
+        }
+        .dropdown-content a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Textarea / Editor Area */
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            background-color: #181818;
+        }
+        textarea {
+            flex: 1;
+            background-color: #121212;
+            color: #00ff66; /* Warna teks ala terminal */
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            border-radius: 3px;
+        }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #222;
+            border-top: 1px solid #333;
+            padding: 6px;
+            gap: 5px;
+        }
+        .bottom-btn {
+            background-color: #2a2a2a;
+            color: #bbb;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .bottom-btn:hover {
+            background-color: #3a3a3a;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- URL Input Bar -->
+        <div class="url-bar-container">
+            <input type="text" id="urlInput" placeholder="http://example.com/vuln.php?id=" value="http://">
+            <button class="btn-go" onclick="executeURL()">Go</button>
+        </div>
+
+        <!-- Toolbar / Menu Dropdown -->
+        <div class="menu-bar">
+            <!-- VECTOR -->
+            <div class="dropdown">
+                <button class="dropbtn">VECTOR ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="insertVector('SQLi')">SQL Injection</a>
+                    <a href="#" onclick="insertVector('XSS')">Cross-Site Scripting (XSS)</a>
+                    <a href="#" onclick="insertVector('LFI')">Local File Inclusion (LFI)</a>
+                </div>
+            </div>
+
+            <!-- ENCODE -->
+            <div class="dropdown">
+                <button class="dropbtn">ENCODE ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="encodeText('url')">URL Encode</a>
+                    <a href="#" onclick="decodeText('url')">URL Decode</a>
+                    <a href="#" onclick="encodeText('base64')">Base64 Encode</a>
+                    <a href="#" onclick="decodeText('base64')">Base64 Decode</a>
+                </div>
+            </div>
+
+            <!-- WAF -->
+            <div class="dropdown">
+                <button class="dropbtn">WAF ▼</button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="insertWafBypass('comment')">Inline Comment Bypass</a>
+                    <a href="#" onclick="insertWafBypass('case')">Case Mixing Bypass</a>
+                </div>
+            </div>
+
+            <button class="menu-btn" onclick="loadUrlData()">LOAD URL</button>
+            <button class="menu-btn" onclick="clearText()">CLEAR</button>
+            <button class="menu-btn" onclick="parseQuery()">PARSE</button>
+            <button class="menu-btn" onclick="executeURL()">EXECUTE</button>
+        </div>
+
+        <!-- Main Payload / Data Editor -->
+        <div class="editor-container">
+            <textarea id="payloadEditor" placeholder="Tulis query, parameter, atau payload di sini..."></textarea>
+        </div>
+
+        <!-- Bottom Options -->
+        <div class="bottom-bar">
+            <button class="bottom-btn" id="postToggle" onclick="togglePost()">POST: OFF</button>
+            <button class="bottom-btn" onclick="viewSource()">VIEW SOURCE</button>
+            <button class="bottom-btn" onclick="extractLink()">EXTRACT LINK</button>
+            <button class="bottom-btn" onclick="copyQuery()">COPY QUERY</button>
+        </div>
+    </div>
+
+    <script>
+        let isPostActive = false;
+
+        function togglePost() {
+            isPostActive = !isPostActive;
+            const btn = document.getElementById('postToggle');
+            btn.innerText = isPostActive ? "POST: ON" : "POST: OFF";
+            btn.style.backgroundColor = isPostActive ? "#442222" : "#2a2a2a";
+        }
+
+        function clearText() {
+            document.getElementById('payloadEditor').value = "";
+        }
+
+        function copyQuery() {
+            const editor = document.getElementById('payloadEditor');
+            editor.select();
+            document.execCommand('copy');
+            alert("Query disalin ke clipboard!");
+        }
+
+        function insertVector(type) {
+            let editor = document.getElementById('payloadEditor');
+            if (type === 'SQLi') {
+                editor.value += "' UNION SELECT 1,2,3-- -";
+            } else if (type === 'XSS') {
+                editor.value += "<script>alert(1)</script>";
+            } else if (type === 'LFI') {
+                editor.value += "../../../../../etc/passwd";
+            }
+        }
+
+        function encodeText(method) {
+            let editor = document.getElementById('payloadEditor');
+            try {
+                if (method === 'url') {
+                    editor.value = encodeURIComponent(editor.value);
+                } else if (method === 'base64') {
+                    editor.value = btoa(editor.value);
+                }
+            } catch (e) {
+                alert("Gagal melakukan encoding!");
+            }
+        }
+
+        function decodeText(method) {
+            let editor = document.getElementById('payloadEditor');
+            try {
+                if (method === 'url') {
+                    editor.value = decodeURIComponent(editor.value);
+                } else if (method === 'base64') {
+                    editor.value = atob(editor.value);
+                }
+            } catch (e) {
+                alert("Gagal melakukan decoding (format salah)!");
+            }
+        }
+
+        function insertWafBypass(type) {
+            let editor = document.getElementById('payloadEditor');
+            if (type === 'comment') {
+                editor.value = editor.value.replace(/ /g, '/**/');
+            }
+        }
+
+        function parseQuery() {
+            let urlInput = document.getElementById('urlInput').value;
+            try {
+                let url = new URL(urlInput);
+                let params = url.search.substring(1);
+                document.getElementById('payloadEditor').value = params.replace(/&/g, '\n');
+            } catch (e) {
+                alert("URL tidak valid untuk di-parse!");
+            }
+        }
+
+        function loadUrlData() {
+            let url = document.getElementById('urlInput').value;
+            if(!url || url === "http://") {
+                alert("Masukkan URL terlebih dahulu!");
+                return;
+            }
+            // Simulasi load URL
+            document.getElementById('payloadEditor').value = "Memuat data dari: " + url;
+        }
+
+        function executeURL() {
+            let url = document.getElementById('urlInput').value;
+            if(!url || url === "http://") {
+                alert("Masukkan URL tujuan!");
+                return;
+            }
+            // Karena masalah CORS browser, eksekusi langsung diarahkan membuka tab baru atau via proxy
+            window.open(url, '_blank');
+        }
+
+        function viewSource() {
+            alert("Fitur View Source memerlukan backend/proxy khusus agar tidak diblokir kebijakan CORS browser.");
+        }
+
+        function extractLink() {
+            alert("Fitur Extract Link digunakan untuk mengambil seluruh tag <a> dari response target.");
+        }
+    </script>
+</body>
+</html>
