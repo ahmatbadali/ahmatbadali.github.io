@@ -168,6 +168,68 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .bg-dark{background:#171b24}
 .bg-light{background:#e8edf4}
 .bg-transparent{background:transparent}
+
+/* WINDOW STYLE PRESETS */
+.window-style-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.window-style{appearance:none;border:1px solid var(--line);background:#111927;color:#aab5c6;border-radius:9px;padding:7px 5px;cursor:pointer;text-align:center;transition:.18s}
+.window-style:hover{border-color:#64748b;transform:translateY(-1px)}
+.window-style.active{border-color:#7c5cff;box-shadow:0 0 0 1px #7c5cff inset;color:#fff;background:#172033}
+.style-preview{height:25px;border-radius:6px;background:#0b1017;border:1px solid #2a3547;display:flex;align-items:center;padding:0 6px;gap:4px;margin-bottom:5px}
+.style-preview i{display:block;width:7px;height:7px;border-radius:50%;background:#697386;flex:0 0 7px}
+.window-style-name{display:block;font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Actual preview window presets */
+.window-bar{transition:background .18s,border-radius .18s}
+.window-bar.window-default{background:#111827}
+.window-bar.window-default .dot:nth-child(1){background:#ff5f57}
+.window-bar.window-default .dot:nth-child(2){background:#febc2e}
+.window-bar.window-default .dot:nth-child(3){background:#28c840}
+
+.window-bar.window-macos{background:#20242b;border-bottom:1px solid #30343b}
+.window-bar.window-macos .dot:nth-child(1){background:#ff5f57}
+.window-bar.window-macos .dot:nth-child(2){background:#febc2e}
+.window-bar.window-macos .dot:nth-child(3){background:#28c840}
+
+.window-bar.window-minimal{background:#f4f4f5;border-bottom:1px solid #d4d4d8}
+.window-bar.window-minimal .window-title{color:#52525b}
+.window-bar.window-minimal .dot:nth-child(1){background:#18181b}
+.window-bar.window-minimal .dot:nth-child(2){background:#a1a1aa}
+.window-bar.window-minimal .dot:nth-child(3){background:transparent;border:1px solid #71717a}
+
+.window-bar.window-dark{background:#05070a;border-bottom:1px solid #111827}
+.window-bar.window-dark .dot{background:#252b36;border:1px solid #394150}
+
+.window-bar.window-linux{background:#202124;border-bottom:1px solid #303134}
+.window-bar.window-linux .dot:nth-child(1){background:#4f7cff}
+.window-bar.window-linux .dot:nth-child(2){background:#f59e0b}
+.window-bar.window-linux .dot:nth-child(3){background:#22c55e}
+
+.window-bar.window-terminal{background:#050805;border-bottom:1px solid #132014}
+.window-bar.window-terminal .window-title{color:#76e69b}
+.window-bar.window-terminal .dot:nth-child(1){background:#4ade80}
+.window-bar.window-terminal .dot:nth-child(2){background:#22c55e}
+.window-bar.window-terminal .dot:nth-child(3){background:#86efac}
+
+.window-bar.window-solarized{background:#073642;border-bottom:1px solid #0b4654}
+.window-bar.window-solarized .window-title{color:#93a1a1}
+.window-bar.window-solarized .dot:nth-child(1){background:#b58900}
+.window-bar.window-solarized .dot:nth-child(2){background:#cb4b16}
+.window-bar.window-solarized .dot:nth-child(3){background:#2aa198}
+
+.window-bar.window-neon{background:#080512;border-bottom:1px solid #28163c}
+.window-bar.window-neon .dot:nth-child(1){background:#ff00c8;box-shadow:0 0 7px #ff00c8}
+.window-bar.window-neon .dot:nth-child(2){background:#7c5cff;box-shadow:0 0 7px #7c5cff}
+.window-bar.window-neon .dot:nth-child(3){background:#00e5ff;box-shadow:0 0 7px #00e5ff}
+
+.window-bar.window-black{background:#000;border-bottom:1px solid #0b0b0b}
+.window-bar.window-black .window-title{color:#777}
+.window-bar.window-black .dot{background:#050505;border:1px solid #252525}
+
+/* Make Linux look more like a desktop control group */
+.window-bar.window-linux .dot{border-radius:3px}
+.window-bar.window-terminal .dot{border-radius:2px}
+.window-bar.window-black .dot{border-radius:2px}
+
 .hidden{display:none!important}
 .toast{
   position:fixed;right:18px;bottom:18px;background:#151d2b;border:1px solid var(--line);
@@ -293,20 +355,6 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
   <div class="section">
     <h3>Spacing</h3>
-    <div class="section">
-        <h3>Window Style</h3>
-        <div class="window-style-grid">
-            <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
-            <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
-            <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#f4f4f5"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
-            <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36"></i><i style="background:#353d4b"></i><i style="background:#454e5d"></i></span><span class="window-style-name">Dark</span></button>
-            <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i></span><span class="window-style-name">Linux</span></button>
-            <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80"></i><i style="background:#22c55e"></i><i style="background:#86efac"></i></span><span class="window-style-name">Terminal</span></button>
-            <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
-            <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8"></i><i style="background:#7c5cff"></i><i style="background:#00e5ff"></i></span><span class="window-style-name">Neon</span></button>
-            <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i></span><span class="window-style-name">Full Black</span></button>
-        </div>
-    </div>
 
     <div class="field"><label class="label">Padding</label><div class="range-row"><input id="padding" type="range" min="10" max="110" value="64"><span class="value" id="paddingVal">64px</span></div></div>
     <div class="field"><label class="label">Radius</label><div class="range-row"><input id="radius" type="range" min="0" max="30" value="14"><span class="value" id="radiusVal">14px</span></div></div>
@@ -374,6 +422,21 @@ input[type=range]{width:100%;accent-color:var(--accent)}
       <div class="toggle-row"><span>Title</span><label class="switch"><input id="drawerShowTitle" type="checkbox" checked><span class="slider"></span></label></div>
       <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="drawerShowLines" type="checkbox" checked><span class="slider"></span></label></div>
     </div>
+    <div class="section">
+      <h3>Window Style</h3>
+      <div class="window-style-grid" id="drawerWindowStyleGrid">
+        <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
+        <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
+        <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#18181b"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
+        <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36;border:1px solid #394150"></i><i style="background:#353d4b;border:1px solid #394150"></i><i style="background:#454e5d;border:1px solid #394150"></i></span><span class="window-style-name">Dark</span></button>
+        <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff;border-radius:3px"></i><i style="background:#f59e0b;border-radius:3px"></i><i style="background:#22c55e;border-radius:3px"></i></span><span class="window-style-name">Linux</span></button>
+        <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80;border-radius:2px"></i><i style="background:#22c55e;border-radius:2px"></i><i style="background:#86efac;border-radius:2px"></i></span><span class="window-style-name">Terminal</span></button>
+        <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
+        <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8;box-shadow:0 0 6px #ff00c8"></i><i style="background:#7c5cff;box-shadow:0 0 6px #7c5cff"></i><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i></span><span class="window-style-name">Neon</span></button>
+        <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #252525;border-radius:2px"></i><i style="background:#050505;border:1px solid #252525;border-radius:2px"></i><i style="background:#050505;border:1px solid #252525;border-radius:2px"></i></span><span class="window-style-name">Full Black</span></button>
+      </div>
+    </div>
+
     <div class="field"><label class="label">Padding</label><div class="range-row"><input id="drawerPadding" type="range" min="10" max="110" value="64"><span class="value" id="drawerPaddingVal">64px</span></div></div>
     <div class="field"><label class="label">Radius</label><div class="range-row"><input id="drawerRadius" type="range" min="0" max="30" value="14"><span class="value" id="drawerRadiusVal">14px</span></div></div>
   </div>
@@ -481,9 +544,11 @@ function setTheme(theme){
   link.href=`https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`;
 }
 function setField(field,value){
+  if(field === "windowStyle") value = String(value || "default");
   state[field]=value;
   if(field==="theme")setTheme(value);
-  syncControls();render();
+  syncControls();
+  render();
 }
 function toast(msg){
   $("toast").textContent=msg;$("toast").classList.add("show");
