@@ -44,6 +44,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/graphql.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/markdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/diff.min.js"></script>
+<!-- Prettier & Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/standalone.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/estree.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/html.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/postcss.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/markdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
@@ -128,23 +135,23 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .code-layer{position:relative;flex:1;min-width:0}
 #highlight{
   margin:0;padding:16px;min-height:100%;font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  white-space:pre-wrap;overflow-wrap:anywhere;color:#e6edf3
+  white-space:pre;overflow-wrap:normal;color:#e6edf3
 }
 #code{
   position:absolute;inset:0;width:100%;height:100%;padding:16px;border:0;outline:0;
   resize:none;background:transparent;color:transparent;caret-color:#fff;
   font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  white-space:pre-wrap;overflow:auto;overflow-wrap:anywhere;z-index:2
+  white-space:pre;overflow:auto;overflow-wrap:normal;z-index:2
 }
 #code::selection{background:#5c6cff55}
 .preview-area{
   flex:1;min-height:360px;display:flex;align-items:stretch;justify-content:center;
   padding:0;overflow:auto;background:#080c12
 }
-.export-frame{width:100%;max-width:1500px;min-width:0;padding:64px;display:flex;justify-content:center;align-items:center}
+.export-frame{width:100%;max-width:1500px;min-width:0;padding:64px;display:flex;justify-content:center;align-items:center;overflow:auto}
 .code-card{
-  width:100%;max-width:1120px;overflow:hidden;border-radius:var(--radius);
-  box-shadow:0 24px 70px #0008;background:#0d1117;border:1px solid #ffffff16
+  width:auto;max-width:none;overflow:hidden;border-radius:var(--radius);
+  box-shadow:0 24px 70px #0008;background:#0d1117;border:1px solid #ffffff16;flex-shrink:0
 }
 .window-bar{height:44px;display:flex;align-items:center;padding:0 15px;background:#111827}
 .dots{display:flex;gap:7px}.dot{width:11px;height:11px;border-radius:50%;background:#697386}
@@ -157,7 +164,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   font:14px/1.6 ui-monospace,monospace;background:#0b1017;user-select:none
 }
 .preview-highlight{
-  flex:1;margin:0;padding:18px;min-width:0;white-space:pre-wrap;overflow-wrap:anywhere;
+  flex:1;margin:0;padding:18px;min-width:0;white-space:pre;overflow-wrap:normal;
   font:14px/1.6 ui-monospace,monospace
 }
 .bg-purple{background:radial-gradient(circle at 20% 20%,#9b5cff,transparent 38%),linear-gradient(135deg,#312e81,#7c3aed)}
@@ -258,9 +265,9 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   .toolbar .btn{height:40px}
   .editor-wrap{width:100%;padding:10px;overflow:hidden}
   .editor{width:100%;min-width:0;min-height:300px;max-height:48vh}
-  .preview-area{width:100%;min-width:100%;max-width:none;min-height:420px;padding:0;margin:0;display:block;overflow-x:hidden;overflow-y:auto}
-  .export-frame{width:100%;min-width:100%;max-width:none;min-height:420px;padding:28px 12px;margin:0;display:flex;align-items:center;justify-content:center}
-  .code-card{flex:0 1 100%;width:100%;min-width:0;max-width:none}
+  .preview-area{width:100%;min-width:100%;max-width:none;min-height:420px;padding:0;margin:0;display:block;overflow-x:auto;overflow-y:auto}
+  .export-frame{width:100%;min-width:max-content;max-width:none;min-height:420px;padding:28px 12px;margin:0;display:flex;align-items:center;justify-content:center}
+  .code-card{width:auto;min-width:0;max-width:none}
   .preview-code{width:100%;min-width:0}
   .preview-highlight,.preview-lines{font-size:12px;line-height:1.55}
   .preview-highlight{padding:14px;min-width:0}
@@ -378,7 +385,6 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
   <div class="section">
     <h3>Spacing</h3>
-
     <div class="field"><label class="label">Padding</label><div class="range-row"><input id="padding" type="range" min="10" max="110" value="64"><span class="value" id="paddingVal">64px</span></div></div>
     <div class="field"><label class="label">Radius</label><div class="range-row"><input id="radius" type="range" min="0" max="30" value="14"><span class="value" id="radiusVal">14px</span></div></div>
   </div>
@@ -583,6 +589,61 @@ function toast(msg){
   clearTimeout(window.__toast);window.__toast=setTimeout(()=>$("toast").classList.remove("show"),1800);
 }
 
+// Auto Prettier Formatting Function
+function formatCodeWithPrettier() {
+  const code = $("code").value;
+  const lang = detectedLanguage(code);
+  
+  if (typeof prettier === "undefined") {
+    toast("Prettier belum termuat");
+    return;
+  }
+
+  try {
+    let parser = "babel";
+    let plugins = [prettierPlugins.babel, prettierPlugins.estree];
+
+    if (lang === "typescript") {
+      parser = "typescript";
+    } else if (lang === "xml") {
+      parser = "html";
+      plugins = [prettierPlugins.html];
+    } else if (lang === "css" || lang === "scss" || lang === "less") {
+      parser = "postcss";
+      plugins = [prettierPlugins.postcss];
+    } else if (lang === "json") {
+      parser = "json";
+    } else if (lang === "markdown") {
+      parser = "markdown";
+      plugins = [prettierPlugins.markdown];
+    }
+
+    const formatted = prettier.format(code, {
+      parser: parser,
+      plugins: plugins,
+      tabWidth: 4,
+      semi: true,
+      singleQuote: false
+    });
+
+    $("code").value = formatted;
+    render();
+    toast("Kode berhasil dirapikan!");
+  } catch (err) {
+    // Fallback jika parser khusus gagal, coba format sebagai JSON jika JSON
+    if (lang === "json") {
+      try {
+        const jsonFormatted = JSON.stringify(JSON.parse(code), null, 4);
+        $("code").value = jsonFormatted;
+        render();
+        toast("JSON diformat!");
+        return;
+      } catch (e) {}
+    }
+    toast("Gagal memformat (Syntax error)");
+  }
+}
+
 $("code").value=defaultCode;
 
 $("code").addEventListener("input",render);
@@ -629,11 +690,9 @@ $("resetBtn").addEventListener("click",()=>{
   Object.assign(state,{language:"auto",filename:"snippet.js",font:"mono",fontSize:14,theme:"atom-one-dark",bg:"purple",showWindow:true,showTitle:true,showLines:true,windowStyle:"default",padding:64,radius:14});
   $("code").value=defaultCode;setTheme(state.theme);syncControls();render();toast("Berhasil direset");
 });
-$("formatBtn").addEventListener("click",()=>{
-  let v=$("code").value;
-  if(state.language==="json"){try{v=JSON.stringify(JSON.parse(v),null,2);$("code").value=v;render();toast("JSON diformat")}catch(e){toast("JSON tidak valid")}}
-  else toast("Format otomatis tersedia untuk JSON");
-});
+
+$("formatBtn").addEventListener("click", formatCodeWithPrettier);
+
 async function exportPNG(){
   if(typeof html2canvas==="undefined"){toast("Library export belum termuat");return}
   const frame=$("exportFrame");
@@ -645,7 +704,7 @@ async function exportPNG(){
 $("pngBtn").addEventListener("click",exportPNG);
 $("mobilePng").addEventListener("click",exportPNG);
 $("mobileCopy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("code").value);toast("Kode berhasil disalin")}catch(e){$("code").select();document.execCommand("copy");toast("Kode berhasil disalin")}});
-$("mobileFormat").addEventListener("click",()=>$("formatBtn").click());
+$("mobileFormat").addEventListener("click", formatCodeWithPrettier);
 $("mobileReset").addEventListener("click",()=>$("resetBtn").click());
 
 $("settingsBtn").addEventListener("click",()=>$("drawer").classList.add("open"));
