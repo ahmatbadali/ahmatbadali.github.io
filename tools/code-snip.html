@@ -7,44 +7,34 @@
 <title>CodeSnap — Code Screenshot Generator</title>
 
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<!-- Highlight.js Stylesheets -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+<!-- Extra theme styles to match carbon more closely via CDN or standard hljs themes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css" id="extraThemeStyle" disabled>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,300..700;1,300..700&family=Fira+Code:wght@300..700&family=Inconsolata:wght@300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Source+Code+Pro:ital,wght@0,300..900;1,300..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<!-- Languages bundle -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/typescript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/xml.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/css.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/scss.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/less.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/json.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/php.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/bash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/shell.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/sql.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/java.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/kotlin.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/swift.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/cpp.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/csharp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/rust.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/ruby.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/perl.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/lua.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/r.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/matlab.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/dart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/scala.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/groovy.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/powershell.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/dockerfile.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/ini.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/http.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/graphql.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/markdown.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/diff.min.js"></script>
-<!-- Prettier & Plugins -->
+
+<!-- Prettier & html2canvas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/standalone.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/babel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prettier/3.2.5/plugins/estree.min.js"></script>
@@ -60,7 +50,7 @@
   --text:#f5f7fb;--muted:#9aa6b8;--accent:#7c5cff;--radius:14px;
 }
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif;min-height:100vh}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .app{min-height:100vh;display:flex;flex-direction:column}
@@ -83,7 +73,7 @@ button{cursor:pointer}
 .btn.danger:hover{background:#4d1a21}
 .layout{display:flex;flex:1;min-height:calc(100vh - 64px)}
 .sidebar{
-  width:285px;flex:0 0 285px;border-right:1px solid var(--line);
+  width:295px;flex:0 0 295px;border-right:1px solid var(--line);
   background:#0f1622;padding:18px;overflow-y:auto
 }
 .section{padding:0 0 20px;margin-bottom:18px;border-bottom:1px solid var(--line)}
@@ -101,10 +91,10 @@ select:focus,input:focus{border-color:#6574ff;box-shadow:0 0 0 2px #6574ff22}
 input[type=range]{width:100%;accent-color:var(--accent)}
 .value{font-size:12px;color:var(--muted);min-width:38px;text-align:right}
 
-/* CUSTOM BG DROPDOWN STYLES */
+/* CUSTOM BG PICKER STYLES */
 .bg-picker-container{position:relative}
 .bg-dropdown-btn{
-  width:100%;display:flex;align-items:center;justify-content:between;gap:8px;
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;
   background:#121b29;border:1px solid var(--line);border-radius:8px;padding:8px 10px;
   color:var(--text);font-size:13px;cursor:pointer;text-align:left;transition:border-color .15s;
 }
@@ -125,8 +115,8 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .hex-input-wrap span{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted)}
 .hex-input-wrap input{padding-left:22px;text-transform:uppercase;font-size:12px}
 .opacity-box{margin-bottom:12px}
-.opacity-header{display:flex;justify-content:between;font-size:11px;color:var(--muted);margin-bottom:4px}
-.swatches{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.opacity-header{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.swatches{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px}
 .swatch{
   height:26px;border-radius:6px;border:1px solid var(--line);position:relative;overflow:hidden;cursor:pointer;transition:transform .1s
 }
@@ -137,7 +127,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
   border:2px dashed var(--line);border-radius:8px;padding:16px;cursor:pointer;background:#0d131f;transition:.15s
 }
 .upload-label:hover{border-color:var(--accent)}
-.upload-info{display:flex;align-items:center;justify-content:between;background:#0d131f;padding:6px 10px;border-radius:6px;font-size:11px;margin-top:8px}
+.upload-info{display:flex;align-items:center;justify-content:space-between;background:#0d131f;padding:6px 10px;border-radius:6px;font-size:11px;margin-top:8px}
 
 .toggle-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0;font-size:13px}
 .switch{position:relative;width:40px;height:22px}
@@ -165,19 +155,17 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .lines{
   white-space:pre;
   flex:0 0 48px;padding:16px 10px 16px 0;text-align:right;color:#566176;
-  font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  user-select:none;background:#0b1017;border-right:1px solid #1b2636
+  font:14px/1.55 monospace; user-select:none;background:#0b1017;border-right:1px solid #1b2636
 }
 .code-layer{position:relative;flex:1;min-width:0}
 #highlight{
-  margin:0;padding:16px;min-height:100%;font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  margin:0;padding:16px;min-height:100%;font:14px/1.55 monospace;
   white-space:pre;overflow-wrap:normal;color:#e6edf3;pointer-events:none;
 }
 #code{
   position:absolute;inset:0;width:100%;height:100%;padding:16px;border:0;outline:0;
   resize:none;background:transparent;color:transparent;caret-color:#fff;
-  font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  white-space:pre;overflow:auto;overflow-wrap:normal;z-index:2
+  font:14px/1.55 monospace;white-space:pre;overflow:auto;overflow-wrap:normal;z-index:2
 }
 #code::selection{background:#5c6cff55}
 .preview-area{
@@ -191,17 +179,16 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 }
 .window-bar{height:44px;display:flex;align-items:center;padding:0 15px;background:#111827}
 .dots{display:flex;gap:7px}.dot{width:11px;height:11px;border-radius:50%;background:#697386}
-.window-title{flex:1;text-align:center;font:12px ui-monospace,monospace;color:#8c98aa;margin:0 30px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.window-title{flex:1;text-align:center;font:12px monospace;color:#8c98aa;margin:0 30px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .preview-code{display:flex}
 .preview-lines{
-  white-space:pre;
-  flex:0 0 auto;
+  white-space:pre;flex:0 0 auto;
   padding:18px 12px 18px 18px;text-align:right;color:#58667d;
-  font:14px/1.6 ui-monospace,monospace;background:#0b1017;user-select:none
+  font:14px/1.6 monospace;background:#0b1017;user-select:none
 }
 .preview-highlight{
   flex:1;margin:0;padding:18px;min-width:0;white-space:pre;overflow-wrap:normal;
-  font:14px/1.6 ui-monospace,monospace
+  font:14px/1.6 monospace
 }
 
 /* WINDOW STYLE PRESETS */
@@ -213,8 +200,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .style-preview i{display:block;width:7px;height:7px;border-radius:50%;background:#697386;flex:0 0 7px}
 .window-style-name{display:block;font-size:10px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Actual preview window presets */
-.window-bar{transition:background .18s,border-radius .18s}
+/* Window Theme variations */
 .window-bar.window-default{background:#111827}
 .window-bar.window-default .dot:nth-child(1){background:#ff5f57}
 .window-bar.window-default .dot:nth-child(2){background:#febc2e}
@@ -238,12 +224,14 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .window-bar.window-linux .dot:nth-child(1){background:#4f7cff}
 .window-bar.window-linux .dot:nth-child(2){background:#f59e0b}
 .window-bar.window-linux .dot:nth-child(3){background:#22c55e}
+.window-bar.window-linux .dot{border-radius:3px}
 
 .window-bar.window-terminal{background:#050805;border-bottom:1px solid #132014}
 .window-bar.window-terminal .window-title{color:#76e69b}
 .window-bar.window-terminal .dot:nth-child(1){background:#4ade80}
 .window-bar.window-terminal .dot:nth-child(2){background:#22c55e}
 .window-bar.window-terminal .dot:nth-child(3){background:#86efac}
+.window-bar.window-terminal .dot{border-radius:2px}
 
 .window-bar.window-solarized{background:#073642;border-bottom:1px solid #0b4654}
 .window-bar.window-solarized .window-title{color:#93a1a1}
@@ -258,11 +246,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 
 .window-bar.window-black{background:#000;border-bottom:1px solid #0b0b0b}
 .window-bar.window-black .window-title{color:#777}
-.window-bar.window-black .dot{background:#050505;border:1px solid #252525}
-
-.window-bar.window-linux .dot{border-radius:3px}
-.window-bar.window-terminal .dot{border-radius:2px}
-.window-bar.window-black .dot{border-radius:2px}
+.window-bar.window-black .dot{background:#050505;border:1px solid #252525;border-radius:2px}
 
 .hidden{display:none!important}
 .toast{
@@ -300,35 +284,19 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
   .preview-highlight,.preview-lines{font-size:12px;line-height:1.55}
   .preview-highlight{padding:14px;min-width:0}
   .preview-lines{padding:14px 9px 14px 12px}
-  .drawer{align-items:flex-end}
-  .drawer-panel{left:0;right:0;top:auto;bottom:0;width:100%;max-width:none;height:min(88vh,760px);max-height:88vh;border-left:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:18px 14px calc(22px + env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .drawer-panel{
+    left:0;right:0;top:auto;bottom:0;width:100%;max-width:none;height:min(90vh,800px);
+    max-height:90vh;border-left:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;
+    padding:18px 14px calc(24px + env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch
+  }
   .drawer-head{position:sticky;top:-18px;z-index:2;padding:8px 0 14px;background:#101824}
-  .drawer .row{display:grid;grid-template-columns:1fr 110px}
-  .drawer .section{padding-bottom:16px;margin-bottom:16px}
-  .drawer .window-style-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .drawer .swatches{grid-template-columns:repeat(7,minmax(0,1fr))}
-}
-@media(max-width:560px){.window-style-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:480px){
-  .brand{font-size:15px}.brand-mark{width:27px;height:27px}
-  .header-actions .primary{font-size:12px;padding:8px 9px}
-  .editor{min-height:240px}
-  #code,#highlight,.lines{font-size:12px;line-height:1.5}
-  #code,#highlight{padding:13px}.lines{padding:13px 8px 13px 0;flex-basis:38px}
-  .window-bar{height:38px}.dot{width:9px;height:9px}
-  .preview-area,.export-frame{min-height:340px}
-  .export-frame{padding:18px 8px}
-  .code-card{border-radius:10px}
-  .preview-lines{padding-left:9px;padding-right:7px}
-  .preview-highlight{padding:12px}
-  .window-title{margin:0 16px}
 }
 .drawer{
   position:fixed;inset:0;background:#0009;z-index:80;display:none
 }
 .drawer.open{display:block}
 .drawer-panel{
-  position:absolute;right:0;top:0;bottom:0;width:min(360px,92vw);overflow-y:auto;
+  position:absolute;right:0;top:0;bottom:0;width:min(380px,94vw);overflow-y:auto;
   background:#101824;border-left:1px solid var(--line);padding:18px
 }
 .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
@@ -356,7 +324,15 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
     <div class="row">
       <div class="field"><label class="label">Font</label>
         <select id="font">
-          <option value="mono">JetBrains Mono</option><option value="system">System Mono</option><option value="consolas">Consolas</option>
+          <option value="jetbrains">JetBrains Mono</option>
+          <option value="fira">Fira Code</option>
+          <option value="sourcecode">Source Code Pro</option>
+          <option value="spacemono">Space Mono</option>
+          <option value="ubuntumono">Ubuntu Mono</option>
+          <option value="inconsolata">Inconsolata</option>
+          <option value="cascadia">Cascadia Code</option>
+          <option value="system">System Mono</option>
+          <option value="consolas">Consolas</option>
         </select>
       </div>
       <div class="field"><label class="label">Size</label><input id="fontSize" type="number" min="10" max="28" value="14"></div>
@@ -364,14 +340,28 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
   </div>
 
   <div class="section">
-    <h3>Theme</h3>
+    <h3>Theme (Carbon style)</h3>
     <select id="theme">
       <option value="atom-one-dark">Atom One Dark</option>
       <option value="github-dark">GitHub Dark</option>
       <option value="monokai">Monokai</option>
       <option value="night-owl">Night Owl</option>
       <option value="tokyo-night-dark">Tokyo Night Dark</option>
+      <option value="nord">Nord</option>
+      <option value="dracula">Dracula</option>
+      <option value="synthwave">SynthWave '84</option>
+      <option value="solarized-dark">Solarized Dark</option>
+      <option value="material-darker">Material Darker</option>
+      <option value="oceanicnext">Oceanic Next</option>
+      <option value="panda">Panda Syntax</option>
+      <option value="zenburn">Zenburn</option>
+      <option value="railscasts">Railscasts</option>
+      <option value="grayscale-dark">Grayscale Dark</option>
+      <option value="vs2015">VS 2015</option>
+      <option value="hopscotch">Hopscotch</option>
       <option value="stackoverflow-dark">Stack Overflow Dark</option>
+      <option value="paraiso-dark">Paraiso Dark</option>
+      <option value="codepen-embed">CodePen Embed</option>
     </select>
   </div>
 
@@ -380,18 +370,17 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
     <!-- Custom Background Picker Component -->
     <div class="bg-picker-container" id="bgPickerContainer">
       <button type="button" class="bg-dropdown-btn" id="bgDropdownToggle">
-        <span class="bg-preview-swatch" id="bgPreviewSwatch" style="background:#7c5cff;"></span>
-        <span id="bgDropdownText" style="flex:1; text-align:left;">Custom / Color</span>
+        <span class="bg-preview-swatch" id="bgPreviewSwatch" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4);"></span>
+        <span id="bgDropdownText" style="flex:1; text-align:left;">Gradient / Color</span>
         <span style="font-size:10px; color:var(--muted)">▼</span>
       </button>
 
       <div class="bg-popup-panel" id="bgPopupPanel">
         <div class="bg-tabs">
-          <button type="button" class="bg-tab active" data-tab="color">Color</button>
+          <button type="button" class="bg-tab active" data-tab="color">Color & Gradient</button>
           <button type="button" class="bg-tab" data-tab="image">Image</button>
         </div>
 
-        <!-- TAB COLOR -->
         <div class="bg-tab-content" id="bgTabColor">
           <div class="color-input-row">
             <input type="color" id="nativeColorPicker" value="#7c5cff">
@@ -407,25 +396,27 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
             </div>
             <input type="range" id="opacityRange" min="0" max="1" step="0.01" value="1">
           </div>
-          <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Presets</div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Gradients & Presets</div>
           <div class="swatches" id="presetSwatchesContainer">
+            <!-- Gradients -->
+            <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)" title="Purple Cyan"></button>
+            <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)" title="Sunset"></button>
+            <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)" title="Emerald Blue"></button>
+            <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)" title="Indigo Purple"></button>
+            <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)" title="Pink Purple"></button>
+            <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)" title="Sky Blue"></button>
+            <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)" title="Teal Orange"></button>
+            <!-- Solids -->
             <button class="swatch" data-preset="#EF4444" style="background:#EF4444" title="Red"></button>
-            <button class="swatch" data-preset="#F97316" style="background:#F97316" title="Orange"></button>
-            <button class="swatch" data-preset="#F59E0B" style="background:#F59E0B" title="Amber"></button>
             <button class="swatch" data-preset="#10B981" style="background:#10B981" title="Emerald"></button>
-            <button class="swatch" data-preset="#06B6D4" style="background:#06B6D4" title="Cyan"></button>
             <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6" title="Blue"></button>
-            <button class="swatch active" data-preset="#7C5CFF" style="background:#7C5CFF" title="Purple"></button>
-            <button class="swatch" data-preset="#EC4899" style="background:#EC4899" title="Pink"></button>
-            <button class="swatch" data-preset="#6B7280" style="background:#6B7280" title="Gray"></button>
+            <button class="swatch" data-preset="#7C5CFF" style="background:#7C5CFF" title="Purple"></button>
             <button class="swatch" data-preset="#111827" style="background:#111827" title="Dark"></button>
             <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF" title="White"></button>
-            <button class="swatch" data-preset="#000000" style="background:#000000" title="Black"></button>
             <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px" title="Transparent"></button>
           </div>
         </div>
 
-        <!-- TAB IMAGE -->
         <div class="bg-tab-content hidden" id="bgTabImage">
           <label class="upload-label">
             <span style="font-size:20px; margin-bottom:4px">📁</span>
@@ -474,7 +465,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 <main class="workspace">
   <div class="mobile-bar">
     <div class="mobile-scroll">
-      <button class="btn mobile-action" id="settingsBtn">⚙ Settings</button>
+      <button class="btn mobile-action primary" id="settingsBtn">⚙ Settings & BG</button>
       <select id="mobileLanguage" aria-label="Language"></select>
       <button class="btn mobile-action" id="mobileCopy">Copy</button>
       <button class="btn mobile-action" id="mobileFormat">Format</button>
@@ -524,35 +515,140 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 </div>
 </div>
 
+<!-- DRAWER SETTINGS (MOBILE & GENERAL FULL CONTROLS) -->
 <div class="drawer" id="drawer">
   <div class="drawer-panel">
-    <div class="drawer-head"><h2>Settings</h2><button class="btn" id="closeDrawer">✕</button></div>
+    <div class="drawer-head"><h2>Settings & Background</h2><button class="btn" id="closeDrawer">✕</button></div>
+    
     <div class="field"><label class="label">Language</label><select id="drawerLanguage"></select></div>
     <div class="field"><label class="label">Filename</label><input id="drawerFilename" type="text" maxlength="120"></div>
     <div class="row">
-      <div class="field"><label class="label">Font</label><select id="drawerFont"><option value="mono">JetBrains Mono</option><option value="system">System Mono</option><option value="consolas">Consolas</option></select></div>
+      <div class="field"><label class="label">Font</label>
+        <select id="drawerFont">
+          <option value="jetbrains">JetBrains Mono</option>
+          <option value="fira">Fira Code</option>
+          <option value="sourcecode">Source Code Pro</option>
+          <option value="spacemono">Space Mono</option>
+          <option value="ubuntumono">Ubuntu Mono</option>
+          <option value="inconsolata">Inconsolata</option>
+          <option value="cascadia">Cascadia Code</option>
+          <option value="system">System Mono</option>
+          <option value="consolas">Consolas</option>
+        </select>
+      </div>
       <div class="field"><label class="label">Size</label><input id="drawerFontSize" type="number" min="10" max="28"></div>
     </div>
-    <div class="field"><label class="label">Theme</label><select id="drawerTheme"><option value="atom-one-dark">Atom One Dark</option><option value="github-dark">GitHub Dark</option><option value="monokai">Monokai</option><option value="night-owl">Night Owl</option><option value="tokyo-night-dark">Tokyo Night Dark</option><option value="stackoverflow-dark">Stack Overflow Dark</option></select></div>
     
+    <div class="field"><label class="label">Theme</label>
+      <select id="drawerTheme">
+        <option value="atom-one-dark">Atom One Dark</option>
+        <option value="github-dark">GitHub Dark</option>
+        <option value="monokai">Monokai</option>
+        <option value="night-owl">Night Owl</option>
+        <option value="tokyo-night-dark">Tokyo Night Dark</option>
+        <option value="nord">Nord</option>
+        <option value="dracula">Dracula</option>
+        <option value="synthwave">SynthWave '84</option>
+        <option value="solarized-dark">Solarized Dark</option>
+        <option value="material-darker">Material Darker</option>
+        <option value="oceanicnext">Oceanic Next</option>
+        <option value="panda">Panda Syntax</option>
+        <option value="zenburn">Zenburn</option>
+        <option value="railscasts">Railscasts</option>
+        <option value="grayscale-dark">Grayscale Dark</option>
+        <option value="vs2015">VS 2015</option>
+        <option value="hopscotch">Hopscotch</option>
+        <option value="stackoverflow-dark">Stack Overflow Dark</option>
+        <option value="paraiso-dark">Paraiso Dark</option>
+        <option value="codepen-embed">CodePen Embed</option>
+      </select>
+    </div>
+
+    <!-- Background Settings Inside Drawer for Mobile -->
+    <div class="section">
+      <h3>Background</h3>
+      <div class="bg-picker-container" id="drawerBgPickerContainer">
+        <button type="button" class="bg-dropdown-btn" id="drawerBgDropdownToggle">
+          <span class="bg-preview-swatch" id="drawerBgPreviewSwatch" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4);"></span>
+          <span id="drawerBgDropdownText" style="flex:1; text-align:left;">Gradient / Color</span>
+          <span style="font-size:10px; color:var(--muted)">▼</span>
+        </button>
+
+        <div class="bg-popup-panel" id="drawerBgPopupPanel" style="position:relative; margin-top:8px; box-shadow:none; border:1px solid var(--line);">
+          <div class="bg-tabs">
+            <button type="button" class="bg-tab active" data-drawer-tab="color">Color & Gradient</button>
+            <button type="button" class="bg-tab" data-drawer-tab="image">Image</button>
+          </div>
+
+          <div class="bg-tab-content" id="drawerBgTabColor">
+            <div class="color-input-row">
+              <input type="color" id="drawerNativeColorPicker" value="#7c5cff">
+              <div class="hex-input-wrap">
+                <span>#</span>
+                <input type="text" id="drawerHexInputText" value="7C5CFF" maxlength="6">
+              </div>
+            </div>
+            <div class="opacity-box">
+              <div class="opacity-header">
+                <span>Opacity</span>
+                <span id="drawerOpacityValLabel">100%</span>
+              </div>
+              <input type="range" id="drawerOpacityRange" min="0" max="1" step="0.01" value="1">
+            </div>
+            <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Gradients & Presets</div>
+            <div class="swatches drawer-swatches">
+              <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)"></button>
+              <button class="swatch" data-preset="#EF4444" style="background:#EF4444"></button>
+              <button class="swatch" data-preset="#10B981" style="background:#10B981"></button>
+              <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6"></button>
+              <button class="swatch" data-preset="#7C5CFF" style="background:#7C5CFF"></button>
+              <button class="swatch" data-preset="#111827" style="background:#111827"></button>
+              <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF"></button>
+              <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px"></button>
+            </div>
+          </div>
+
+          <div class="bg-tab-content hidden" id="drawerBgTabImage">
+            <label class="upload-label">
+              <span style="font-size:20px; margin-bottom:4px">📁</span>
+              <span style="font-size:12px; font-weight:600; color:var(--text)">Upload Background</span>
+              <span style="font-size:10px; color:var(--muted); margin-top:2px">Local image (PNG, JPG, WEBP)</span>
+              <input type="file" id="drawerBgImageUpload" accept="image/*" class="hidden">
+            </label>
+            <div class="upload-info hidden" id="drawerBgUploadInfoBox">
+              <span id="drawerBgUploadFilename" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">image.png</span>
+              <button type="button" id="drawerBgRemoveImgBtn" style="background:none; border:0; color:#ff9fa8; font-size:11px; cursor:pointer; font-weight:600">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <h3>Window</h3>
       <div class="toggle-row"><span>Window controls</span><label class="switch"><input id="drawerShowWindow" type="checkbox" checked><span class="slider"></span></label></div>
       <div class="toggle-row"><span>Title</span><label class="switch"><input id="drawerShowTitle" type="checkbox" checked><span class="slider"></span></label></div>
       <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="drawerShowLines" type="checkbox" checked><span class="slider"></span></label></div>
     </div>
+    
     <div class="section">
       <h3>Window Style</h3>
       <div class="window-style-grid" id="drawerWindowStyleGrid">
         <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
         <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
-        <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#18181b"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
-        <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36;border:1px solid #394150"></i><i style="background:#353d4b;border:1px solid #394150"></i><i style="background:#454e5d;border:1px solid #394150"></i></span><span class="window-style-name">Dark</span></button>
-        <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff;border-radius:3px"></i><i style="background:#f59e0b;border-radius:3px"></i><i style="background:#22c55e;border-radius:3px"></i></span><span class="window-style-name">Linux</span></button>
-        <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80;border-radius:2px"></i><i style="background:#22c55e;border-radius:2px"></i><i style="background:#86efac;border-radius:2px"></i></span><span class="window-style-name">Terminal</span></button>
+        <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#f4f4f5"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
+        <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36"></i><i style="background:#353d4b"></i><i style="background:#454e5d"></i></span><span class="window-style-name">Dark</span></button>
+        <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i></span><span class="window-style-name">Linux</span></button>
+        <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80"></i><i style="background:#22c55e"></i><i style="background:#86efac"></i></span><span class="window-style-name">Terminal</span></button>
         <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
-        <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8;box-shadow:0 0 6px #ff00c8"></i><i style="background:#7c5cff;box-shadow:0 0 6px #7c5cff"></i><i style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></i></span><span class="window-style-name">Neon</span></button>
-        <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #252525;border-radius:2px"></i><i style="background:#050505;border:1px solid #252525;border-radius:2px"></i><i style="background:#050505;border:1px solid #252525;border-radius:2px"></i></span><span class="window-style-name">Full Black</span></button>
+        <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8"></i><i style="background:#7c5cff"></i><i style="background:#00e5ff"></i></span><span class="window-style-name">Neon</span></button>
+        <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i></span><span class="window-style-name">Full Black</span></button>
       </div>
     </div>
 
@@ -573,32 +669,42 @@ console.log("Hello, Cyberind!");`;
 
 const languages = [
   ["auto","Auto Detect"],["plaintext","Plain Text"],["javascript","JavaScript"],["typescript","TypeScript"],
-  ["xml","HTML / XML"],["css","CSS"],["scss","SCSS"],["less","Less"],["json","JSON"],["python","Python"],
-  ["php","PHP"],["bash","Bash"],["shell","Shell"],["sql","SQL"],["java","Java"],["kotlin","Kotlin"],
-  ["swift","Swift"],["cpp","C++"],["csharp","C#"],["go","Go"],["rust","Rust"],["ruby","Ruby"],["perl","Perl"],
-  ["lua","Lua"],["r","R"],["matlab","MATLAB"],["dart","Dart"],["scala","Scala"],["groovy","Groovy"],
-  ["powershell","PowerShell"],["dockerfile","Dockerfile"],["yaml","YAML"],["ini","INI"],["http","HTTP"],
-  ["graphql","GraphQL"],["markdown","Markdown"],["diff","Diff"]
+  ["xml","HTML / XML"],["css","CSS"],["scss","SCSS"],["json","JSON"],["python","Python"],
+  ["php","PHP"],["bash","Bash"],["shell","Shell"],["sql","SQL"],["java","Java"],["go","Go"],
+  ["rust","Rust"],["yaml","YAML"],["markdown","Markdown"]
 ];
+
+const fontFamilies = {
+  jetbrains: "'JetBrains Mono', monospace",
+  fira: "'Fira Code', monospace",
+  sourcecode: "'Source Code Pro', monospace",
+  spacemono: "'Space Mono', monospace",
+  ubuntumono: "'Ubuntu Mono', monospace",
+  inconsolata: "'Inconsolata', monospace",
+  cascadia: "'Cascadia Code', monospace",
+  system: "ui-monospace,SFMono-Regular,Menlo,monospace",
+  consolas: "Consolas,monospace"
+};
 
 const $ = id => document.getElementById(id);
 const state = {
-  language:"auto", filename:"snippet.js", font:"mono", fontSize:14, theme:"atom-one-dark",
-  bgColor:"#7C5CFF", bgOpacity:1, bgImageUrl:"", bgImageName:"",
+  language:"auto", filename:"snippet.js", font:"jetbrains", fontSize:14, theme:"atom-one-dark",
+  bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)", bgOpacity:1, bgImageUrl:"", bgImageName:"",
   showWindow:true, showTitle:true, showLines:true, windowStyle:"default", padding:64, radius:14
 };
 
 const selects = [$("language"),$("mobileLanguage"),$("drawerLanguage")];
 selects.forEach(s => languages.forEach(([v,t]) => s.add(new Option(t,v))));
 
-function hexToRgba(hex, alpha) {
-  if(hex === "transparent") return "transparent";
-  let c = hex.replace('#', '');
-  if (c.length === 3) {
-    c = c.split('').map(x => x + x).join('');
+function hexToRgba(bg, alpha) {
+  if(bg === "transparent") return "transparent";
+  if(bg.startsWith("linear-gradient")) return bg; // gradient handles opacity via CSS or direct string
+  let hex = bg.replace('#', '');
+  if (hex.length === 3) {
+    hex = hex.split('').map(x => x + x).join('');
   }
-  const num = parseInt(c, 16);
-  if (isNaN(num)) return hex;
+  const num = parseInt(hex, 16);
+  if (isNaN(num)) return bg;
   return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
 }
 
@@ -622,9 +728,7 @@ function lineMarkup(code){
   return Array.from({length:n},(_,i)=>i+1).join("\n");
 }
 function applyFont(){
-  const family=state.font==="consolas" ? "Consolas,monospace" :
-    state.font==="system" ? "ui-monospace,SFMono-Regular,Menlo,monospace" :
-    "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
+  const family=fontFamilies[state.font] || fontFamilies.jetbrains;
   ["code","highlight","previewHighlight","editorLines","previewLines"].forEach(id=>{
     if($(id)) $(id).style.fontFamily=family;
   });
@@ -649,7 +753,6 @@ function render(){
   $("editorLines").classList.toggle("hidden",!state.showLines);
   $("previewLines").classList.toggle("hidden",!state.showLines);
 
-  // Background Export Frame Styling
   const exportFrame = $("exportFrame");
   if(state.bgImageUrl){
     exportFrame.style.backgroundImage = `url('${state.bgImageUrl}')`;
@@ -658,12 +761,23 @@ function render(){
     exportFrame.style.backgroundColor = "transparent";
     $("bgPreviewSwatch").style.backgroundImage = `url('${state.bgImageUrl}')`;
     $("bgPreviewSwatch").style.backgroundSize = "cover";
+    if($("drawerBgPreviewSwatch")){
+      $("drawerBgPreviewSwatch").style.backgroundImage = `url('${state.bgImageUrl}')`;
+      $("drawerBgPreviewSwatch").style.backgroundSize = "cover";
+    }
   } else {
     exportFrame.style.backgroundImage = "none";
     const computedBg = hexToRgba(state.bgColor, state.bgOpacity);
     exportFrame.style.backgroundColor = computedBg;
+    if(state.bgColor.startsWith("linear-gradient")){
+      exportFrame.style.background = state.bgColor;
+    }
     $("bgPreviewSwatch").style.backgroundImage = "none";
-    $("bgPreviewSwatch").style.backgroundColor = state.bgColor === "transparent" ? "#333" : state.bgColor;
+    $("bgPreviewSwatch").style.background = state.bgColor;
+    if($("drawerBgPreviewSwatch")){
+      $("drawerBgPreviewSwatch").style.backgroundImage = "none";
+      $("drawerBgPreviewSwatch").style.background = state.bgColor;
+    }
   }
 
   exportFrame.style.padding=state.padding+"px";
@@ -686,23 +800,29 @@ function syncControls(){
   $("paddingVal").textContent=state.padding+"px";$("drawerPaddingVal").textContent=state.padding+"px";
   $("radiusVal").textContent=state.radius+"px";$("drawerRadiusVal").textContent=state.radius+"px";
   
-  // Sync Background controls
-  if(state.bgColor !== "transparent") {
+  if(!state.bgColor.startsWith("linear-gradient") && state.bgColor !== "transparent") {
     $("nativeColorPicker").value = state.bgColor;
     $("hexInputText").value = state.bgColor.replace("#","");
+    $("drawerNativeColorPicker").value = state.bgColor;
+    $("drawerHexInputText").value = state.bgColor.replace("#","");
   }
   $("opacityRange").value = state.bgOpacity;
+  $("drawerOpacityRange").value = state.bgOpacity;
   $("opacityValLabel").textContent = Math.round(state.bgOpacity * 100) + "%";
+  $("drawerOpacityValLabel").textContent = Math.round(state.bgOpacity * 100) + "%";
 
   document.querySelectorAll("[data-preset]").forEach(b => {
-    b.classList.toggle("active", b.dataset.preset.toLowerCase() === state.bgColor.toLowerCase());
+    b.classList.toggle("active", b.dataset.preset === state.bgColor);
   });
 
   if(state.bgImageUrl) {
     $("bgUploadInfoBox").classList.remove("hidden");
     $("bgUploadFilename").textContent = state.bgImageName || "Uploaded Image";
+    $("drawerBgUploadInfoBox").classList.remove("hidden");
+    $("drawerBgUploadFilename").textContent = state.bgImageName || "Uploaded Image";
   } else {
     $("bgUploadInfoBox").classList.add("hidden");
+    $("drawerBgUploadInfoBox").classList.add("hidden");
   }
 
   document.querySelectorAll(".window-style").forEach(b=>b.classList.toggle("active",b.dataset.windowStyle===state.windowStyle));
@@ -713,6 +833,7 @@ function setTheme(theme){
   const link=document.querySelector('link[rel="stylesheet"]');
   if(link) link.href=`https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`;
 }
+
 function setField(field,value){
   if(field === "windowStyle") value = String(value || "default");
   state[field]=value;
@@ -720,65 +841,85 @@ function setField(field,value){
   syncControls();
   render();
 }
+
 function toast(msg){
   $("toast").textContent=msg;$("toast").classList.add("show");
   clearTimeout(window.__toast);window.__toast=setTimeout(()=>$("toast").classList.remove("show"),1800);
 }
 
-// Background Dropdown & Tabs Logic
+// Background Dropdown & Tabs Desktop & Drawer Mobile
 $("bgDropdownToggle").addEventListener("click", (e) => {
   e.stopPropagation();
   $("bgPopupPanel").classList.toggle("open");
 });
+$("drawerBgDropdownToggle").addEventListener("click", (e) => {
+  e.stopPropagation();
+  $("drawerBgPopupPanel").classList.toggle("open");
+});
 document.addEventListener("click", (e) => {
-  if(!$("bgPickerContainer").contains(e.target)){
+  if(!document.getElementById("bgPickerContainer").contains(e.target)){
     $("bgPopupPanel").classList.remove("open");
   }
+  if(!document.getElementById("drawerBgPickerContainer").contains(e.target)){
+    $("drawerBgPopupPanel").classList.remove("open");
+  }
 });
+
 document.querySelectorAll(".bg-tab").forEach(tab => {
   tab.addEventListener("click", () => {
-    document.querySelectorAll(".bg-tab").forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    const target = tab.dataset.tab;
+    const target = tab.dataset.tab || tab.dataset.drawerTab;
+    document.querySelectorAll(".bg-tab").forEach(t => {
+      if((t.dataset.tab === target) || (t.dataset.drawerTab === target)) t.classList.add("active");
+      else t.classList.remove("active");
+    });
     if(target === "color") {
       $("bgTabColor").classList.remove("hidden");
       $("bgTabImage").classList.add("hidden");
+      $("drawerBgTabColor").classList.remove("hidden");
+      $("drawerBgTabImage").classList.add("hidden");
     } else {
       $("bgTabColor").classList.add("hidden");
       $("bgTabImage").classList.remove("hidden");
+      $("drawerBgTabColor").classList.add("hidden");
+      $("drawerBgTabImage").classList.remove("hidden");
     }
   });
 });
 
-$("nativeColorPicker").addEventListener("input", (e) => {
-  state.bgColor = e.target.value;
+function handleColorChange(val){
+  state.bgColor = val;
   state.bgImageUrl = "";
   syncControls();
   render();
-});
-$("hexInputText").addEventListener("input", (e) => {
+}
+$("nativeColorPicker").addEventListener("input", e => handleColorChange(e.target.value));
+$("drawerNativeColorPicker").addEventListener("input", e => handleColorChange(e.target.value));
+
+$("hexInputText").addEventListener("input", e => {
   let val = e.target.value.trim();
-  if(val.length === 3 || val.length === 6) {
-    state.bgColor = "#" + val;
-    state.bgImageUrl = "";
-    syncControls();
-    render();
-  }
+  if(val.length === 3 || val.length === 6) handleColorChange("#" + val);
 });
-$("opacityRange").addEventListener("input", (e) => {
+$("drawerHexInputText").addEventListener("input", e => {
+  let val = e.target.value.trim();
+  if(val.length === 3 || val.length === 6) handleColorChange("#" + val);
+});
+
+$("opacityRange").addEventListener("input", e => {
   state.bgOpacity = parseFloat(e.target.value);
   syncControls();
   render();
 });
-document.querySelectorAll("[data-preset]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    state.bgColor = btn.dataset.preset;
-    state.bgImageUrl = "";
-    syncControls();
-    render();
-  });
+$("drawerOpacityRange").addEventListener("input", e => {
+  state.bgOpacity = parseFloat(e.target.value);
+  syncControls();
+  render();
 });
-$("bgImageUpload").addEventListener("change", (e) => {
+
+document.querySelectorAll("[data-preset]").forEach(btn => {
+  btn.addEventListener("click", () => handleColorChange(btn.dataset.preset));
+});
+
+function handleImageUpload(e){
   const file = e.target.files[0];
   if(file){
     state.bgImageName = file.name;
@@ -790,70 +931,44 @@ $("bgImageUpload").addEventListener("change", (e) => {
     };
     reader.readAsDataURL(file);
   }
-});
-$("bgRemoveImgBtn").addEventListener("click", () => {
+}
+$("bgImageUpload").addEventListener("change", handleImageUpload);
+$("drawerBgImageUpload").addEventListener("change", handleImageUpload);
+
+function removeImage(){
   state.bgImageUrl = "";
   state.bgImageName = "";
   syncControls();
   render();
-});
+}
+$("bgRemoveImgBtn").addEventListener("click", removeImage);
+$("drawerBgRemoveImgBtn").addEventListener("click", removeImage);
 
-// Auto Prettier Formatting Function
 function formatCodeWithPrettier() {
   const code = $("code").value;
   const lang = detectedLanguage(code);
-  
-  if (typeof prettier === "undefined") {
-    toast("Prettier belum termuat");
-    return;
-  }
-
+  if (typeof prettier === "undefined") { toast("Prettier belum termuat"); return; }
   try {
-    let parser = "babel";
-    let plugins = [prettierPlugins.babel, prettierPlugins.estree];
+    let parser = "babel", plugins = [prettierPlugins.babel, prettierPlugins.estree];
+    if (lang === "typescript") parser = "typescript";
+    else if (lang === "xml") { parser = "html"; plugins = [prettierPlugins.html]; }
+    else if (lang === "css" || lang === "scss") { parser = "postcss"; plugins = [prettierPlugins.postcss]; }
+    else if (lang === "json") parser = "json";
+    else if (lang === "markdown") { parser = "markdown"; plugins = [prettierPlugins.markdown]; }
 
-    if (lang === "typescript") {
-      parser = "typescript";
-    } else if (lang === "xml") {
-      parser = "html";
-      plugins = [prettierPlugins.html];
-    } else if (lang === "css" || lang === "scss" || lang === "less") {
-      parser = "postcss";
-      plugins = [prettierPlugins.postcss];
-    } else if (lang === "json") {
-      parser = "json";
-    } else if (lang === "markdown") {
-      parser = "markdown";
-      plugins = [prettierPlugins.markdown];
-    }
-
-    const formatted = prettier.format(code, {
-      parser: parser,
-      plugins: plugins,
-      tabWidth: 4,
-      semi: true,
-      singleQuote: false
-    });
-
+    const formatted = prettier.format(code, { parser, plugins, tabWidth: 4, semi: true, singleQuote: false });
     $("code").value = formatted;
     render();
     toast("Kode berhasil dirapikan!");
   } catch (err) {
     if (lang === "json") {
-      try {
-        const jsonFormatted = JSON.stringify(JSON.parse(code), null, 4);
-        $("code").value = jsonFormatted;
-        render();
-        toast("JSON diformat!");
-        return;
-      } catch (e) {}
+      try { $("code").value = JSON.stringify(JSON.parse(code), null, 4); render(); toast("JSON diformat!"); return; } catch(e){}
     }
     toast("Gagal memformat (Syntax error)");
   }
 }
 
 $("code").value=defaultCode;
-
 $("code").addEventListener("input",render);
 $("code").addEventListener("scroll",()=>{
   $("highlight").scrollTop=$("code").scrollTop;
@@ -869,52 +984,33 @@ $("code").addEventListener("keydown",e=>{
   }
 });
 
-$("filename").addEventListener("input",e=>setField("filename",e.target.value));
-$("drawerFilename").addEventListener("input",e=>setField("filename",e.target.value));
-$("language").addEventListener("change",e=>setField("language",e.target.value));
-$("mobileLanguage").addEventListener("change",e=>setField("language",e.target.value));
-$("drawerLanguage").addEventListener("change",e=>setField("language",e.target.value));
-$("font").addEventListener("change",e=>setField("font",e.target.value));
-$("drawerFont").addEventListener("change",e=>setField("font",e.target.value));
-$("fontSize").addEventListener("input",e=>setField("fontSize",Math.max(10,Math.min(28,+e.target.value||14))));
-$("drawerFontSize").addEventListener("input",e=>setField("fontSize",Math.max(10,Math.min(28,+e.target.value||14))));
-$("theme").addEventListener("change",e=>setField("theme",e.target.value));
-$("drawerTheme").addEventListener("change",e=>setField("theme",e.target.value));
+// Bind controls listeners
+["filename","drawerFilename"].forEach(id => $(id).addEventListener("input", e=>setField("filename",e.target.value)));
+["language","mobileLanguage","drawerLanguage"].forEach(id => $(id).addEventListener("change", e=>setField("language",e.target.value)));
+["font","drawerFont"].forEach(id => $(id).addEventListener("change", e=>setField("font",e.target.value)));
+["fontSize","drawerFontSize"].forEach(id => $(id).addEventListener("input", e=>setField("fontSize",Math.max(10,Math.min(28,+e.target.value||14)))));
+["theme","drawerTheme"].forEach(id => $(id).addEventListener("change", e=>setField("theme",e.target.value)));
 
 ["showWindow","showTitle","showLines"].forEach(k=>{
   $(k).addEventListener("change",e=>setField(k,e.target.checked));
   const drawerEl = $("drawer"+k[0].toUpperCase()+k.slice(1));
   if(drawerEl) drawerEl.addEventListener("change",e=>setField(k,e.target.checked));
 });
-$("padding").addEventListener("input",e=>setField("padding",+e.target.value));
-$("drawerPadding").addEventListener("input",e=>setField("padding",+e.target.value));
-$("radius").addEventListener("input",e=>setField("radius",+e.target.value));
-$("drawerRadius").addEventListener("input",e=>setField("radius",+e.target.value));
+["padding","drawerPadding"].forEach(id => $(id).addEventListener("input", e=>setField("padding",+e.target.value)));
+["radius","drawerRadius"].forEach(id => $(id).addEventListener("input", e=>setField("radius",+e.target.value)));
 
 document.querySelectorAll(".window-style").forEach(b=>b.addEventListener("click",()=>setField("windowStyle",b.dataset.windowStyle)));
 
 async function copyCodeAction(){
-  try{
-    await navigator.clipboard.writeText($("code").value);
-    toast("Kode berhasil disalin");
-  }catch(e){
-    $("code").select();
-    document.execCommand("copy");
-    toast("Kode berhasil disalin");
-  }
+  try{ await navigator.clipboard.writeText($("code").value); toast("Kode berhasil disalin"); }
+  catch(e){ $("code").select(); document.execCommand("copy"); toast("Kode berhasil disalin"); }
 }
-
-function clearEditorAction(){
-  if(confirm("Hapus semua isi kode di editor?")){
-    $("code").value = "";
-    render();
-    toast("Editor dibersihkan");
-  }
-}
-
 $("copyBtn").addEventListener("click", copyCodeAction);
 $("mobileCopy").addEventListener("click", copyCodeAction);
 
+function clearEditorAction(){
+  if(confirm("Hapus semua isi kode di editor?")){ $("code").value = ""; render(); toast("Editor dibersihkan"); }
+}
 $("clearBtn").addEventListener("click", clearEditorAction);
 $("mobileClear").addEventListener("click", clearEditorAction);
 
@@ -922,7 +1018,7 @@ $("formatBtn").addEventListener("click", formatCodeWithPrettier);
 $("mobileFormat").addEventListener("click", formatCodeWithPrettier);
 
 $("resetBtn").addEventListener("click",()=>{
-  Object.assign(state,{language:"auto",filename:"snippet.js",font:"mono",fontSize:14,theme:"atom-one-dark",bgColor:"#7C5CFF",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,windowStyle:"default",padding:64,radius:14});
+  Object.assign(state,{language:"auto",filename:"snippet.js",font:"jetbrains",fontSize:14,theme:"atom-one-dark",bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,windowStyle:"default",padding:64,radius:14});
   $("code").value=defaultCode;setTheme(state.theme);syncControls();render();toast("Berhasil direset");
 });
 $("mobileReset").addEventListener("click",()=>$("resetBtn").click());
