@@ -227,11 +227,6 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
   position: absolute;
   font-size: 0.8em;
 }
-.show-hidden-chars .whitespace-eol::after {
-  content: "¬";
-  color: rgba(120, 130, 150, 0.45);
-  margin-left: 2px;
-}
 
 /* WATERMARK */
 .card-watermark{
@@ -846,7 +841,7 @@ function languageLabel(v){
 
 function processHiddenCharacters(htmlText) {
   if (!state.showHiddenChars) return htmlText;
-  // Membungkus spasi dan tab dengan span khusus untuk divisualisasikan
+  // Membungkus spasi dan tab dengan span khusus untuk divisualisasikan tanpa merusak highlight
   return htmlText
     .replace(/ /g, '<span class="whitespace-space"> </span>')
     .replace(/\t/g, '<span class="whitespace-tab">\t</span>');
