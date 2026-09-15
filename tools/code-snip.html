@@ -58,7 +58,7 @@ button{cursor:pointer}
   position:sticky;top:0;z-index:50
 }
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
-.brand-mark{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,#8b5cf6,#06b6d4);font-size:15px}
+.brand-mark{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,#ff007f,#7c5cff);font-size:15px}
 .header-actions{display:flex;gap:8px}
 .btn{
   border:1px solid var(--line);background:#141c2a;color:var(--text);
@@ -89,7 +89,7 @@ select:focus,input:focus{border-color:#6574ff;box-shadow:0 0 0 2px #6574ff22}
 input[type=range]{width:100%;accent-color:var(--accent)}
 .value{font-size:12px;color:var(--muted);min-width:38px;text-align:right}
 
-/* CARBON PRESETS THUMBNAILS */
+/* PRESETS THUMBNAILS */
 .presets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 .preset-thumb{
   height:44px;border-radius:6px;border:1px solid var(--line);cursor:pointer;
@@ -99,7 +99,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .preset-thumb:hover{border-color:var(--accent);transform:scale(1.03)}
 .preset-thumb.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 
-/* CARBON TABS CATEGORIES (Window, Editor, Misc) */
+/* CARBON TABS CATEGORIES */
 .carbon-tabs{display:flex;background:#090e15;border-radius:8px;padding:3px;margin-bottom:12px;border:1px solid var(--line)}
 .carbon-tab{
   flex:1;background:none;border:0;padding:6px 0;font-size:11px;font-weight:600;
@@ -206,6 +206,31 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .preview-highlight{
   flex:1;margin:0;padding:18px;min-width:0;white-space:pre;overflow-wrap:normal;
   font:14px/1.6 monospace
+}
+
+/* HIDDEN CHARACTERS VISUALIZER */
+.show-hidden-chars .whitespace-space {
+  position: relative;
+}
+.show-hidden-chars .whitespace-space::after {
+  content: "·";
+  color: rgba(120, 130, 150, 0.45);
+  position: absolute;
+  font-weight: bold;
+}
+.show-hidden-chars .whitespace-tab {
+  position: relative;
+}
+.show-hidden-chars .whitespace-tab::after {
+  content: "→";
+  color: rgba(120, 130, 150, 0.45);
+  position: absolute;
+  font-size: 0.8em;
+}
+.show-hidden-chars .whitespace-eol::after {
+  content: "¬";
+  color: rgba(120, 130, 150, 0.45);
+  margin-left: 2px;
 }
 
 /* WATERMARK */
@@ -345,7 +370,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
     <div class="presets-grid">
       <div class="preset-thumb active" data-preset-id="p1" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4)" title="Purple Cyan">Purple</div>
       <div class="preset-thumb" data-preset-id="p2" style="background:linear-gradient(135deg,#f43f5e,#fb923c)" title="Sunset">Sunset</div>
-      <div class="preset-thumb" data-preset-id="p3" style="background:linear-gradient(135deg,#10b981,#3b82f6)" title="Emerald Blue">Emerald</div>
+      <div class="preset-thumb" data-preset-id="p3" style="background:linear-gradient(135deg,#2b083d,#ff007f);border-color:#ff007f" title="Synthwave">Synth</div>
       <div class="preset-thumb" data-preset-id="p4" style="background:#111827;border-color:#48556a" title="Minimal Dark">Dark</div>
     </div>
   </div>
@@ -409,7 +434,6 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
           <option value="stackoverflow-dark">Stack Overflow Dark</option>
           <option value="paraiso-dark">Paraiso Dark</option>
           <option value="codepen-embed">CodePen Embed</option>
-          <!-- Additional Themes Added -->
           <option value="github">GitHub Light</option>
           <option value="atom-one-light">Atom One Light</option>
           <option value="solarized-light">Solarized Light</option>
@@ -439,7 +463,8 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
       </div>
       <div class="field"><label class="label">Line height</label><div class="range-row"><input id="lineHeight" type="range" min="1.2" max="2.2" step="0.05" value="1.55"><span class="value" id="lineHeightVal">1.55</span></div></div>
       <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="showLines" type="checkbox" checked><span class="slider"></span></label></div>
-      <div class="field"><label class="label">First line number</label><input id="firstLineNumber" type="number" value="1" min="0" max="999"></div>
+      <div class="toggle-row"><span>Hidden characters</span><label class="switch"><input id="showHiddenChars" type="checkbox"><span class="slider"></span></label></div>
+      <div class="field" style="margin-top:10px;"><label class="label">First line number</label><input id="firstLineNumber" type="number" value="1" min="0" max="999"></div>
     </div>
   </div>
 
@@ -480,11 +505,10 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
             <div class="swatches" id="presetSwatchesContainer">
               <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)"></button>
               <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #2b083d, #ff007f)" style="background:linear-gradient(135deg, #2b083d, #ff007f)"></button>
               <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)"></button>
               <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
               <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)"></button>
               <button class="swatch" data-preset="#EF4444" style="background:#EF4444"></button>
               <button class="swatch" data-preset="#10B981" style="background:#10B981"></button>
               <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6"></button>
@@ -523,7 +547,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
     <div class="section">
       <h3>Watermark</h3>
       <div class="toggle-row"><span>Enable watermark</span><label class="switch"><input id="showWatermark" type="checkbox"><span class="slider"></span></label></div>
-      <div class="field" style="margin-top:8px"><label class="label">Watermark text</label><input id="watermarkText" type="text" value="by @ahmatbadali"></div>
+      <div class="field" style="margin-top:8px"><label class="label">Watermark text</label><input id="watermarkText" type="text" value="by Codesnip"></div>
     </div>
   </div>
 </aside>
@@ -568,14 +592,14 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
       <div class="code-card" id="codeCard">
         <div class="window-bar" id="windowBar">
           <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-          <div class="window-title" id="previewTitle">snippet.js</div>
+          <div class="window-title" id="previewTitle"><code id="previewTitleCode" style="font:inherit">snippet.js</code></div>
         </div>
         <div class="preview-code">
           <div class="preview-lines" id="previewLines"></div>
           <pre class="preview-highlight" id="previewHighlight"></pre>
         </div>
       </div>
-      <div class="card-watermark" id="cardWatermark">by @ahmatbadali</div>
+      <div class="card-watermark" id="cardWatermark">by Codesnip</div>
     </div>
   </section>
 </main>
@@ -642,7 +666,6 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
             <option value="stackoverflow-dark">Stack Overflow Dark</option>
             <option value="paraiso-dark">Paraiso Dark</option>
             <option value="codepen-embed">CodePen Embed</option>
-            <!-- Additional Themes Added -->
             <option value="github">GitHub Light</option>
             <option value="atom-one-light">Atom One Light</option>
             <option value="solarized-light">Solarized Light</option>
@@ -672,7 +695,8 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
         </div>
         <div class="field"><label class="label">Line height</label><div class="range-row"><input id="drawerLineHeight" type="range" min="1.2" max="2.2" step="0.05" value="1.55"><span class="value" id="drawerLineHeightVal">1.55</span></div></div>
         <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="drawerShowLines" type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="field"><label class="label">First line number</label><input id="drawerFirstLineNumber" type="number" value="1" min="0" max="999"></div>
+        <div class="toggle-row"><span>Hidden characters</span><label class="switch"><input id="drawerShowHiddenChars" type="checkbox"><span class="slider"></span></label></div>
+        <div class="field" style="margin-top:10px;"><label class="label">First line number</label><input id="drawerFirstLineNumber" type="number" value="1" min="0" max="999"></div>
       </div>
     </div>
 
@@ -711,11 +735,10 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
               <div class="swatches drawer-swatches">
                 <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)"></button>
                 <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #2b083d, #ff007f)" style="background:linear-gradient(135deg, #2b083d, #ff007f)"></button>
                 <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)"></button>
                 <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)"></button>
-                <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
                 <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)"></button>
-                <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)"></button>
                 <button class="swatch" data-preset="#EF4444" style="background:#EF4444"></button>
                 <button class="swatch" data-preset="#10B981" style="background:#10B981"></button>
                 <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6"></button>
@@ -754,7 +777,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
       <div class="section">
         <h3>Watermark</h3>
         <div class="toggle-row"><span>Enable watermark</span><label class="switch"><input id="drawerShowWatermark" type="checkbox"><span class="slider"></span></label></div>
-        <div class="field" style="margin-top:8px"><label class="label">Watermark text</label><input id="drawerWatermarkText" type="text" value="by @ahmatbadali"></div>
+        <div class="field" style="margin-top:8px"><label class="label">Watermark text</label><input id="drawerWatermarkText" type="text" value="by Codesnip"></div>
       </div>
     </div>
   </div>
@@ -794,9 +817,9 @@ const $ = id => document.getElementById(id);
 const state = {
   language:"auto", filename:"snippet.js", font:"jetbrains", fontSize:14, lineHeight:1.55, theme:"atom-one-dark",
   bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)", bgOpacity:1, bgImageUrl:"", bgImageName:"",
-  showWindow:true, showTitle:true, showLines:true, firstLineNumber:1, windowStyle:"default", 
+  showWindow:true, showTitle:true, showLines:true, showHiddenChars:false, firstLineNumber:1, windowStyle:"default", 
   paddingVert:64, paddingHoriz:64, radius:14, dropShadow:true, shadowBlur:70,
-  showWatermark:false, watermarkText:"by @ahmatbadali"
+  showWatermark:false, watermarkText:"by Codesnip"
 };
 
 const selects = [$("language"),$("mobileLanguage"),$("drawerLanguage")];
@@ -820,12 +843,33 @@ function detectedLanguage(code){
 function languageLabel(v){
   const x=languages.find(a=>a[0]===v); return x ? x[1] : v;
 }
+
+function processHiddenCharacters(htmlText) {
+  if (!state.showHiddenChars) return htmlText;
+  // Membungkus spasi dan tab dengan span khusus untuk divisualisasikan
+  return htmlText
+    .replace(/ /g, '<span class="whitespace-space"> </span>')
+    .replace(/\t/g, '<span class="whitespace-tab">\t</span>');
+}
+
 function highlightCode(code){
   const lang=detectedLanguage(code);
-  if(lang==="plaintext") return escapeHtml(code);
-  try{return hljs.highlight(code,{language:lang,ignoreIllegals:true}).value}
-  catch(e){return escapeHtml(code)}
+  let rawHtml = "";
+  if(lang==="plaintext") rawHtml = escapeHtml(code);
+  else {
+    try{ rawHtml = hljs.highlight(code,{language:lang,ignoreIllegals:true}).value }
+    catch(e){ rawHtml = escapeHtml(code) }
+  }
+  return processHiddenCharacters(rawHtml);
 }
+
+function highlightFilename(filename) {
+  const lang = detectedLanguage(filename || "snippet.js");
+  if(lang === "plaintext") return escapeHtml(filename);
+  try { return hljs.highlight(filename, {language: lang, ignoreIllegals: true}).value; }
+  catch(e) { return escapeHtml(filename); }
+}
+
 function escapeHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 
 function lineMarkup(code){
@@ -839,7 +883,6 @@ function applyFont(){
   ["code","highlight","previewHighlight","editorLines","previewLines"].forEach(id=>{
     if($(id)) $(id).style.fontFamily=family;
   });
-  $("code.style")?.fontSize;
   ["code","highlight","previewHighlight","editorLines","previewLines"].forEach(id => {
     if($(id)) {
       $(id).style.fontSize = state.fontSize+"px";
@@ -852,17 +895,26 @@ function applyFont(){
 
 function render(){
   const code=$("code").value;
-  $("highlight").querySelector("code").innerHTML=highlightCode(code);
-  $("previewHighlight").innerHTML=highlightCode(code);
+  const highlighted = highlightCode(code);
+  $("highlight").querySelector("code").innerHTML = highlighted;
+  $("previewHighlightinnerHTML") || ($("previewHighlight").innerHTML = highlighted);
   $("editorLines").textContent=lineMarkup(code);
   $("previewLines").textContent=lineMarkup(code);
   $("toolbarFilename").textContent=state.filename || "snippet";
-  $("previewTitle").textContent=state.filename || "snippet";
+  
+  // Render filename with syntax highlight color
+  const coloredTitle = highlightFilename(state.filename || "snippet.js");
+  $("previewTitleCode").innerHTML = coloredTitle;
+
   $("langBadge").textContent=state.language==="auto" ? "Auto → "+languageLabel(detectedLanguage(code)) : languageLabel(state.language);
   $("windowBar").className="window-bar window-"+state.windowStyle+(state.showWindow?"":" hidden");
   $("previewTitle").classList.toggle("hidden",!state.showTitle);
   $("editorLines").classList.toggle("hidden",!state.showLines);
   $("previewLines").classList.toggle("hidden",!state.showLines);
+
+  // Toggle CSS class for hidden characters wrapper on editor and preview
+  $("editorContainer").classList.toggle("show-hidden-chars", state.showHiddenChars);
+  $("codeCard").classList.toggle("show-hidden-chars", state.showHiddenChars);
 
   const exportFrame = $("exportFrame");
   if(state.bgImageUrl){
@@ -927,6 +979,7 @@ function syncControls(){
   $("showWindow").checked=state.showWindow;$("drawerShowWindow").checked=state.showWindow;
   $("showTitle").checked=state.showTitle;$("drawerShowTitle").checked=state.showTitle;
   $("showLines").checked=state.showLines;$("drawerShowLines").checked=state.showLines;
+  $("showHiddenChars").checked=state.showHiddenChars;$("drawerShowHiddenChars").checked=state.showHiddenChars;
   
   $("paddingVert").value=state.paddingVert;$("drawerPaddingVert").value=state.paddingVert;
   $("paddingHoriz").value=state.paddingHoriz;$("drawerPaddingHoriz").value=state.paddingHoriz;
@@ -1022,8 +1075,8 @@ document.querySelectorAll(".preset-thumb").forEach(thumb => {
       setField("bgColor", "linear-gradient(135deg, #f43f5e, #fb923c)");
       setField("theme", "monokai");
     } else if(id === "p3") {
-      setField("bgColor", "linear-gradient(135deg, #10b981, #3b82f6)");
-      setField("theme", "nord");
+      setField("bgColor", "linear-gradient(135deg, #2b083d, #ff007f)");
+      setField("theme", "synthwave");
     } else if(id === "p4") {
       setField("bgColor", "#111827");
       setField("theme", "github-dark");
@@ -1177,7 +1230,7 @@ $("code").addEventListener("keydown",e=>{
 ["theme","drawerTheme"].forEach(id => $(id).addEventListener("change", e=>setField("theme",e.target.value)));
 ["firstLineNumber","drawerFirstLineNumber"].forEach(id => $(id).addEventListener("input", e=>setField("firstLineNumber",+e.target.value||1)));
 
-["showWindow","showTitle","showLines"].forEach(k=>{
+["showWindow","showTitle","showLines","showHiddenChars"].forEach(k=>{
   $(k).addEventListener("change",e=>setField(k,e.target.checked));
   const drawerEl = $("drawer"+k[0].toUpperCase()+k.slice(1));
   if(drawerEl) drawerEl.addEventListener("change",e=>setField(k,e.target.checked));
@@ -1217,7 +1270,7 @@ $("formatBtn").addEventListener("click", formatCodeWithPrettier);
 $("mobileFormat").addEventListener("click", formatCodeWithPrettier);
 
 $("resetBtn").addEventListener("click",()=>{
-  Object.assign(state,{language:"auto",filename:"snippet.js",font:"jetbrains",fontSize:14,lineHeight:1.55,theme:"atom-one-dark",bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,firstLineNumber:1,windowStyle:"default",paddingVert:64,paddingHoriz:64,radius:14,dropShadow:true,shadowBlur:70,showWatermark:false,watermarkText:"by @ahmatbadali"});
+  Object.assign(state,{language:"auto",filename:"snippet.js",font:"jetbrains",fontSize:14,lineHeight:1.55,theme:"atom-one-dark",bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,showHiddenChars:false,firstLineNumber:1,windowStyle:"default",paddingVert:64,paddingHoriz:64,radius:14,dropShadow:true,shadowBlur:70,showWatermark:false,watermarkText:"by Codesnip"});
   $("code").value=defaultCode;setTheme(state.theme);syncControls();render();toast("Berhasil direset");
 });
 $("mobileReset").addEventListener("click",()=>$("resetBtn").click());
