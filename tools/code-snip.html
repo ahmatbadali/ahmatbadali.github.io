@@ -8,14 +8,12 @@
 
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <!-- Highlight.js Stylesheets -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
-<!-- Extra theme styles to match carbon more closely via CDN or standard hljs themes -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css" id="extraThemeStyle" disabled>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css" id="highlightThemeLink">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,300..700;1,300..700&family=Fira+Code:wght@300..700&family=Inconsolata:wght@300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Source+Code+Pro:ital,wght@0,300..900;1,300..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,300..700;1,300..700&family=Fira+Code:wght@300..700&family=Inconsolata:wght@300..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Source+Code+Pro:ital,wght@0,300..900;1,300..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Hack&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
 <!-- Languages bundle -->
@@ -73,10 +71,10 @@ button{cursor:pointer}
 .btn.danger:hover{background:#4d1a21}
 .layout{display:flex;flex:1;min-height:calc(100vh - 64px)}
 .sidebar{
-  width:295px;flex:0 0 295px;border-right:1px solid var(--line);
+  width:315px;flex:0 0 315px;border-right:1px solid var(--line);
   background:#0f1622;padding:18px;overflow-y:auto
 }
-.section{padding:0 0 20px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.section{padding:0 0 16px;margin-bottom:16px;border-bottom:1px solid var(--line)}
 .section:last-child{border-bottom:0}
 .section h3{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#7f8ba0;margin:0 0 11px}
 .field{margin-bottom:12px}
@@ -91,7 +89,25 @@ select:focus,input:focus{border-color:#6574ff;box-shadow:0 0 0 2px #6574ff22}
 input[type=range]{width:100%;accent-color:var(--accent)}
 .value{font-size:12px;color:var(--muted);min-width:38px;text-align:right}
 
-/* CUSTOM BG PICKER STYLES */
+/* CARBON PRESETS THUMBNAILS */
+.presets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+.preset-thumb{
+  height:44px;border-radius:6px;border:1px solid var(--line);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:10px;font-weight:600;color:#fff;transition:.15s;overflow:hidden;position:relative
+}
+.preset-thumb:hover{border-color:var(--accent);transform:scale(1.03)}
+.preset-thumb.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+
+/* CARBON TABS CATEGORIES (Window, Editor, Misc) */
+.carbon-tabs{display:flex;background:#090e15;border-radius:8px;padding:3px;margin-bottom:12px;border:1px solid var(--line)}
+.carbon-tab{
+  flex:1;background:none;border:0;padding:6px 0;font-size:11px;font-weight:600;
+  color:var(--muted);border-radius:6px;cursor:pointer;transition:.15s;text-align:center
+}
+.carbon-tab.active{background:#182335;color:var(--text)}
+
+/* CUSTOM BG PICKER */
 .bg-picker-container{position:relative}
 .bg-dropdown-btn{
   width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;
@@ -136,6 +152,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .slider:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s}
 .switch input:checked+.slider{background:var(--accent)}
 .switch input:checked+.slider:before{transform:translateX(18px)}
+
 .workspace{flex:1;min-width:0;display:flex;flex-direction:column;background:#0b1018}
 .mobile-bar{display:none}
 .toolbar{
@@ -172,7 +189,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
   flex:1;min-height:360px;display:flex;align-items:stretch;justify-content:center;
   padding:0;overflow:auto;background:#080c12
 }
-.export-frame{width:100%;max-width:1500px;min-width:0;padding:64px;display:flex;justify-content:center;align-items:center;overflow:auto}
+.export-frame{width:100%;max-width:1500px;min-width:0;padding:64px;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:auto;position:relative}
 .code-card{
   width:auto;max-width:none;overflow:hidden;border-radius:var(--radius);
   box-shadow:0 24px 70px #0008;background:#0d1117;border:1px solid #ffffff16;flex-shrink:0
@@ -189,6 +206,11 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 .preview-highlight{
   flex:1;margin:0;padding:18px;min-width:0;white-space:pre;overflow-wrap:normal;
   font:14px/1.6 monospace
+}
+
+/* WATERMARK */
+.card-watermark{
+  margin-top:12px;font-size:12px;font-weight:600;color:#8c98aa;letter-spacing:0.5px;text-align:right;width:100%;padding-right:4px;display:none
 }
 
 /* WINDOW STYLE PRESETS */
@@ -278,7 +300,7 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
   .editor-wrap{width:100%;padding:10px;overflow:hidden}
   .editor{width:100%;min-width:0;min-height:280px;max-height:44vh}
   .preview-area{width:100%;min-width:100%;max-width:none;min-height:380px;padding:0;margin:0;display:block;overflow-x:auto;overflow-y:auto}
-  .export-frame{width:100%;min-width:max-content;max-width:none;min-height:380px;padding:24px 12px;margin:0;display:flex;align-items:center;justify-content:center}
+  .export-frame{width:100%;min-width:max-content;max-width:none;min-height:380px;padding:24px 12px;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .code-card{width:auto;min-width:0;max-width:none}
   .preview-code{width:100%;min-width:0}
   .preview-highlight,.preview-lines{font-size:12px;line-height:1.55}
@@ -317,155 +339,190 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
 
 <div class="layout">
 <aside class="sidebar">
+  <!-- Presets Grid ala Carbon -->
   <div class="section">
-    <h3>Code</h3>
-    <div class="field"><label class="label">Language</label><select id="language"></select></div>
-    <div class="field"><label class="label">Filename</label><input id="filename" type="text" value="snippet.js" maxlength="120"></div>
-    <div class="row">
-      <div class="field"><label class="label">Font</label>
-        <select id="font">
-          <option value="jetbrains">JetBrains Mono</option>
-          <option value="fira">Fira Code</option>
-          <option value="sourcecode">Source Code Pro</option>
-          <option value="spacemono">Space Mono</option>
-          <option value="ubuntumono">Ubuntu Mono</option>
-          <option value="inconsolata">Inconsolata</option>
-          <option value="cascadia">Cascadia Code</option>
-          <option value="system">System Mono</option>
-          <option value="consolas">Consolas</option>
+    <h3>Presets</h3>
+    <div class="presets-grid">
+      <div class="preset-thumb active" data-preset-id="p1" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4)" title="Purple Cyan">Purple</div>
+      <div class="preset-thumb" data-preset-id="p2" style="background:linear-gradient(135deg,#f43f5e,#fb923c)" title="Sunset">Sunset</div>
+      <div class="preset-thumb" data-preset-id="p3" style="background:linear-gradient(135deg,#10b981,#3b82f6)" title="Emerald Blue">Emerald</div>
+      <div class="preset-thumb" data-preset-id="p4" style="background:#111827;border-color:#48556a" title="Minimal Dark">Dark</div>
+    </div>
+  </div>
+
+  <!-- Carbon Category Tabs -->
+  <div class="carbon-tabs">
+    <button type="button" class="carbon-tab active" data-cat="window">Window</button>
+    <button type="button" class="carbon-tab" data-cat="editor">Editor</button>
+    <button type="button" class="carbon-tab" data-cat="misc">Misc</button>
+  </div>
+
+  <!-- CATEGORY WINDOW -->
+  <div class="settings-cat" id="catWindow">
+    <div class="section">
+      <h3>Window Options</h3>
+      <div class="toggle-row"><span>Window controls</span><label class="switch"><input id="showWindow" type="checkbox" checked><span class="slider"></span></label></div>
+      <div class="toggle-row"><span>Title / Filename</span><label class="switch"><input id="showTitle" type="checkbox" checked><span class="slider"></span></label></div>
+      <div class="field" style="margin-top:10px;"><label class="label">Filename</label><input id="filename" type="text" value="snippet.js" maxlength="120"></div>
+    </div>
+
+    <div class="section">
+      <h3>Window Style</h3>
+      <div class="window-style-grid">
+        <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
+        <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
+        <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#f4f4f5"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
+        <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36"></i><i style="background:#353d4b"></i><i style="background:#454e5d"></i></span><span class="window-style-name">Dark</span></button>
+        <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i></span><span class="window-style-name">Linux</span></button>
+        <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80"></i><i style="background:#22c55e"></i><i style="background:#86efac"></i></span><span class="window-style-name">Terminal</span></button>
+        <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
+        <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8"></i><i style="background:#7c5cff"></i><i style="background:#00e5ff"></i></span><span class="window-style-name">Neon</span></button>
+        <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i></span><span class="window-style-name">Full Black</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY EDITOR -->
+  <div class="settings-cat hidden" id="catEditor">
+    <div class="section">
+      <h3>Editor Setup</h3>
+      <div class="field"><label class="label">Language</label><select id="language"></select></div>
+      <div class="field"><label class="label">Theme (Carbon style)</label>
+        <select id="theme">
+          <option value="atom-one-dark">Atom One Dark</option>
+          <option value="github-dark">GitHub Dark</option>
+          <option value="monokai">Monokai</option>
+          <option value="night-owl">Night Owl</option>
+          <option value="tokyo-night-dark">Tokyo Night Dark</option>
+          <option value="nord">Nord</option>
+          <option value="dracula">Dracula</option>
+          <option value="synthwave">SynthWave '84</option>
+          <option value="solarized-dark">Solarized Dark</option>
+          <option value="material-darker">Material Darker</option>
+          <option value="oceanicnext">Oceanic Next</option>
+          <option value="panda">Panda Syntax</option>
+          <option value="zenburn">Zenburn</option>
+          <option value="railscasts">Railscasts</option>
+          <option value="grayscale-dark">Grayscale Dark</option>
+          <option value="vs2015">VS 2015</option>
+          <option value="hopscotch">Hopscotch</option>
+          <option value="stackoverflow-dark">Stack Overflow Dark</option>
+          <option value="paraiso-dark">Paraiso Dark</option>
+          <option value="codepen-embed">CodePen Embed</option>
         </select>
       </div>
-      <div class="field"><label class="label">Size</label><input id="fontSize" type="number" min="10" max="28" value="14"></div>
+      <div class="row">
+        <div class="field"><label class="label">Font</label>
+          <select id="font">
+            <option value="jetbrains">JetBrains Mono</option>
+            <option value="fira">Fira Code</option>
+            <option value="sourcecode">Source Code Pro</option>
+            <option value="spacemono">Space Mono</option>
+            <option value="ubuntumono">Ubuntu Mono</option>
+            <option value="inconsolata">Inconsolata</option>
+            <option value="cascadia">Cascadia Code</option>
+            <option value="hack">Hack</option>
+            <option value="system">System Mono</option>
+            <option value="consolas">Consolas</option>
+          </select>
+        </div>
+        <div class="field"><label class="label">Size</label><input id="fontSize" type="number" min="10" max="28" value="14"></div>
+      </div>
+      <div class="field"><label class="label">Line height</label><div class="range-row"><input id="lineHeight" type="range" min="1.2" max="2.2" step="0.05" value="1.55"><span class="value" id="lineHeightVal">1.55</span></div></div>
+      <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="showLines" type="checkbox" checked><span class="slider"></span></label></div>
+      <div class="field"><label class="label">First line number</label><input id="firstLineNumber" type="number" value="1" min="0" max="999"></div>
     </div>
   </div>
 
-  <div class="section">
-    <h3>Theme (Carbon style)</h3>
-    <select id="theme">
-      <option value="atom-one-dark">Atom One Dark</option>
-      <option value="github-dark">GitHub Dark</option>
-      <option value="monokai">Monokai</option>
-      <option value="night-owl">Night Owl</option>
-      <option value="tokyo-night-dark">Tokyo Night Dark</option>
-      <option value="nord">Nord</option>
-      <option value="dracula">Dracula</option>
-      <option value="synthwave">SynthWave '84</option>
-      <option value="solarized-dark">Solarized Dark</option>
-      <option value="material-darker">Material Darker</option>
-      <option value="oceanicnext">Oceanic Next</option>
-      <option value="panda">Panda Syntax</option>
-      <option value="zenburn">Zenburn</option>
-      <option value="railscasts">Railscasts</option>
-      <option value="grayscale-dark">Grayscale Dark</option>
-      <option value="vs2015">VS 2015</option>
-      <option value="hopscotch">Hopscotch</option>
-      <option value="stackoverflow-dark">Stack Overflow Dark</option>
-      <option value="paraiso-dark">Paraiso Dark</option>
-      <option value="codepen-embed">CodePen Embed</option>
-    </select>
-  </div>
+  <!-- CATEGORY MISC -->
+  <div class="settings-cat hidden" id="catMisc">
+    <div class="section">
+      <h3>Background & Frame</h3>
+      <!-- Custom Background Picker -->
+      <div class="bg-picker-container" id="bgPickerContainer">
+        <button type="button" class="bg-dropdown-btn" id="bgDropdownToggle">
+          <span class="bg-preview-swatch" id="bgPreviewSwatch" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4);"></span>
+          <span id="bgDropdownText" style="flex:1; text-align:left;">Gradient / Color</span>
+          <span style="font-size:10px; color:var(--muted)">▼</span>
+        </button>
 
-  <div class="section">
-    <h3>Background</h3>
-    <!-- Custom Background Picker Component -->
-    <div class="bg-picker-container" id="bgPickerContainer">
-      <button type="button" class="bg-dropdown-btn" id="bgDropdownToggle">
-        <span class="bg-preview-swatch" id="bgPreviewSwatch" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4);"></span>
-        <span id="bgDropdownText" style="flex:1; text-align:left;">Gradient / Color</span>
-        <span style="font-size:10px; color:var(--muted)">▼</span>
-      </button>
+        <div class="bg-popup-panel" id="bgPopupPanel">
+          <div class="bg-tabs">
+            <button type="button" class="bg-tab active" data-tab="color">Color & Gradient</button>
+            <button type="button" class="bg-tab" data-tab="image">Image</button>
+          </div>
 
-      <div class="bg-popup-panel" id="bgPopupPanel">
-        <div class="bg-tabs">
-          <button type="button" class="bg-tab active" data-tab="color">Color & Gradient</button>
-          <button type="button" class="bg-tab" data-tab="image">Image</button>
-        </div>
-
-        <div class="bg-tab-content" id="bgTabColor">
-          <div class="color-input-row">
-            <input type="color" id="nativeColorPicker" value="#7c5cff">
-            <div class="hex-input-wrap">
-              <span>#</span>
-              <input type="text" id="hexInputText" value="7C5CFF" maxlength="6">
+          <div class="bg-tab-content" id="bgTabColor">
+            <div class="color-input-row">
+              <input type="color" id="nativeColorPicker" value="#7c5cff">
+              <div class="hex-input-wrap">
+                <span>#</span>
+                <input type="text" id="hexInputText" value="7C5CFF" maxlength="6">
+              </div>
+            </div>
+            <div class="opacity-box">
+              <div class="opacity-header">
+                <span>Opacity</span>
+                <span id="opacityValLabel">100%</span>
+              </div>
+              <input type="range" id="opacityRange" min="0" max="1" step="0.01" value="1">
+            </div>
+            <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Gradients & Presets</div>
+            <div class="swatches" id="presetSwatchesContainer">
+              <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)"></button>
+              <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)"></button>
+              <button class="swatch" data-preset="#EF4444" style="background:#EF4444"></button>
+              <button class="swatch" data-preset="#10B981" style="background:#10B981"></button>
+              <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6"></button>
+              <button class="swatch" data-preset="#7C5CFF" style="background:#7C5CFF"></button>
+              <button class="swatch" data-preset="#111827" style="background:#111827"></button>
+              <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF"></button>
+              <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px"></button>
             </div>
           </div>
-          <div class="opacity-box">
-            <div class="opacity-header">
-              <span>Opacity</span>
-              <span id="opacityValLabel">100%</span>
-            </div>
-            <input type="range" id="opacityRange" min="0" max="1" step="0.01" value="1">
-          </div>
-          <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Gradients & Presets</div>
-          <div class="swatches" id="presetSwatchesContainer">
-            <!-- Gradients -->
-            <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)" title="Purple Cyan"></button>
-            <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)" title="Sunset"></button>
-            <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)" title="Emerald Blue"></button>
-            <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)" title="Indigo Purple"></button>
-            <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)" title="Pink Purple"></button>
-            <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)" title="Sky Blue"></button>
-            <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)" title="Teal Orange"></button>
-            <!-- Solids -->
-            <button class="swatch" data-preset="#EF4444" style="background:#EF4444" title="Red"></button>
-            <button class="swatch" data-preset="#10B981" style="background:#10B981" title="Emerald"></button>
-            <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6" title="Blue"></button>
-            <button class="swatch" data-preset="#7C5CFF" style="background:#7C5CFF" title="Purple"></button>
-            <button class="swatch" data-preset="#111827" style="background:#111827" title="Dark"></button>
-            <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF" title="White"></button>
-            <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px" title="Transparent"></button>
-          </div>
-        </div>
 
-        <div class="bg-tab-content hidden" id="bgTabImage">
-          <label class="upload-label">
-            <span style="font-size:20px; margin-bottom:4px">📁</span>
-            <span style="font-size:12px; font-weight:600; color:var(--text)">Upload Background</span>
-            <span style="font-size:10px; color:var(--muted); margin-top:2px">Local image (PNG, JPG, WEBP)</span>
-            <input type="file" id="bgImageUpload" accept="image/*" class="hidden">
-          </label>
-          <div class="upload-info hidden" id="bgUploadInfoBox">
-            <span id="bgUploadFilename" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">image.png</span>
-            <button type="button" id="bgRemoveImgBtn" style="background:none; border:0; color:#ff9fa8; font-size:11px; cursor:pointer; font-weight:600">Remove</button>
+          <div class="bg-tab-content hidden" id="bgTabImage">
+            <label class="upload-label">
+              <span style="font-size:20px; margin-bottom:4px">📁</span>
+              <span style="font-size:12px; font-weight:600; color:var(--text)">Upload Background</span>
+              <span style="font-size:10px; color:var(--muted); margin-top:2px">Local image (PNG, JPG, WEBP)</span>
+              <input type="file" id="bgImageUpload" accept="image/*" class="hidden">
+            </label>
+            <div class="upload-info hidden" id="bgUploadInfoBox">
+              <span id="bgUploadFilename" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">image.png</span>
+              <button type="button" id="bgRemoveImgBtn" style="background:none; border:0; color:#ff9fa8; font-size:11px; cursor:pointer; font-weight:600">Remove</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="section">
-    <h3>Window</h3>
-    <div class="toggle-row"><span>Window controls</span><label class="switch"><input id="showWindow" type="checkbox" checked><span class="slider"></span></label></div>
-    <div class="toggle-row"><span>Title</span><label class="switch"><input id="showTitle" type="checkbox" checked><span class="slider"></span></label></div>
-    <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="showLines" type="checkbox" checked><span class="slider"></span></label></div>
-  </div>
-
-  <div class="section">
-    <h3>Window Style</h3>
-    <div class="window-style-grid">
-      <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
-      <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
-      <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#f4f4f5"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
-      <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36"></i><i style="background:#353d4b"></i><i style="background:#454e5d"></i></span><span class="window-style-name">Dark</span></button>
-      <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i></span><span class="window-style-name">Linux</span></button>
-      <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80"></i><i style="background:#22c55e"></i><i style="background:#86efac"></i></span><span class="window-style-name">Terminal</span></button>
-      <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
-      <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8"></i><i style="background:#7c5cff"></i><i style="background:#00e5ff"></i></span><span class="window-style-name">Neon</span></button>
-      <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i></span><span class="window-style-name">Full Black</span></button>
+    <div class="section">
+      <h3>Spacing & Effects</h3>
+      <div class="field"><label class="label">Padding (Vertical)</label><div class="range-row"><input id="paddingVert" type="range" min="10" max="120" value="64"><span class="value" id="paddingVertVal">64px</span></div></div>
+      <div class="field"><label class="label">Padding (Horizontal)</label><div class="range-row"><input id="paddingHoriz" type="range" min="10" max="120" value="64"><span class="value" id="paddingHorizVal">64px</span></div></div>
+      <div class="field"><label class="label">Card Radius</label><div class="range-row"><input id="radius" type="range" min="0" max="30" value="14"><span class="value" id="radiusVal">14px</span></div></div>
+      <div class="toggle-row"><span>Drop shadow</span><label class="switch"><input id="dropShadow" type="checkbox" checked><span class="slider"></span></label></div>
+      <div class="field"><label class="label">Blur radius shadow</label><div class="range-row"><input id="shadowBlur" type="range" min="10" max="150" value="70"><span class="value" id="shadowBlurVal">70px</span></div></div>
     </div>
-  </div>
 
-  <div class="section">
-    <h3>Spacing</h3>
-    <div class="field"><label class="label">Padding</label><div class="range-row"><input id="padding" type="range" min="10" max="110" value="64"><span class="value" id="paddingVal">64px</span></div></div>
-    <div class="field"><label class="label">Radius</label><div class="range-row"><input id="radius" type="range" min="0" max="30" value="14"><span class="value" id="radiusVal">14px</span></div></div>
+    <div class="section">
+      <h3>Watermark</h3>
+      <div class="toggle-row"><span>Enable watermark</span><label class="switch"><input id="showWatermark" type="checkbox"><span class="slider"></span></label></div>
+      <div class="field" style="margin-top:8px"><label class="label">Watermark text</label><input id="watermarkText" type="text" value="by @ahmatbadali"></div>
+    </div>
   </div>
 </aside>
 
 <main class="workspace">
   <div class="mobile-bar">
     <div class="mobile-scroll">
-      <button class="btn mobile-action primary" id="settingsBtn">⚙ Settings & BG</button>
+      <button class="btn mobile-action primary" id="settingsBtn">⚙ Settings & Custom</button>
       <select id="mobileLanguage" aria-label="Language"></select>
       <button class="btn mobile-action" id="mobileCopy">Copy</button>
       <button class="btn mobile-action" id="mobileFormat">Format</button>
@@ -509,151 +566,179 @@ input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--
           <pre class="preview-highlight" id="previewHighlight"></pre>
         </div>
       </div>
+      <div class="card-watermark" id="cardWatermark">by @ahmatbadali</div>
     </div>
   </section>
 </main>
 </div>
 </div>
 
-<!-- DRAWER SETTINGS (MOBILE & GENERAL FULL CONTROLS) -->
+<!-- DRAWER SETTINGS (MOBILE FULL CONTROLS) -->
 <div class="drawer" id="drawer">
   <div class="drawer-panel">
-    <div class="drawer-head"><h2>Settings & Background</h2><button class="btn" id="closeDrawer">✕</button></div>
+    <div class="drawer-head"><h2>Settings & Carbon UI</h2><button class="btn" id="closeDrawer">✕</button></div>
     
-    <div class="field"><label class="label">Language</label><select id="drawerLanguage"></select></div>
-    <div class="field"><label class="label">Filename</label><input id="drawerFilename" type="text" maxlength="120"></div>
-    <div class="row">
-      <div class="field"><label class="label">Font</label>
-        <select id="drawerFont">
-          <option value="jetbrains">JetBrains Mono</option>
-          <option value="fira">Fira Code</option>
-          <option value="sourcecode">Source Code Pro</option>
-          <option value="spacemono">Space Mono</option>
-          <option value="ubuntumono">Ubuntu Mono</option>
-          <option value="inconsolata">Inconsolata</option>
-          <option value="cascadia">Cascadia Code</option>
-          <option value="system">System Mono</option>
-          <option value="consolas">Consolas</option>
-        </select>
+    <div class="carbon-tabs" style="margin-bottom:14px;">
+      <button type="button" class="carbon-tab active" data-drawer-cat="window">Window</button>
+      <button type="button" class="carbon-tab" data-drawer-cat="editor">Editor</button>
+      <button type="button" class="carbon-tab" data-drawer-cat="misc">Misc</button>
+    </div>
+
+    <div class="drawer-cat" id="drawerCatWindow">
+      <div class="section">
+        <h3>Window Options</h3>
+        <div class="toggle-row"><span>Window controls</span><label class="switch"><input id="drawerShowWindow" type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="toggle-row"><span>Title / Filename</span><label class="switch"><input id="drawerShowTitle" type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="field" style="margin-top:10px;"><label class="label">Filename</label><input id="drawerFilename" type="text" maxlength="120"></div>
       </div>
-      <div class="field"><label class="label">Size</label><input id="drawerFontSize" type="number" min="10" max="28"></div>
-    </div>
-    
-    <div class="field"><label class="label">Theme</label>
-      <select id="drawerTheme">
-        <option value="atom-one-dark">Atom One Dark</option>
-        <option value="github-dark">GitHub Dark</option>
-        <option value="monokai">Monokai</option>
-        <option value="night-owl">Night Owl</option>
-        <option value="tokyo-night-dark">Tokyo Night Dark</option>
-        <option value="nord">Nord</option>
-        <option value="dracula">Dracula</option>
-        <option value="synthwave">SynthWave '84</option>
-        <option value="solarized-dark">Solarized Dark</option>
-        <option value="material-darker">Material Darker</option>
-        <option value="oceanicnext">Oceanic Next</option>
-        <option value="panda">Panda Syntax</option>
-        <option value="zenburn">Zenburn</option>
-        <option value="railscasts">Railscasts</option>
-        <option value="grayscale-dark">Grayscale Dark</option>
-        <option value="vs2015">VS 2015</option>
-        <option value="hopscotch">Hopscotch</option>
-        <option value="stackoverflow-dark">Stack Overflow Dark</option>
-        <option value="paraiso-dark">Paraiso Dark</option>
-        <option value="codepen-embed">CodePen Embed</option>
-      </select>
-    </div>
-
-    <!-- Background Settings Inside Drawer for Mobile -->
-    <div class="section">
-      <h3>Background</h3>
-      <div class="bg-picker-container" id="drawerBgPickerContainer">
-        <button type="button" class="bg-dropdown-btn" id="drawerBgDropdownToggle">
-          <span class="bg-preview-swatch" id="drawerBgPreviewSwatch" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4);"></span>
-          <span id="drawerBgDropdownText" style="flex:1; text-align:left;">Gradient / Color</span>
-          <span style="font-size:10px; color:var(--muted)">▼</span>
-        </button>
-
-        <div class="bg-popup-panel" id="drawerBgPopupPanel" style="position:relative; margin-top:8px; box-shadow:none; border:1px solid var(--line);">
-          <div class="bg-tabs">
-            <button type="button" class="bg-tab active" data-drawer-tab="color">Color & Gradient</button>
-            <button type="button" class="bg-tab" data-drawer-tab="image">Image</button>
-          </div>
-
-          <div class="bg-tab-content" id="drawerBgTabColor">
-            <div class="color-input-row">
-              <input type="color" id="drawerNativeColorPicker" value="#7c5cff">
-              <div class="hex-input-wrap">
-                <span>#</span>
-                <input type="text" id="drawerHexInputText" value="7C5CFF" maxlength="6">
-              </div>
-            </div>
-            <div class="opacity-box">
-              <div class="opacity-header">
-                <span>Opacity</span>
-                <span id="drawerOpacityValLabel">100%</span>
-              </div>
-              <input type="range" id="drawerOpacityRange" min="0" max="1" step="0.01" value="1">
-            </div>
-            <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Gradients & Presets</div>
-            <div class="swatches drawer-swatches">
-              <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)"></button>
-              <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)"></button>
-              <button class="swatch" data-preset="#EF4444" style="background:#EF4444"></button>
-              <button class="swatch" data-preset="#10B981" style="background:#10B981"></button>
-              <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6"></button>
-              <button class="swatch" data-preset="#7C5CFF" style="background:#7C5CFF"></button>
-              <button class="swatch" data-preset="#111827" style="background:#111827"></button>
-              <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF"></button>
-              <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px"></button>
-            </div>
-          </div>
-
-          <div class="bg-tab-content hidden" id="drawerBgTabImage">
-            <label class="upload-label">
-              <span style="font-size:20px; margin-bottom:4px">📁</span>
-              <span style="font-size:12px; font-weight:600; color:var(--text)">Upload Background</span>
-              <span style="font-size:10px; color:var(--muted); margin-top:2px">Local image (PNG, JPG, WEBP)</span>
-              <input type="file" id="drawerBgImageUpload" accept="image/*" class="hidden">
-            </label>
-            <div class="upload-info hidden" id="drawerBgUploadInfoBox">
-              <span id="drawerBgUploadFilename" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">image.png</span>
-              <button type="button" id="drawerBgRemoveImgBtn" style="background:none; border:0; color:#ff9fa8; font-size:11px; cursor:pointer; font-weight:600">Remove</button>
-            </div>
-          </div>
+      <div class="section">
+        <h3>Window Style</h3>
+        <div class="window-style-grid" id="drawerWindowStyleGrid">
+          <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
+          <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
+          <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#f4f4f5"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
+          <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36"></i><i style="background:#353d4b"></i><i style="background:#454e5d"></i></span><span class="window-style-name">Dark</span></button>
+          <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i></span><span class="window-style-name">Linux</span></button>
+          <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80"></i><i style="background:#22c55e"></i><i style="background:#86efac"></i></span><span class="window-style-name">Terminal</span></button>
+          <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
+          <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8"></i><i style="background:#7c5cff"></i><i style="background:#00e5ff"></i></span><span class="window-style-name">Neon</span></button>
+          <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i></span><span class="window-style-name">Full Black</span></button>
         </div>
       </div>
     </div>
 
-    <div class="section">
-      <h3>Window</h3>
-      <div class="toggle-row"><span>Window controls</span><label class="switch"><input id="drawerShowWindow" type="checkbox" checked><span class="slider"></span></label></div>
-      <div class="toggle-row"><span>Title</span><label class="switch"><input id="drawerShowTitle" type="checkbox" checked><span class="slider"></span></label></div>
-      <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="drawerShowLines" type="checkbox" checked><span class="slider"></span></label></div>
-    </div>
-    
-    <div class="section">
-      <h3>Window Style</h3>
-      <div class="window-style-grid" id="drawerWindowStyleGrid">
-        <button class="window-style active" data-window-style="default"><span class="style-preview"><i></i><i></i><i></i></span><span class="window-style-name">Default</span></button>
-        <button class="window-style" data-window-style="macos"><span class="style-preview"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="window-style-name">MacOS</span></button>
-        <button class="window-style" data-window-style="minimal"><span class="style-preview"><i style="background:#f4f4f5"></i><i style="background:#a1a1aa"></i><i style="background:transparent;border:1px solid #71717a"></i></span><span class="window-style-name">Minimal</span></button>
-        <button class="window-style" data-window-style="dark"><span class="style-preview"><i style="background:#252b36"></i><i style="background:#353d4b"></i><i style="background:#454e5d"></i></span><span class="window-style-name">Dark</span></button>
-        <button class="window-style" data-window-style="linux"><span class="style-preview"><i style="background:#4f7cff"></i><i style="background:#f59e0b"></i><i style="background:#22c55e"></i></span><span class="window-style-name">Linux</span></button>
-        <button class="window-style" data-window-style="terminal"><span class="style-preview"><i style="background:#4ade80"></i><i style="background:#22c55e"></i><i style="background:#86efac"></i></span><span class="window-style-name">Terminal</span></button>
-        <button class="window-style" data-window-style="solarized"><span class="style-preview"><i style="background:#b58900"></i><i style="background:#cb4b16"></i><i style="background:#2aa198"></i></span><span class="window-style-name">Solarized</span></button>
-        <button class="window-style" data-window-style="neon"><span class="style-preview"><i style="background:#ff00c8"></i><i style="background:#7c5cff"></i><i style="background:#00e5ff"></i></span><span class="window-style-name">Neon</span></button>
-        <button class="window-style" data-window-style="black"><span class="style-preview"><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i><i style="background:#050505;border:1px solid #202020"></i></span><span class="window-style-name">Full Black</span></button>
+    <div class="drawer-cat hidden" id="drawerCatEditor">
+      <div class="section">
+        <h3>Editor Setup</h3>
+        <div class="field"><label class="label">Language</label><select id="drawerLanguage"></select></div>
+        <div class="field"><label class="label">Theme</label>
+          <select id="drawerTheme">
+            <option value="atom-one-dark">Atom One Dark</option>
+            <option value="github-dark">GitHub Dark</option>
+            <option value="monokai">Monokai</option>
+            <option value="night-owl">Night Owl</option>
+            <option value="tokyo-night-dark">Tokyo Night Dark</option>
+            <option value="nord">Nord</option>
+            <option value="dracula">Dracula</option>
+            <option value="synthwave">SynthWave '84</option>
+            <option value="solarized-dark">Solarized Dark</option>
+            <option value="material-darker">Material Darker</option>
+            <option value="oceanicnext">Oceanic Next</option>
+            <option value="panda">Panda Syntax</option>
+            <option value="zenburn">Zenburn</option>
+            <option value="railscasts">Railscasts</option>
+            <option value="grayscale-dark">Grayscale Dark</option>
+            <option value="vs2015">VS 2015</option>
+            <option value="hopscotch">Hopscotch</option>
+            <option value="stackoverflow-dark">Stack Overflow Dark</option>
+            <option value="paraiso-dark">Paraiso Dark</option>
+            <option value="codepen-embed">CodePen Embed</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="field"><label class="label">Font</label>
+            <select id="drawerFont">
+              <option value="jetbrains">JetBrains Mono</option>
+              <option value="fira">Fira Code</option>
+              <option value="sourcecode">Source Code Pro</option>
+              <option value="spacemono">Space Mono</option>
+              <option value="ubuntumono">Ubuntu Mono</option>
+              <option value="inconsolata">Inconsolata</option>
+              <option value="cascadia">Cascadia Code</option>
+              <option value="hack">Hack</option>
+              <option value="system">System Mono</option>
+              <option value="consolas">Consolas</option>
+            </select>
+          </div>
+          <div class="field"><label class="label">Size</label><input id="drawerFontSize" type="number" min="10" max="28"></div>
+        </div>
+        <div class="field"><label class="label">Line height</label><div class="range-row"><input id="drawerLineHeight" type="range" min="1.2" max="2.2" step="0.05" value="1.55"><span class="value" id="drawerLineHeightVal">1.55</span></div></div>
+        <div class="toggle-row"><span>Line numbers</span><label class="switch"><input id="drawerShowLines" type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="field"><label class="label">First line number</label><input id="drawerFirstLineNumber" type="number" value="1" min="0" max="999"></div>
       </div>
     </div>
 
-    <div class="field"><label class="label">Padding</label><div class="range-row"><input id="drawerPadding" type="range" min="10" max="110" value="64"><span class="value" id="drawerPaddingVal">64px</span></div></div>
-    <div class="field"><label class="label">Radius</label><div class="range-row"><input id="drawerRadius" type="range" min="0" max="30" value="14"><span class="value" id="drawerRadiusVal">14px</span></div></div>
+    <div class="drawer-cat hidden" id="drawerCatMisc">
+      <div class="section">
+        <h3>Background</h3>
+        <div class="bg-picker-container" id="drawerBgPickerContainer">
+          <button type="button" class="bg-dropdown-btn" id="drawerBgDropdownToggle">
+            <span class="bg-preview-swatch" id="drawerBgPreviewSwatch" style="background:linear-gradient(140deg,#8b5cf6,#06b6d4);"></span>
+            <span id="drawerBgDropdownText" style="flex:1; text-align:left;">Gradient / Color</span>
+            <span style="font-size:10px; color:var(--muted)">▼</span>
+          </button>
+
+          <div class="bg-popup-panel" id="drawerBgPopupPanel" style="position:relative; margin-top:8px; box-shadow:none; border:1px solid var(--line);">
+            <div class="bg-tabs">
+              <button type="button" class="bg-tab active" data-drawer-tab="color">Color & Gradient</button>
+              <button type="button" class="bg-tab" data-drawer-tab="image">Image</button>
+            </div>
+
+            <div class="bg-tab-content" id="drawerBgTabColor">
+              <div class="color-input-row">
+                <input type="color" id="drawerNativeColorPicker" value="#7c5cff">
+                <div class="hex-input-wrap">
+                  <span>#</span>
+                  <input type="text" id="drawerHexInputText" value="7C5CFF" maxlength="6">
+                </div>
+              </div>
+              <div class="opacity-box">
+                <div class="opacity-header">
+                  <span>Opacity</span>
+                  <span id="drawerOpacityValLabel">100%</span>
+                </div>
+                <input type="range" id="drawerOpacityRange" min="0" max="1" step="0.01" value="1">
+              </div>
+              <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Gradients & Presets</div>
+              <div class="swatches drawer-swatches">
+                <button class="swatch" data-preset="linear-gradient(140deg, #8b5cf6, #06b6d4)" style="background:linear-gradient(140deg, #8b5cf6, #06b6d4)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #f43f5e, #fb923c)" style="background:linear-gradient(135deg, #f43f5e, #fb923c)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #10b981, #3b82f6)" style="background:linear-gradient(135deg, #10b981, #3b82f6)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #6366f1, #a855f7)" style="background:linear-gradient(135deg, #6366f1, #a855f7)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #ec4899, #8b5cf6)" style="background:linear-gradient(135deg, #ec4899, #8b5cf6)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #0ea5e9, #6366f1)" style="background:linear-gradient(135deg, #0ea5e9, #6366f1)"></button>
+                <button class="swatch" data-preset="linear-gradient(135deg, #14b8a6, #f97316)" style="background:linear-gradient(135deg, #14b8a6, #f97316)"></button>
+                <button class="swatch" data-preset="#EF4444" style="background:#EF4444"></button>
+                <button class="swatch" data-preset="#10B981" style="background:#10B981"></button>
+                <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6"></button>
+                <button class="swatch" data-preset="#7C5CFF" style="background:#7C5CFF"></button>
+                <button class="swatch" data-preset="#111827" style="background:#111827"></button>
+                <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF"></button>
+                <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px"></button>
+              </div>
+            </div>
+
+            <div class="bg-tab-content hidden" id="drawerBgTabImage">
+              <label class="upload-label">
+                <span style="font-size:20px; margin-bottom:4px">📁</span>
+                <span style="font-size:12px; font-weight:600; color:var(--text)">Upload Background</span>
+                <span style="font-size:10px; color:var(--muted); margin-top:2px">Local image (PNG, JPG, WEBP)</span>
+                <input type="file" id="drawerBgImageUpload" accept="image/*" class="hidden">
+              </label>
+              <div class="upload-info hidden" id="drawerBgUploadInfoBox">
+                <span id="drawerBgUploadFilename" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">image.png</span>
+                <button type="button" id="drawerBgRemoveImgBtn" style="background:none; border:0; color:#ff9fa8; font-size:11px; cursor:pointer; font-weight:600">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Spacing & Effects</h3>
+        <div class="field"><label class="label">Padding (Vertical)</label><div class="range-row"><input id="drawerPaddingVert" type="range" min="10" max="120" value="64"><span class="value" id="drawerPaddingVertVal">64px</span></div></div>
+        <div class="field"><label class="label">Padding (Horizontal)</label><div class="range-row"><input id="drawerPaddingHoriz" type="range" min="10" max="120" value="64"><span class="value" id="drawerPaddingHorizVal">64px</span></div></div>
+        <div class="field"><label class="label">Card Radius</label><div class="range-row"><input id="drawerRadius" type="range" min="0" max="30" value="14"><span class="value" id="drawerRadiusVal">14px</span></div></div>
+        <div class="toggle-row"><span>Drop shadow</span><label class="switch"><input id="drawerDropShadow" type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="field"><label class="label">Blur radius shadow</label><div class="range-row"><input id="drawerShadowBlur" type="range" min="10" max="150" value="70"><span class="value" id="drawerShadowBlurVal">70px</span></div></div>
+      </div>
+
+      <div class="section">
+        <h3>Watermark</h3>
+        <div class="toggle-row"><span>Enable watermark</span><label class="switch"><input id="drawerShowWatermark" type="checkbox"><span class="slider"></span></label></div>
+        <div class="field" style="margin-top:8px"><label class="label">Watermark text</label><input id="drawerWatermarkText" type="text" value="by @ahmatbadali"></div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -682,15 +767,18 @@ const fontFamilies = {
   ubuntumono: "'Ubuntu Mono', monospace",
   inconsolata: "'Inconsolata', monospace",
   cascadia: "'Cascadia Code', monospace",
+  hack: "'Hack', monospace",
   system: "ui-monospace,SFMono-Regular,Menlo,monospace",
   consolas: "Consolas,monospace"
 };
 
 const $ = id => document.getElementById(id);
 const state = {
-  language:"auto", filename:"snippet.js", font:"jetbrains", fontSize:14, theme:"atom-one-dark",
+  language:"auto", filename:"snippet.js", font:"jetbrains", fontSize:14, lineHeight:1.55, theme:"atom-one-dark",
   bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)", bgOpacity:1, bgImageUrl:"", bgImageName:"",
-  showWindow:true, showTitle:true, showLines:true, windowStyle:"default", padding:64, radius:14
+  showWindow:true, showTitle:true, showLines:true, firstLineNumber:1, windowStyle:"default", 
+  paddingVert:64, paddingHoriz:64, radius:14, dropShadow:true, shadowBlur:70,
+  showWatermark:false, watermarkText:"by @ahmatbadali"
 };
 
 const selects = [$("language"),$("mobileLanguage"),$("drawerLanguage")];
@@ -698,11 +786,9 @@ selects.forEach(s => languages.forEach(([v,t]) => s.add(new Option(t,v))));
 
 function hexToRgba(bg, alpha) {
   if(bg === "transparent") return "transparent";
-  if(bg.startsWith("linear-gradient")) return bg; // gradient handles opacity via CSS or direct string
+  if(bg.startsWith("linear-gradient")) return bg;
   let hex = bg.replace('#', '');
-  if (hex.length === 3) {
-    hex = hex.split('').map(x => x + x).join('');
-  }
+  if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
   const num = parseInt(hex, 16);
   if (isNaN(num)) return bg;
   return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
@@ -723,20 +809,27 @@ function highlightCode(code){
   catch(e){return escapeHtml(code)}
 }
 function escapeHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
 function lineMarkup(code){
-  const n=Math.max(1,code.split("\n").length);
-  return Array.from({length:n},(_,i)=>i+1).join("\n");
+  const linesCount = Math.max(1, code.split("\n").length);
+  const startNum = parseInt(state.firstLineNumber) || 1;
+  return Array.from({length: linesCount}, (_, i) => startNum + i).join("\n");
 }
+
 function applyFont(){
   const family=fontFamilies[state.font] || fontFamilies.jetbrains;
   ["code","highlight","previewHighlight","editorLines","previewLines"].forEach(id=>{
     if($(id)) $(id).style.fontFamily=family;
   });
-  $("code").style.fontSize=state.fontSize+"px";
-  $("highlight").style.fontSize=state.fontSize+"px";
-  $("previewHighlight").style.fontSize=state.fontSize+"px";
-  $("editorLines").style.fontSize=state.fontSize+"px";
-  $("previewLines").style.fontSize=state.fontSize+"px";
+  $("code.style")?.fontSize;
+  ["code","highlight","previewHighlight","editorLines","previewLines"].forEach(id => {
+    if($(id)) {
+      $(id).style.fontSize = state.fontSize+"px";
+      $(id).style.lineHeight = state.lineHeight;
+    }
+  });
+  $("editorLines").style.lineHeight = state.lineHeight;
+  $("previewLines").style.lineHeight = state.lineHeight;
 }
 
 function render(){
@@ -780,9 +873,26 @@ function render(){
     }
   }
 
-  exportFrame.style.padding=state.padding+"px";
-  $("codeCard").style.borderRadius=state.radius+"px";
-  $("previewHighlight").style.borderRadius="0 0 "+state.radius+"px 0";
+  exportFrame.style.padding = `${state.paddingVert}px ${state.paddingHoriz}px`;
+  $("codeCard").style.borderRadius = state.radius+"px";
+  $("previewHighlight").style.borderRadius = "0 0 "+state.radius+"px 0";
+
+  // Drop Shadow
+  if(state.dropShadow){
+    $("codeCard").style.boxShadow = `0 24px ${state.shadowBlur}px rgba(0,0,0,0.55)`;
+  } else {
+    $("codeCard").style.boxShadow = "none";
+  }
+
+  // Watermark
+  const wm = $("cardWatermark");
+  if(state.showWatermark){
+    wm.style.display = "block";
+    wm.textContent = state.watermarkText || "";
+  } else {
+    wm.style.display = "none";
+  }
+
   applyFont();
 }
 
@@ -791,14 +901,29 @@ function syncControls(){
   $("filename").value=state.filename;$("drawerFilename").value=state.filename;
   $("font").value=state.font;$("drawerFont").value=state.font;
   $("fontSize").value=state.fontSize;$("drawerFontSize").value=state.fontSize;
+  $("lineHeight").value=state.lineHeight;$("drawerLineHeight").value=state.lineHeight;
+  $("lineHeightVal").textContent=state.lineHeight;$("drawerLineHeightVal").textContent=state.lineHeight;
   $("theme").value=state.theme;$("drawerTheme").value=state.theme;
+  $("firstLineNumber").value=state.firstLineNumber;$("drawerFirstLineNumber").value=state.firstLineNumber;
+
   $("showWindow").checked=state.showWindow;$("drawerShowWindow").checked=state.showWindow;
   $("showTitle").checked=state.showTitle;$("drawerShowTitle").checked=state.showTitle;
   $("showLines").checked=state.showLines;$("drawerShowLines").checked=state.showLines;
-  $("padding").value=state.padding;$("drawerPadding").value=state.padding;
+  
+  $("paddingVert").value=state.paddingVert;$("drawerPaddingVert").value=state.paddingVert;
+  $("paddingHoriz").value=state.paddingHoriz;$("drawerPaddingHoriz").value=state.paddingHoriz;
+  $("paddingVertVal").textContent=state.paddingVert+"px";$("drawerPaddingVertVal").textContent=state.paddingVert+"px";
+  $("paddingHorizVal").textContent=state.paddingHoriz+"px";$("drawerPaddingHorizVal").textContent=state.paddingHoriz+"px";
+
   $("radius").value=state.radius;$("drawerRadius").value=state.radius;
-  $("paddingVal").textContent=state.padding+"px";$("drawerPaddingVal").textContent=state.padding+"px";
   $("radiusVal").textContent=state.radius+"px";$("drawerRadiusVal").textContent=state.radius+"px";
+
+  $("dropShadow").checked=state.dropShadow;$("drawerDropShadow").checked=state.dropShadow;
+  $("shadowBlur").value=state.shadowBlur;$("drawerShadowBlur").value=state.shadowBlur;
+  $("shadowBlurVal").textContent=state.shadowBlur+"px";$("drawerShadowBlurVal").textContent=state.shadowBlur+"px";
+
+  $("showWatermark").checked=state.showWatermark;$("drawerShowWatermark").checked=state.showWatermark;
+  $("watermarkText").value=state.watermarkText;$("drawerWatermarkText").value=state.watermarkText;
   
   if(!state.bgColor.startsWith("linear-gradient") && state.bgColor !== "transparent") {
     $("nativeColorPicker").value = state.bgColor;
@@ -830,14 +955,14 @@ function syncControls(){
 
 function setTheme(theme){
   state.theme=theme;
-  const link=document.querySelector('link[rel="stylesheet"]');
+  const link=document.getElementById("highlightThemeLink");
   if(link) link.href=`https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`;
 }
 
 function setField(field,value){
   if(field === "windowStyle") value = String(value || "default");
   state[field]=value;
-  if(field==="theme")setTheme(value);
+  if(field==="theme") setTheme(value);
   syncControls();
   render();
 }
@@ -846,6 +971,47 @@ function toast(msg){
   $("toast").textContent=msg;$("toast").classList.add("show");
   clearTimeout(window.__toast);window.__toast=setTimeout(()=>$("toast").classList.remove("show"),1800);
 }
+
+// Category Tabs Switcher (Window | Editor | Misc)
+function switchCat(catName){
+  document.querySelectorAll(".carbon-tab").forEach(t => {
+    if(t.dataset.cat === catName || t.dataset.drawerCat === catName) t.classList.add("active");
+    else t.classList.remove("active");
+  });
+  ["Window","Editor","Misc"].forEach(c => {
+    const el = $("cat"+c);
+    if(el) el.classList.toggle("hidden", c.toLowerCase() !== catName);
+    const drawerEl = $("drawerCat"+c);
+    if(drawerEl) drawerEl.classList.toggle("hidden", c.toLowerCase() !== catName);
+  });
+}
+document.querySelectorAll(".carbon-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    switchCat(tab.dataset.cat || tab.dataset.drawerCat);
+  });
+});
+
+// Presets Thumbnail Action
+document.querySelectorAll(".preset-thumb").forEach(thumb => {
+  thumb.addEventListener("click", () => {
+    document.querySelectorAll(".preset-thumb").forEach(t => t.classList.remove("active"));
+    thumb.classList.add("active");
+    const id = thumb.dataset.presetId;
+    if(id === "p1") {
+      setField("bgColor", "linear-gradient(140deg, #8b5cf6, #06b6d4)");
+      setField("theme", "atom-one-dark");
+    } else if(id === "p2") {
+      setField("bgColor", "linear-gradient(135deg, #f43f5e, #fb923c)");
+      setField("theme", "monokai");
+    } else if(id === "p3") {
+      setField("bgColor", "linear-gradient(135deg, #10b981, #3b82f6)");
+      setField("theme", "nord");
+    } else if(id === "p4") {
+      setField("bgColor", "#111827");
+      setField("theme", "github-dark");
+    }
+  });
+});
 
 // Background Dropdown & Tabs Desktop & Drawer Mobile
 $("bgDropdownToggle").addEventListener("click", (e) => {
@@ -989,15 +1155,30 @@ $("code").addEventListener("keydown",e=>{
 ["language","mobileLanguage","drawerLanguage"].forEach(id => $(id).addEventListener("change", e=>setField("language",e.target.value)));
 ["font","drawerFont"].forEach(id => $(id).addEventListener("change", e=>setField("font",e.target.value)));
 ["fontSize","drawerFontSize"].forEach(id => $(id).addEventListener("input", e=>setField("fontSize",Math.max(10,Math.min(28,+e.target.value||14)))));
+["lineHeight","drawerLineHeight"].forEach(id => $(id).addEventListener("input", e=>setField("lineHeight",+e.target.value)));
 ["theme","drawerTheme"].forEach(id => $(id).addEventListener("change", e=>setField("theme",e.target.value)));
+["firstLineNumber","drawerFirstLineNumber"].forEach(id => $(id).addEventListener("input", e=>setField("firstLineNumber",+e.target.value||1)));
 
 ["showWindow","showTitle","showLines"].forEach(k=>{
   $(k).addEventListener("change",e=>setField(k,e.target.checked));
   const drawerEl = $("drawer"+k[0].toUpperCase()+k.slice(1));
   if(drawerEl) drawerEl.addEventListener("change",e=>setField(k,e.target.checked));
 });
-["padding","drawerPadding"].forEach(id => $(id).addEventListener("input", e=>setField("padding",+e.target.value)));
+
+["paddingVert","drawerPaddingVert"].forEach(id => $(id).addEventListener("input", e=>setField("paddingVert",+e.target.value)));
+["paddingHoriz","drawerPaddingHoriz"].forEach(id => $(id).addEventListener("input", e=>setField("paddingHoriz",+e.target.value)));
 ["radius","drawerRadius"].forEach(id => $(id).addEventListener("input", e=>setField("radius",+e.target.value)));
+["shadowBlur","drawerShadowBlur"].forEach(id => $(id).addEventListener("input", e=>setField("shadowBlur",+e.target.value)));
+
+["dropShadow","drawerDropShadow"].forEach(id => {
+  $(id).addEventListener("change", e=>setField("dropShadow", e.target.checked));
+});
+["showWatermark","drawerShowWatermark"].forEach(id => {
+  $(id).addEventListener("change", e=>setField("showWatermark", e.target.checked));
+});
+["watermarkText","drawerWatermarkText"].forEach(id => {
+  $(id).addEventListener("input", e=>setField("watermarkText", e.target.value));
+});
 
 document.querySelectorAll(".window-style").forEach(b=>b.addEventListener("click",()=>setField("windowStyle",b.dataset.windowStyle)));
 
@@ -1018,7 +1199,7 @@ $("formatBtn").addEventListener("click", formatCodeWithPrettier);
 $("mobileFormat").addEventListener("click", formatCodeWithPrettier);
 
 $("resetBtn").addEventListener("click",()=>{
-  Object.assign(state,{language:"auto",filename:"snippet.js",font:"jetbrains",fontSize:14,theme:"atom-one-dark",bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,windowStyle:"default",padding:64,radius:14});
+  Object.assign(state,{language:"auto",filename:"snippet.js",font:"jetbrains",fontSize:14,lineHeight:1.55,theme:"atom-one-dark",bgColor:"linear-gradient(140deg, #8b5cf6, #06b6d4)",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,firstLineNumber:1,windowStyle:"default",paddingVert:64,paddingHoriz:64,radius:14,dropShadow:true,shadowBlur:70,showWatermark:false,watermarkText:"by @ahmatbadali"});
   $("code").value=defaultCode;setTheme(state.theme);syncControls();render();toast("Berhasil direset");
 });
 $("mobileReset").addEventListener("click",()=>$("resetBtn").click());
