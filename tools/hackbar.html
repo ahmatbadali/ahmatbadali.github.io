@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web-Based Hackbar</title>
+    <title>Web Hackbar - Pentest Tools</title>
     <style>
         * {
             box-sizing: border-box;
@@ -17,7 +17,8 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-            padding: 10px;
+            height: 100dvh;
+            padding: 5px;
         }
         .container {
             display: flex;
@@ -28,43 +29,51 @@
             border-radius: 4px;
             overflow: hidden;
         }
-        /* URL Bar Section */
+        /* URL Bar */
         .url-bar-container {
             display: flex;
             background-color: #252525;
-            padding: 8px;
+            padding: 6px;
             border-bottom: 1px solid #333;
-            gap: 5px;
-            align-items: center;
+            gap: 4px;
         }
         .url-bar-container input {
             flex: 1;
             background-color: #121212;
             border: 1px solid #444;
             color: #fff;
-            padding: 6px 8px;
-            font-size: 14px;
+            padding: 8px;
+            font-size: 13px;
             border-radius: 3px;
         }
         .btn-go {
-            background-color: #333;
+            background-color: #2b2b2b;
             color: #fff;
             border: 1px solid #555;
-            padding: 6px 12px;
+            padding: 0 14px;
             cursor: pointer;
             border-radius: 3px;
+            font-weight: bold;
         }
-        .btn-go:hover { background-color: #444; }
-
-        /* Menu Bar Section */
+        
+        /* Menu / Toolbar (Scrollable di HP) */
         .menu-bar {
             display: flex;
-            flex-wrap: wrap;
             background-color: #1a1a1a;
             border-bottom: 1px solid #333;
             padding: 5px;
-            gap: 5px;
+            gap: 4px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
         }
+        .menu-bar::-webkit-scrollbar {
+            height: 3px;
+        }
+        .menu-bar::-webkit-scrollbar-thumb {
+            background: #444;
+        }
+
         .dropdown {
             position: relative;
             display: inline-block;
@@ -86,14 +95,15 @@
             display: none;
             position: absolute;
             background-color: #222;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
-            z-index: 10;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.6);
+            z-index: 99;
             border: 1px solid #444;
+            left: 0;
         }
         .dropdown-content a {
             color: #ddd;
-            padding: 8px 12px;
+            padding: 10px;
             text-decoration: none;
             display: block;
             font-size: 12px;
@@ -102,47 +112,53 @@
             background-color: #333;
             color: #fff;
         }
-        .dropdown:hover .dropdown-content {
+        .dropdown.active .dropdown-content {
             display: block;
         }
 
-        /* Textarea / Editor Area */
+        /* Editor Area */
         .editor-container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 8px;
+            padding: 6px;
             background-color: #181818;
         }
         textarea {
             flex: 1;
             background-color: #121212;
-            color: #00ff66; /* Warna teks ala terminal */
+            color: #00ff66;
             border: 1px solid #333;
             padding: 10px;
-            font-size: 14px;
+            font-size: 13px;
             resize: none;
             outline: none;
             border-radius: 3px;
+            width: 100%;
         }
 
         /* Bottom Bar */
         .bottom-bar {
             display: flex;
-            flex-wrap: wrap;
             background-color: #222;
             border-top: 1px solid #333;
             padding: 6px;
-            gap: 5px;
+            gap: 4px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .bottom-bar::-webkit-scrollbar {
+            height: 3px;
         }
         .bottom-btn {
             background-color: #2a2a2a;
             color: #bbb;
             border: 1px solid #444;
-            padding: 5px 10px;
+            padding: 6px 10px;
             font-size: 11px;
             cursor: pointer;
             border-radius: 3px;
+            flex-shrink: 0;
         }
         .bottom-btn:hover {
             background-color: #3a3a3a;
@@ -155,39 +171,38 @@
     <div class="container">
         <!-- URL Input Bar -->
         <div class="url-bar-container">
-            <input type="text" id="urlInput" placeholder="http://example.com/vuln.php?id=" value="http://">
+            <input type="text" id="urlInput" placeholder="http://target.com/page.php?id=" value="http://">
             <button class="btn-go" onclick="executeURL()">Go</button>
         </div>
 
         <!-- Toolbar / Menu Dropdown -->
         <div class="menu-bar">
             <!-- VECTOR -->
-            <div class="dropdown">
-                <button class="dropbtn">VECTOR ▼</button>
+            <div class="dropdown" id="dropVector">
+                <button class="dropbtn" onclick="toggleDropdown('dropVector')">VECTOR ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="insertVector('SQLi')">SQL Injection</a>
-                    <a href="#" onclick="insertVector('XSS')">Cross-Site Scripting (XSS)</a>
-                    <a href="#" onclick="insertVector('LFI')">Local File Inclusion (LFI)</a>
+                    <a href="#" onclick="insertVector('SQLi'); return false;">SQL Injection</a>
+                    <a href="#" onclick="insertVector('XSS'); return false;">XSS Payload</a>
+                    <a href="#" onclick="insertVector('LFI'); return false;">LFI Traversal</a>
                 </div>
             </div>
 
             <!-- ENCODE -->
-            <div class="dropdown">
-                <button class="dropbtn">ENCODE ▼</button>
+            <div class="dropdown" id="dropEncode">
+                <button class="dropbtn" onclick="toggleDropdown('dropEncode')">ENCODE ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="encodeText('url')">URL Encode</a>
-                    <a href="#" onclick="decodeText('url')">URL Decode</a>
-                    <a href="#" onclick="encodeText('base64')">Base64 Encode</a>
-                    <a href="#" onclick="decodeText('base64')">Base64 Decode</a>
+                    <a href="#" onclick="encodeText('url'); return false;">URL Encode</a>
+                    <a href="#" onclick="decodeText('url'); return false;">URL Decode</a>
+                    <a href="#" onclick="encodeText('base64'); return false;">Base64 Encode</a>
+                    <a href="#" onclick="decodeText('base64'); return false;">Base64 Decode</a>
                 </div>
             </div>
 
             <!-- WAF -->
-            <div class="dropdown">
-                <button class="dropbtn">WAF ▼</button>
+            <div class="dropdown" id="dropWaf">
+                <button class="dropbtn" onclick="toggleDropdown('dropWaf')">WAF ▼</button>
                 <div class="dropdown-content">
-                    <a href="#" onclick="insertWafBypass('comment')">Inline Comment Bypass</a>
-                    <a href="#" onclick="insertWafBypass('case')">Case Mixing Bypass</a>
+                    <a href="#" onclick="insertWafBypass('comment'); return false;">Inline Comment (/**/)</a>
                 </div>
             </div>
 
@@ -199,7 +214,7 @@
 
         <!-- Main Payload / Data Editor -->
         <div class="editor-container">
-            <textarea id="payloadEditor" placeholder="Tulis query, parameter, atau payload di sini..."></textarea>
+            <textarea id="payloadEditor" placeholder="Payload atau parameter query akan tampil di sini..."></textarea>
         </div>
 
         <!-- Bottom Options -->
@@ -213,6 +228,24 @@
 
     <script>
         let isPostActive = false;
+
+        // Fungsi agar dropdown bisa diklik dengan mudah di layar HP (touchscreen)
+        function toggleDropdown(id) {
+            event.stopPropagation();
+            // Tutup dropdown lain yang mungkin sedang terbuka
+            document.querySelectorAll('.dropdown').forEach(item => {
+                if (item.id !== id) item.classList.remove('active');
+            });
+            let element = document.getElementById(id);
+            element.classList.toggle('active');
+        }
+
+        // Tutup dropdown jika mengklik area lain di luar menu
+        window.onclick = function() {
+            document.querySelectorAll('.dropdown').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
 
         function togglePost() {
             isPostActive = !isPostActive;
@@ -283,7 +316,7 @@
                 let params = url.search.substring(1);
                 document.getElementById('payloadEditor').value = params.replace(/&/g, '\n');
             } catch (e) {
-                alert("URL tidak valid untuk di-parse!");
+                alert("URL tidak valid atau tidak memiliki parameter query!");
             }
         }
 
@@ -293,8 +326,7 @@
                 alert("Masukkan URL terlebih dahulu!");
                 return;
             }
-            // Simulasi load URL
-            document.getElementById('payloadEditor').value = "Memuat data dari: " + url;
+            document.getElementById('payloadEditor').value = "Target URL: " + url;
         }
 
         function executeURL() {
@@ -303,16 +335,15 @@
                 alert("Masukkan URL tujuan!");
                 return;
             }
-            // Karena masalah CORS browser, eksekusi langsung diarahkan membuka tab baru atau via proxy
             window.open(url, '_blank');
         }
 
         function viewSource() {
-            alert("Fitur View Source memerlukan backend/proxy khusus agar tidak diblokir kebijakan CORS browser.");
+            alert("Fitur View Source memerlukan backend proxy khusus untuk menghindari CORS browser.");
         }
 
         function extractLink() {
-            alert("Fitur Extract Link digunakan untuk mengambil seluruh tag <a> dari response target.");
+            alert("Fitur Extract Link digunakan untuk mengambil list link dari target.");
         }
     </script>
 </body>
