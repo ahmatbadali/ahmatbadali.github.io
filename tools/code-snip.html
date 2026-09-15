@@ -100,12 +100,45 @@ select:focus,input:focus{border-color:#6574ff;box-shadow:0 0 0 2px #6574ff22}
 .range-row{display:flex;align-items:center;gap:10px}
 input[type=range]{width:100%;accent-color:var(--accent)}
 .value{font-size:12px;color:var(--muted);min-width:38px;text-align:right}
-.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-.swatch{
-  height:36px;border-radius:9px;border:2px solid transparent;position:relative;overflow:hidden
+
+/* CUSTOM BG DROPDOWN STYLES */
+.bg-picker-container{position:relative}
+.bg-dropdown-btn{
+  width:100%;display:flex;align-items:center;justify-content:between;gap:8px;
+  background:#121b29;border:1px solid var(--line);border-radius:8px;padding:8px 10px;
+  color:var(--text);font-size:13px;cursor:pointer;text-align:left;transition:border-color .15s;
 }
-.swatch.active{border-color:white}
-.swatch span{position:absolute;inset:0}
+.bg-dropdown-btn:hover{border-color:#384761}
+.bg-preview-swatch{width:18px;height:18px;border-radius:4px;border:1px solid #48556a;flex-shrink:0}
+.bg-popup-panel{
+  position:absolute;left:0;right:0;top:calc(100% + 6px);background:#111927;
+  border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px #000a;
+  padding:14px;z-index:60;display:none
+}
+.bg-popup-panel.open{display:block}
+.bg-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:12px}
+.bg-tab{flex:1;background:none;border:0;border-bottom:2px solid transparent;padding:6px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s}
+.bg-tab.active{border-bottom-color:var(--accent);color:var(--text)}
+.color-input-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+input[type=color]{width:36px;height:36px;background:none;border:1px solid var(--line);border-radius:6px;cursor:pointer;padding:0}
+.hex-input-wrap{position:relative;flex:1}
+.hex-input-wrap span{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted)}
+.hex-input-wrap input{padding-left:22px;text-transform:uppercase;font-size:12px}
+.opacity-box{margin-bottom:12px}
+.opacity-header{display:flex;justify-content:between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.swatches{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.swatch{
+  height:26px;border-radius:6px;border:1px solid var(--line);position:relative;overflow:hidden;cursor:pointer;transition:transform .1s
+}
+.swatch:hover{transform:scale(1.1)}
+.swatch.active{border-color:white;box-shadow:0 0 0 1px white}
+.upload-label{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:2px dashed var(--line);border-radius:8px;padding:16px;cursor:pointer;background:#0d131f;transition:.15s
+}
+.upload-label:hover{border-color:var(--accent)}
+.upload-info{display:flex;align-items:center;justify-content:between;background:#0d131f;padding:6px 10px;border-radius:6px;font-size:11px;margin-top:8px}
+
 .toggle-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0;font-size:13px}
 .switch{position:relative;width:40px;height:22px}
 .switch input{display:none}
@@ -170,14 +203,6 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   flex:1;margin:0;padding:18px;min-width:0;white-space:pre;overflow-wrap:normal;
   font:14px/1.6 ui-monospace,monospace
 }
-.bg-purple{background:radial-gradient(circle at 20% 20%,#9b5cff,transparent 38%),linear-gradient(135deg,#312e81,#7c3aed)}
-.bg-sunset{background:linear-gradient(135deg,#fb7185,#f97316,#facc15)}
-.bg-ocean{background:linear-gradient(135deg,#075985,#0e7490,#06b6d4)}
-.bg-aurora{background:radial-gradient(circle at 20% 30%,#22c55e,transparent 35%),radial-gradient(circle at 80% 70%,#06b6d4,transparent 38%),#172554}
-.bg-pink{background:linear-gradient(135deg,#831843,#be185d,#7e22ce)}
-.bg-dark{background:#171b24}
-.bg-light{background:#e8edf4}
-.bg-transparent{background:transparent}
 
 /* WINDOW STYLE PRESETS */
 .window-style-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
@@ -281,7 +306,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   .drawer .row{display:grid;grid-template-columns:1fr 110px}
   .drawer .section{padding-bottom:16px;margin-bottom:16px}
   .drawer .window-style-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .drawer .swatches{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .drawer .swatches{grid-template-columns:repeat(7,minmax(0,1fr))}
 }
 @media(max-width:560px){.window-style-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:480px){
@@ -352,15 +377,68 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
   <div class="section">
     <h3>Background</h3>
-    <div class="swatches">
-      <button class="swatch bg-purple active" data-bg="purple" title="Purple"></button>
-      <button class="swatch bg-sunset" data-bg="sunset" title="Sunset"></button>
-      <button class="swatch bg-ocean" data-bg="ocean" title="Ocean"></button>
-      <button class="swatch bg-aurora" data-bg="aurora" title="Aurora"></button>
-      <button class="swatch bg-pink" data-bg="pink" title="Pink"></button>
-      <button class="swatch bg-dark" data-bg="dark" title="Dark"></button>
-      <button class="swatch bg-light" data-bg="light" title="Light"></button>
-      <button class="swatch bg-transparent" data-bg="transparent" title="Transparent"></button>
+    <!-- Custom Background Picker Component -->
+    <div class="bg-picker-container" id="bgPickerContainer">
+      <button type="button" class="bg-dropdown-btn" id="bgDropdownToggle">
+        <span class="bg-preview-swatch" id="bgPreviewSwatch" style="background:#7c5cff;"></span>
+        <span id="bgDropdownText" style="flex:1; text-align:left;">Custom / Color</span>
+        <span style="font-size:10px; color:var(--muted)">▼</span>
+      </button>
+
+      <div class="bg-popup-panel" id="bgPopupPanel">
+        <div class="bg-tabs">
+          <button type="button" class="bg-tab active" data-tab="color">Color</button>
+          <button type="button" class="bg-tab" data-tab="image">Image</button>
+        </div>
+
+        <!-- TAB COLOR -->
+        <div class="bg-tab-content" id="bgTabColor">
+          <div class="color-input-row">
+            <input type="color" id="nativeColorPicker" value="#7c5cff">
+            <div class="hex-input-wrap">
+              <span>#</span>
+              <input type="text" id="hexInputText" value="7C5CFF" maxlength="6">
+            </div>
+          </div>
+          <div class="opacity-box">
+            <div class="opacity-header">
+              <span>Opacity</span>
+              <span id="opacityValLabel">100%</span>
+            </div>
+            <input type="range" id="opacityRange" min="0" max="1" step="0.01" value="1">
+          </div>
+          <div style="font-size:11px; color:var(--muted); margin-bottom:6px">Presets</div>
+          <div class="swatches" id="presetSwatchesContainer">
+            <button class="swatch" data-preset="#EF4444" style="background:#EF4444" title="Red"></button>
+            <button class="swatch" data-preset="#F97316" style="background:#F97316" title="Orange"></button>
+            <button class="swatch" data-preset="#F59E0B" style="background:#F59E0B" title="Amber"></button>
+            <button class="swatch" data-preset="#10B981" style="background:#10B981" title="Emerald"></button>
+            <button class="swatch" data-preset="#06B6D4" style="background:#06B6D4" title="Cyan"></button>
+            <button class="swatch" data-preset="#3B82F6" style="background:#3B82F6" title="Blue"></button>
+            <button class="swatch active" data-preset="#7C5CFF" style="background:#7C5CFF" title="Purple"></button>
+            <button class="swatch" data-preset="#EC4899" style="background:#EC4899" title="Pink"></button>
+            <button class="swatch" data-preset="#6B7280" style="background:#6B7280" title="Gray"></button>
+            <button class="swatch" data-preset="#111827" style="background:#111827" title="Dark"></button>
+            <button class="swatch" data-preset="#FFFFFF" style="background:#FFFFFF" title="White"></button>
+            <button class="swatch" data-preset="#000000" style="background:#000000" title="Black"></button>
+            <button class="swatch" data-preset="transparent" style="background:repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 10px 10px" title="Transparent"></button>
+          </div>
+        </div>
+
+        <!-- TAB IMAGE -->
+        <div class="bg-tab-content hidden" id="bgTabImage">
+          <label class="upload-label">
+            <span style="font-size:20px; margin-bottom:4px">📁</span>
+            <span style="font-size:12px; font-weight:600; color:var(--text)">Upload Background</span>
+            <span style="font-size:10px; color:var(--muted); margin-top:2px">Local image (PNG, JPG, WEBP)</span>
+            <input type="file" id="bgImageUpload" accept="image/*" class="hidden">
+          </label>
+          <div class="upload-info hidden" id="bgUploadInfoBox">
+            <span id="bgUploadFilename" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">image.png</span>
+            <button type="button" id="bgRemoveImgBtn" style="background:none; border:0; color:#ff9fa8; font-size:11px; cursor:pointer; font-weight:600">Remove</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -429,7 +507,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
   </section>
 
   <section class="preview-area">
-    <div id="exportFrame" class="export-frame bg-purple">
+    <div id="exportFrame" class="export-frame">
       <div class="code-card" id="codeCard">
         <div class="window-bar" id="windowBar">
           <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
@@ -456,7 +534,7 @@ input[type=range]{width:100%;accent-color:var(--accent)}
       <div class="field"><label class="label">Size</label><input id="drawerFontSize" type="number" min="10" max="28"></div>
     </div>
     <div class="field"><label class="label">Theme</label><select id="drawerTheme"><option value="atom-one-dark">Atom One Dark</option><option value="github-dark">GitHub Dark</option><option value="monokai">Monokai</option><option value="night-owl">Night Owl</option><option value="tokyo-night-dark">Tokyo Night Dark</option><option value="stackoverflow-dark">Stack Overflow Dark</option></select></div>
-    <div class="field"><label class="label">Background</label><div class="swatches" id="drawerSwatches"></div></div>
+    
     <div class="section">
       <h3>Window</h3>
       <div class="toggle-row"><span>Window controls</span><label class="switch"><input id="drawerShowWindow" type="checkbox" checked><span class="slider"></span></label></div>
@@ -506,11 +584,23 @@ const languages = [
 const $ = id => document.getElementById(id);
 const state = {
   language:"auto", filename:"snippet.js", font:"mono", fontSize:14, theme:"atom-one-dark",
-  bg:"purple", showWindow:true, showTitle:true, showLines:true, windowStyle:"default", padding:64, radius:14
+  bgColor:"#7C5CFF", bgOpacity:1, bgImageUrl:"", bgImageName:"",
+  showWindow:true, showTitle:true, showLines:true, windowStyle:"default", padding:64, radius:14
 };
 
 const selects = [$("language"),$("mobileLanguage"),$("drawerLanguage")];
 selects.forEach(s => languages.forEach(([v,t]) => s.add(new Option(t,v))));
+
+function hexToRgba(hex, alpha) {
+  if(hex === "transparent") return "transparent";
+  let c = hex.replace('#', '');
+  if (c.length === 3) {
+    c = c.split('').map(x => x + x).join('');
+  }
+  const num = parseInt(c, 16);
+  if (isNaN(num)) return hex;
+  return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
+}
 
 function detectedLanguage(code){
   if(state.language!=="auto") return state.language;
@@ -544,6 +634,7 @@ function applyFont(){
   $("editorLines").style.fontSize=state.fontSize+"px";
   $("previewLines").style.fontSize=state.fontSize+"px";
 }
+
 function render(){
   const code=$("code").value;
   $("highlight").querySelector("code").innerHTML=highlightCode(code);
@@ -557,12 +648,30 @@ function render(){
   $("previewTitle").classList.toggle("hidden",!state.showTitle);
   $("editorLines").classList.toggle("hidden",!state.showLines);
   $("previewLines").classList.toggle("hidden",!state.showLines);
-  $("exportFrame").className="export-frame bg-"+state.bg;
-  $("exportFrame").style.padding=state.padding+"px";
+
+  // Background Export Frame Styling
+  const exportFrame = $("exportFrame");
+  if(state.bgImageUrl){
+    exportFrame.style.backgroundImage = `url('${state.bgImageUrl}')`;
+    exportFrame.style.backgroundSize = "cover";
+    exportFrame.style.backgroundPosition = "center";
+    exportFrame.style.backgroundColor = "transparent";
+    $("bgPreviewSwatch").style.backgroundImage = `url('${state.bgImageUrl}')`;
+    $("bgPreviewSwatch").style.backgroundSize = "cover";
+  } else {
+    exportFrame.style.backgroundImage = "none";
+    const computedBg = hexToRgba(state.bgColor, state.bgOpacity);
+    exportFrame.style.backgroundColor = computedBg;
+    $("bgPreviewSwatch").style.backgroundImage = "none";
+    $("bgPreviewSwatch").style.backgroundColor = state.bgColor === "transparent" ? "#333" : state.bgColor;
+  }
+
+  exportFrame.style.padding=state.padding+"px";
   $("codeCard").style.borderRadius=state.radius+"px";
   $("previewHighlight").style.borderRadius="0 0 "+state.radius+"px 0";
   applyFont();
 }
+
 function syncControls(){
   $("language").value=state.language;$("mobileLanguage").value=state.language;$("drawerLanguage").value=state.language;
   $("filename").value=state.filename;$("drawerFilename").value=state.filename;
@@ -576,9 +685,29 @@ function syncControls(){
   $("radius").value=state.radius;$("drawerRadius").value=state.radius;
   $("paddingVal").textContent=state.padding+"px";$("drawerPaddingVal").textContent=state.padding+"px";
   $("radiusVal").textContent=state.radius+"px";$("drawerRadiusVal").textContent=state.radius+"px";
-  document.querySelectorAll(".swatch").forEach(b=>b.classList.toggle("active",b.dataset.bg===state.bg));
+  
+  // Sync Background controls
+  if(state.bgColor !== "transparent") {
+    $("nativeColorPicker").value = state.bgColor;
+    $("hexInputText").value = state.bgColor.replace("#","");
+  }
+  $("opacityRange").value = state.bgOpacity;
+  $("opacityValLabel").textContent = Math.round(state.bgOpacity * 100) + "%";
+
+  document.querySelectorAll("[data-preset]").forEach(b => {
+    b.classList.toggle("active", b.dataset.preset.toLowerCase() === state.bgColor.toLowerCase());
+  });
+
+  if(state.bgImageUrl) {
+    $("bgUploadInfoBox").classList.remove("hidden");
+    $("bgUploadFilename").textContent = state.bgImageName || "Uploaded Image";
+  } else {
+    $("bgUploadInfoBox").classList.add("hidden");
+  }
+
   document.querySelectorAll(".window-style").forEach(b=>b.classList.toggle("active",b.dataset.windowStyle===state.windowStyle));
 }
+
 function setTheme(theme){
   state.theme=theme;
   const link=document.querySelector('link[rel="stylesheet"]');
@@ -595,6 +724,79 @@ function toast(msg){
   $("toast").textContent=msg;$("toast").classList.add("show");
   clearTimeout(window.__toast);window.__toast=setTimeout(()=>$("toast").classList.remove("show"),1800);
 }
+
+// Background Dropdown & Tabs Logic
+$("bgDropdownToggle").addEventListener("click", (e) => {
+  e.stopPropagation();
+  $("bgPopupPanel").classList.toggle("open");
+});
+document.addEventListener("click", (e) => {
+  if(!$("bgPickerContainer").contains(e.target)){
+    $("bgPopupPanel").classList.remove("open");
+  }
+});
+document.querySelectorAll(".bg-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".bg-tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    const target = tab.dataset.tab;
+    if(target === "color") {
+      $("bgTabColor").classList.remove("hidden");
+      $("bgTabImage").classList.add("hidden");
+    } else {
+      $("bgTabColor").classList.add("hidden");
+      $("bgTabImage").classList.remove("hidden");
+    }
+  });
+});
+
+$("nativeColorPicker").addEventListener("input", (e) => {
+  state.bgColor = e.target.value;
+  state.bgImageUrl = "";
+  syncControls();
+  render();
+});
+$("hexInputText").addEventListener("input", (e) => {
+  let val = e.target.value.trim();
+  if(val.length === 3 || val.length === 6) {
+    state.bgColor = "#" + val;
+    state.bgImageUrl = "";
+    syncControls();
+    render();
+  }
+});
+$("opacityRange").addEventListener("input", (e) => {
+  state.bgOpacity = parseFloat(e.target.value);
+  syncControls();
+  render();
+});
+document.querySelectorAll("[data-preset]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.bgColor = btn.dataset.preset;
+    state.bgImageUrl = "";
+    syncControls();
+    render();
+  });
+});
+$("bgImageUpload").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if(file){
+    state.bgImageName = file.name;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      state.bgImageUrl = evt.target.result;
+      syncControls();
+      render();
+    };
+    reader.readAsDataURL(file);
+  }
+});
+$("bgRemoveImgBtn").addEventListener("click", () => {
+  state.bgImageUrl = "";
+  state.bgImageName = "";
+  syncControls();
+  render();
+});
 
 // Auto Prettier Formatting Function
 function formatCodeWithPrettier() {
@@ -689,7 +891,6 @@ $("drawerPadding").addEventListener("input",e=>setField("padding",+e.target.valu
 $("radius").addEventListener("input",e=>setField("radius",+e.target.value));
 $("drawerRadius").addEventListener("input",e=>setField("radius",+e.target.value));
 
-document.querySelectorAll(".swatch").forEach(b=>b.addEventListener("click",()=>setField("bg",b.dataset.bg)));
 document.querySelectorAll(".window-style").forEach(b=>b.addEventListener("click",()=>setField("windowStyle",b.dataset.windowStyle)));
 
 async function copyCodeAction(){
@@ -721,7 +922,7 @@ $("formatBtn").addEventListener("click", formatCodeWithPrettier);
 $("mobileFormat").addEventListener("click", formatCodeWithPrettier);
 
 $("resetBtn").addEventListener("click",()=>{
-  Object.assign(state,{language:"auto",filename:"snippet.js",font:"mono",fontSize:14,theme:"atom-one-dark",bg:"purple",showWindow:true,showTitle:true,showLines:true,windowStyle:"default",padding:64,radius:14});
+  Object.assign(state,{language:"auto",filename:"snippet.js",font:"mono",fontSize:14,theme:"atom-one-dark",bgColor:"#7C5CFF",bgOpacity:1,bgImageUrl:"",bgImageName:"",showWindow:true,showTitle:true,showLines:true,windowStyle:"default",padding:64,radius:14});
   $("code").value=defaultCode;setTheme(state.theme);syncControls();render();toast("Berhasil direset");
 });
 $("mobileReset").addEventListener("click",()=>$("resetBtn").click());
@@ -729,7 +930,7 @@ $("mobileReset").addEventListener("click",()=>$("resetBtn").click());
 async function exportPNG(){
   if(typeof html2canvas==="undefined"){toast("Library export belum termuat");return}
   const frame=$("exportFrame");
-  const canvas=await html2canvas(frame,{backgroundColor:state.bg==="transparent"?null:null,scale:2,useCORS:true,logging:false});
+  const canvas=await html2canvas(frame,{backgroundColor:null,scale:2,useCORS:true,logging:false});
   const a=document.createElement("a");
   const base=(state.filename||"snippet").replace(/\.[^/.]+$/,"").replace(/[^\w.-]+/g,"-")||"snippet";
   a.download=base+".png";a.href=canvas.toDataURL("image/png");a.click();toast("PNG berhasil dibuat");
