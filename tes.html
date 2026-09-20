@@ -6,2236 +6,2072 @@
   class="scroll-smooth"
 >
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
   <meta
-    name="description"
-    content="Portfolio pribadi Ahmat Badali, mahasiswa Fakultas Teknik Sipil di Universitas Nahdlatul Ulama Kalimantan Selatan, bekerja di bidang Keamanan, serta Founder dan kontributor utama Indonesian Cyber Team (Cyberind.id)."
-  >
-
-  <meta name="author" content="Ahmat Badali">
-
-  <meta property="og:title" content="Ahmat Badali — Personal Portfolio">
-  <meta
-    property="og:description"
-    content="Portfolio, pendidikan, pengalaman kerja, Cyberind.id, keahlian, tools, dan prestasi Ahmat Badali."
-  >
-  <meta property="og:type" content="website">
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Ahmat Badali — Personal Portfolio</title>
 
-  <!-- =====================================================
-       EXTERNAL LIBRARIES
-  ====================================================== -->
+  <meta
+    name="description"
+    content="Portfolio pribadi Ahmat Badali — Mahasiswa Teknik Sipil, Founder dan kontributor utama Cyberind.id."
+  />
+  <meta name="author" content="Ahmat Badali" />
+  <meta name="theme-color" content="#3b6ff5" />
 
-  <!-- Tailwind CSS -->
+  <!-- =========================================================
+       FONTS
+  ========================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=PT+Sans:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- =========================================================
+       FONT AWESOME
+  ========================================================== -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  />
+
+  <!-- =========================================================
+       TAILWIND CSS
+  ========================================================== -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Alpine.js -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["DM Sans", "sans-serif"],
+            heading: ["PT Sans", "sans-serif"],
+          },
+
+          colors: {
+            accent: {
+              DEFAULT: "rgb(var(--accent-rgb) / <alpha-value>)",
+              light: "rgb(var(--accent-light-rgb) / <alpha-value>)",
+              soft: "rgb(var(--accent-2-rgb) / <alpha-value>)",
+            },
+          },
+
+          boxShadow: {
+            soft: "0 20px 60px rgba(0,0,0,.08)",
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- =========================================================
+       ALPINE JS
+  ========================================================== -->
   <script
     defer
     src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
   ></script>
 
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-  >
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- =====================================================
-       TAILWIND CONFIG
-  ====================================================== -->
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['PT Sans', 'sans-serif'],
-            body: ['DM Sans', 'sans-serif']
-          },
-
-          colors: {
-            accent: 'rgb(var(--accent-rgb) / <alpha-value>)',
-            'accent-light': 'rgb(var(--accent-light-rgb) / <alpha-value>)',
-            'accent-2': 'rgb(var(--accent-2-rgb) / <alpha-value>)'
-          }
-        }
-      }
-    };
-  </script>
-
-  <!-- =====================================================
+  <!-- =========================================================
        CUSTOM CSS
-  ====================================================== -->
-
+  ========================================================== -->
   <style>
     :root {
       --accent-rgb: 59 111 245;
       --accent-light-rgb: 125 168 255;
       --accent-2-rgb: 165 202 255;
+
+      --bg: #f7f9fc;
+      --surface: #ffffff;
+      --text: #111827;
+      --muted: #64748b;
+      --border: #e5e7eb;
     }
 
-    *,
-    *::before,
-    *::after {
+    html.dark {
+      --bg: #080b12;
+      --surface: #0f141e;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    * {
       box-sizing: border-box;
     }
 
-    html,
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
     body {
-      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
     }
 
     h1,
     h2,
     h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'PT Sans', sans-serif;
+    h4 {
+      font-family: "PT Sans", sans-serif;
     }
 
-    body {
-      transition:
-        background-color .3s,
-        color .3s;
+    a {
+      text-decoration: none;
     }
 
-    /* Background noise */
-    body::before {
-      content: '';
+    ::selection {
+      background: rgb(var(--accent-rgb) / 0.2);
+    }
+
+    /* =========================================================
+       SCROLL PROGRESS
+    ========================================================== */
+
+    #scroll-progress {
       position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: .35;
-
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgb(var(--accent-rgb));
-      border-radius: 99px;
-    }
-
-    /* =====================================================
-       REVEAL ANIMATION
-    ====================================================== */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(26px);
-
-      transition:
-        opacity .6s cubic-bezier(.4, 0, .2, 1),
-        transform .6s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-    }
-
-    .d1 {
-      transition-delay: .08s;
-    }
-
-    .d2 {
-      transition-delay: .16s;
-    }
-
-    .d3 {
-      transition-delay: .24s;
-    }
-
-    .d4 {
-      transition-delay: .32s;
-    }
-
-    /* =====================================================
-       NAVIGATION
-    ====================================================== */
-
-    .nl {
-      position: relative;
-    }
-
-    .nl::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1.5px;
-
-      background: currentColor;
-
-      transition:
-        width .22s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    .nl:hover::after,
-    .nl.on::after {
-      width: 100%;
-    }
-
-    /* =====================================================
-       SHIMMER
-    ====================================================== */
-
-    .shimmer {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .shimmer::after {
-      content: '';
-      position: absolute;
       top: 0;
-      left: -100%;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: rgb(var(--accent-rgb));
+      z-index: 9999;
+      transition: width 0.08s linear;
+    }
 
-      width: 60%;
-      height: 100%;
+    /* =========================================================
+       BACKGROUND BLOBS
+    ========================================================== */
 
-      background: rgba(255, 255, 255, .18);
+    .blob {
+      position: fixed;
+      width: 320px;
+      height: 320px;
+      border-radius: 999px;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.12;
+    }
 
-      transform: skewX(-20deg);
+    .blob-one {
+      top: -120px;
+      left: -100px;
+      background: rgb(var(--accent-rgb));
+    }
 
+    .blob-two {
+      right: -120px;
+      top: 35%;
+      background: rgb(var(--accent-light-rgb));
+    }
+
+    .blob-three {
+      bottom: -160px;
+      left: 30%;
+      background: rgb(var(--accent-2-rgb));
+    }
+
+    /* =========================================================
+       GLASS NAVBAR
+    ========================================================== */
+
+    .glass-nav {
+      background: rgb(255 255 255 / 0.75);
+      border-bottom: 1px solid rgb(229 231 235 / 0.8);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    html.dark .glass-nav {
+      background: rgb(8 11 18 / 0.78);
+      border-bottom-color: rgb(30 41 59 / 0.8);
+    }
+
+    /* =========================================================
+       CONTAINER
+    ========================================================== */
+
+    .container-main {
+      width: min(1180px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    @media (min-width: 768px) {
+      .container-main {
+        width: min(1180px, calc(100% - 48px));
+      }
+    }
+
+    /* =========================================================
+       SECTION
+    ========================================================== */
+
+    .section {
+      padding: 90px 0;
+    }
+
+    @media (max-width: 640px) {
+      .section {
+        padding: 70px 0;
+      }
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      color: rgb(var(--accent-rgb));
+      background: rgb(var(--accent-rgb) / 0.09);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb));
+      box-shadow: 0 0 0 5px rgb(var(--accent-rgb) / 0.1);
+    }
+
+    .section-title {
+      margin-top: 16px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      max-width: 680px;
+      margin-top: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       CARD
+    ========================================================== */
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
       transition:
-        left .4s cubic-bezier(.4, 0, .2, 1);
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
     }
 
-    .shimmer:hover::after {
-      left: 160%;
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgb(var(--accent-rgb) / 0.35);
+      box-shadow: 0 18px 50px rgb(0 0 0 / 0.08);
     }
 
-    /* =====================================================
-       PROFILE IMAGE
-    ====================================================== */
+    html.dark .card:hover {
+      box-shadow: 0 18px 50px rgb(0 0 0 / 0.25);
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================== */
+
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-top: 110px;
+      padding-bottom: 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.7rem, 7vw, 5.7rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 700;
+    }
+
+    .hero-title span {
+      color: rgb(var(--accent-rgb));
+    }
+
+    .hero-desc {
+      max-width: 680px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      color: white;
+      background: rgb(var(--accent-rgb));
+      box-shadow: 0 10px 25px rgb(var(--accent-rgb) / 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: rgb(var(--accent-rgb) / 0.9);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgb(var(--accent-rgb) / 0.4);
+      color: rgb(var(--accent-rgb));
+    }
+
+    /* =========================================================
+       PROFILE PHOTO
+    ========================================================== */
+
+    .hero-photo-wrap {
+      position: relative;
+      width: min(410px, 100%);
+      margin-inline: auto;
+    }
+
+    .hero-photo-glow {
+      position: absolute;
+      inset: -25px;
+      border-radius: 40px;
+      background: rgb(var(--accent-rgb) / 0.14);
+      filter: blur(40px);
+      z-index: -1;
+    }
 
     .pf {
+      position: relative;
       overflow: hidden;
-      background: #d4d4d8;
+      aspect-ratio: 4 / 5;
+      border-radius: 32px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 30px 80px rgb(0 0 0 / 0.12);
     }
 
     .pf img {
       width: 100%;
       height: 100%;
-
       object-fit: cover;
       object-position: top center;
-
       display: block;
     }
 
-    /* =====================================================
-       CARD
-    ====================================================== */
-
-    .card-h {
-      transition:
-        transform .28s cubic-bezier(.4, 0, .2, 1),
-        border-color .18s;
+    .photo-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      padding: 14px 16px;
+      border-radius: 17px;
+      color: white;
+      background: rgb(8 11 18 / 0.68);
+      border: 1px solid rgb(255 255 255 / 0.12);
+      backdrop-filter: blur(14px);
     }
 
-    .card-h:hover {
-      transform: translateY(-4px);
+    /* =========================================================
+       STATS
+    ========================================================== */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 38px;
     }
 
-    .glass-card {
-      background: rgba(240, 246, 255, .75);
-
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-
-      border: 1px solid rgba(191, 219, 254, .6);
-
-      box-shadow:
-        0 8px 32px rgba(59, 111, 245, .06);
+    .stat {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
     }
 
-    .dark .glass-card {
-      background: rgba(24, 24, 27, .75);
-
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-
-      border: 1px solid rgba(255, 255, 255, .1);
-
-      box-shadow:
-        0 8px 32px rgba(0, 0, 0, .37);
+    .stat strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
     }
 
-    /* =====================================================
-       GLASS TOUCH
-    ====================================================== */
+    .stat span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
 
-    .glass-touch {
+    /* =========================================================
+       TIMELINE
+    ========================================================== */
+
+    .timeline {
       position: relative;
-
-      transition:
-        transform .28s cubic-bezier(.4, 0, .2, 1),
-        background-color .35s,
-        border-color .35s,
-        box-shadow .35s,
-        backdrop-filter .35s;
+      margin-top: 40px;
     }
 
-    .glass-touch:hover,
-    .glass-touch:active,
-    .glass-touch.touched {
-      background-image:
-        linear-gradient(
-          135deg,
-          rgba(219, 234, 254, .8),
-          rgba(191, 219, 254, .5)
-        ) !important;
-
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-
-      border-color:
-        rgba(59, 111, 245, .4) !important;
-
-      box-shadow:
-        0 10px 25px rgba(59, 111, 245, .15),
-        inset 0 1px 0 rgba(255, 255, 255, .8);
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 5px;
+      bottom: 5px;
+      width: 1px;
+      background: var(--border);
     }
 
-    .dark .glass-touch:hover,
-    .dark .glass-touch:active,
-    .dark .glass-touch.touched {
-      background-image:
-        linear-gradient(
-          135deg,
-          rgb(var(--accent-rgb) / .2),
-          rgb(var(--accent-2-rgb) / .3)
-        ) !important;
-
-      background-color: transparent !important;
-
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-
-      border-color:
-        rgb(var(--accent-2-rgb) / .65) !important;
-
-      box-shadow:
-        0 10px 34px rgb(var(--accent-rgb) / .2),
-        inset 0 1px 0 rgba(255, 255, 255, .25);
+    .timeline-item {
+      position: relative;
+      padding-left: 52px;
+      margin-bottom: 35px;
     }
 
-    /* =====================================================
-       3D BUTTON
-    ====================================================== */
-
-    .btn-3d-inset {
-      box-shadow:
-        inset 2px 2px 5px rgba(0, 0, 0, .12),
-        inset -2px -2px 5px rgba(255, 255, 255, .8),
-        0 1px 2px rgba(0, 0, 0, .05);
-
-      transition: all .2s ease;
+    .timeline-dot {
+      position: absolute;
+      left: 8px;
+      top: 7px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb));
+      box-shadow: 0 0 0 6px rgb(var(--accent-rgb) / 0.12);
     }
 
-    .btn-3d-inset:active {
-      box-shadow:
-        inset 3px 3px 6px rgba(0, 0, 0, .2),
-        inset -2px -2px 4px rgba(255, 255, 255, .9);
+    /* =========================================================
+       SKILLS
+    ========================================================== */
 
-      transform: translateY(1px);
+    .skill {
+      padding: 20px;
     }
 
-    .dark .btn-3d-inset {
-      box-shadow:
-        inset 3px 3px 6px rgba(0, 0, 0, .7),
-        inset -2px -2px 5px rgba(255, 255, 255, .05);
+    .skill-icon {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: rgb(var(--accent-rgb));
+      background: rgb(var(--accent-rgb) / 0.1);
+      font-size: 18px;
     }
 
-    .dark .btn-3d-inset:active {
-      box-shadow:
-        inset 4px 4px 8px rgba(0, 0, 0, .85),
-        inset -1px -1px 3px rgba(255, 255, 255, .1);
+    /* =========================================================
+       TOOLS
+    ========================================================== */
+
+    .tool-card {
+      display: block;
+      padding: 22px;
     }
 
-    [x-cloak] {
-      display: none !important;
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      color: rgb(var(--accent-rgb));
+      background: rgb(var(--accent-rgb) / 0.1);
     }
 
-    /* =====================================================
-       SCROLL REVEAL
-    ====================================================== */
+    /* =========================================================
+       CONTACT
+    ========================================================== */
 
-    .scroll-reveal {
+    .contact-card {
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-icon {
+      flex: 0 0 auto;
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: rgb(var(--accent-rgb));
+      background: rgb(var(--accent-rgb) / 0.1);
+      font-size: 20px;
+    }
+
+    .contact-info {
+      min-width: 0;
+    }
+
+    .contact-info strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .contact-info span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    /* =========================================================
+       REVEAL ANIMATION
+    ========================================================== */
+
+    .reveal {
       opacity: 0;
-      transform: translateY(30px);
-
+      transform: translateY(25px);
       transition:
-        opacity .75s cubic-bezier(.22, 1, .36, 1),
-        transform .75s cubic-bezier(.22, 1, .36, 1);
+        opacity 0.7s ease,
+        transform 0.7s ease;
     }
 
-    .scroll-reveal.show {
+    .reveal.show {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .scroll-reveal.left {
-      transform: translateX(-35px);
+    /* =========================================================
+       MOBILE
+    ========================================================== */
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .hero-content {
+        order: 2;
+      }
+
+      .hero-photo-wrap {
+        order: 1;
+        width: min(360px, 100%);
+      }
+
+      .hero {
+        padding-top: 130px;
+      }
     }
 
-    .scroll-reveal.right {
-      transform: translateX(35px);
+    @media (max-width: 640px) {
+      .container-main {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .hero-title {
+        font-size: clamp(2.7rem, 14vw, 4.2rem);
+      }
+
+      .hero-desc {
+        font-size: 0.98rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .pf {
+        border-radius: 25px;
+      }
     }
 
-    .scroll-reveal.show.left,
-    .scroll-reveal.show.right {
-      transform: translateX(0);
+    /* =========================================================
+       MOBILE MENU
+    ========================================================== */
+
+    .mobile-menu {
+      border-top: 1px solid var(--border);
     }
 
-    /* =====================================================
-       CONTACT ICON
-    ====================================================== */
+    /* =========================================================
+       FOOTER
+    ========================================================== */
 
-    .icon-link {
-      transition:
-        transform .28s cubic-bezier(.22, 1, .36, 1),
-        background-color .28s,
-        border-color .28s,
-        color .28s;
+    footer {
+      border-top: 1px solid var(--border);
     }
 
-    .icon-link:hover {
-      transform: translateY(-5px) scale(1.04);
-    }
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================== */
 
-    .icon-link i {
-      transition:
-        transform .28s cubic-bezier(.22, 1, .36, 1);
-    }
-
-    .icon-link:hover i {
-      transform: scale(1.12);
-    }
-
-    /* =====================================================
-       PARALLAX
-    ====================================================== */
-
-    .parallax-blob {
-      will-change: transform;
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 
-<body
-  class="bg-blue-50/30 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased"
->
+<body>
 
-  <!-- =====================================================
+  <!-- =========================================================
        SCROLL PROGRESS
-  ====================================================== -->
+  ========================================================== -->
+  <div id="scroll-progress"></div>
 
-  <div
-    class="fixed top-0 left-0 right-0 h-[3px] z-[60] bg-transparent"
-  >
-    <div
-      id="scrollProgress"
-      class="h-full w-0 bg-gradient-to-r from-accent to-accent-2 transition-[width] duration-150 ease-out"
-    ></div>
-  </div>
+  <!-- =========================================================
+       DECORATIVE BACKGROUND
+  ========================================================== -->
+  <div class="blob blob-one"></div>
+  <div class="blob blob-two"></div>
+  <div class="blob blob-three"></div>
 
-
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
-
+  <!-- =========================================================
+       NAVBAR
+  ========================================================== -->
   <header
-    class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
-    :class="sc
-      ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm shadow-black/5'
-      : ''"
+    class="fixed top-0 left-0 right-0 z-50 glass-nav"
+    x-data="{ mobileOpen: false }"
   >
+    <div class="container-main">
+      <div class="h-[72px] flex items-center justify-between">
 
-    <nav
-      class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between"
-    >
-
-      <!-- Logo -->
-      <a
-        href="#hero"
-        class="font-display font-bold text-xl tracking-tight"
-      >
-        <span class="text-zinc-900 dark:text-white">
-          ahmat
-        </span>
-
-        <span class="text-accent">
-          badali
-        </span>
-      </a>
-
-
-      <!-- Desktop Navigation -->
-      <ul
-        class="hidden md:flex items-center gap-7 text-sm"
-        role="list"
-      >
-
-        <li>
-          <a
-            href="#about"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Tentang
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#education"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Pendidikan
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#experience"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Pengalaman
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#team"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Team
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#skills"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Keahlian
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#tools"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Tools
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#achievements"
-            class="nl text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
-          >
-            Prestasi
-          </a>
-        </li>
-
-      </ul>
-
-
-      <!-- Header Actions -->
-      <div class="flex items-center gap-3">
-
-        <!-- Dark Mode -->
-        <button
-          type="button"
-          @click="dark = !dark"
-          class="btn-3d-inset glass-touch w-10 h-10 flex items-center justify-center rounded-full border border-blue-200/60 dark:border-zinc-800 bg-blue-50/50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200"
-          :aria-label="dark ? 'Mode terang' : 'Mode gelap'"
-        >
-
-          <span x-show="!dark">
-            <i class="fa-solid fa-moon text-sm"></i>
-          </span>
-
-          <span x-show="dark" x-cloak>
-            <i class="fa-solid fa-sun text-sm text-amber-400"></i>
-          </span>
-
-        </button>
-
-
-        <!-- Contact Button -->
+        <!-- Logo -->
         <a
-          href="#contact"
-          class="hidden md:inline-flex items-center shimmer bg-accent text-white text-sm font-medium px-5 py-2 rounded-full hover:bg-accent-light transition-colors shadow-sm"
+          href="#beranda"
+          class="flex items-center gap-3 font-bold"
+          @click="mobileOpen = false"
         >
-          Kontak
+          <span
+            class="w-10 h-10 rounded-xl grid place-items-center text-white"
+            style="background: rgb(var(--accent-rgb));"
+          >
+            AB
+          </span>
+
+          <span class="hidden sm:block">
+            Ahmat Badali
+          </span>
         </a>
 
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-7 text-sm font-medium">
 
-        <!-- Mobile Menu -->
-        <button
-          type="button"
-          @click="mm = !mm"
-          class="btn-3d-inset glass-touch md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-blue-200/60 dark:border-zinc-800 bg-blue-50/50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200"
-          aria-label="Buka menu"
-        >
-
-          <span x-show="!mm">
-            <i class="fa-solid fa-bars"></i>
-          </span>
-
-          <span x-show="mm" x-cloak>
-            <i class="fa-solid fa-xmark"></i>
-          </span>
-
-        </button>
-
-      </div>
-
-    </nav>
-
-
-    <!-- Mobile Navigation -->
-    <div
-      x-show="mm"
-      x-cloak
-      class="md:hidden glass-card border-t border-blue-100 dark:border-zinc-900"
-    >
-
-      <ul
-        class="flex flex-col px-6 py-5 gap-4 text-sm font-medium"
-      >
-
-        <li>
-          <a href="#about" @click="mm = false">
-            Tentang Saya
+          <a href="#tentang" class="hover:text-accent transition">
+            Tentang
           </a>
-        </li>
 
-        <li>
-          <a href="#education" @click="mm = false">
+          <a href="#pendidikan" class="hover:text-accent transition">
             Pendidikan
           </a>
-        </li>
 
-        <li>
-          <a href="#experience" @click="mm = false">
+          <a href="#pengalaman" class="hover:text-accent transition">
             Pengalaman
           </a>
-        </li>
 
-        <li>
-          <a href="#team" @click="mm = false">
+          <a href="#team" class="hover:text-accent transition">
             Team
           </a>
-        </li>
 
-        <li>
-          <a href="#skills" @click="mm = false">
+          <a href="#keahlian" class="hover:text-accent transition">
             Keahlian
           </a>
-        </li>
 
-        <li>
-          <a href="#tools" @click="mm = false">
+          <a href="#tools" class="hover:text-accent transition">
             Tools
           </a>
-        </li>
 
-        <li>
-          <a href="#achievements" @click="mm = false">
+          <a href="#prestasi" class="hover:text-accent transition">
             Prestasi
           </a>
-        </li>
 
-        <li>
           <a
-            href="#contact"
-            @click="mm = false"
-            class="text-accent"
+            href="#kontak"
+            class="px-4 py-2 rounded-xl text-white"
+            style="background: rgb(var(--accent-rgb));"
           >
             Kontak
           </a>
-        </li>
 
-      </ul>
+          <!-- Theme -->
+          <button
+            type="button"
+            @click="toggleDark()"
+            class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 grid place-items-center"
+            aria-label="Ganti tema"
+          >
+            <i
+              class="fa-solid"
+              :class="dark ? 'fa-sun' : 'fa-moon'"
+            ></i>
+          </button>
+        </nav>
 
+        <!-- Mobile Controls -->
+        <div class="lg:hidden flex items-center gap-2">
+
+          <button
+            type="button"
+            @click="toggleDark()"
+            class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 grid place-items-center"
+            aria-label="Ganti tema"
+          >
+            <i
+              class="fa-solid"
+              :class="dark ? 'fa-sun' : 'fa-moon'"
+            ></i>
+          </button>
+
+          <button
+            type="button"
+            @click="mobileOpen = !mobileOpen"
+            class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 grid place-items-center"
+            aria-label="Buka menu"
+          >
+            <i
+              class="fa-solid"
+              :class="mobileOpen ? 'fa-xmark' : 'fa-bars'"
+            ></i>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div
+        x-show="mobileOpen"
+        x-transition
+        class="lg:hidden mobile-menu py-4"
+      >
+        <nav class="flex flex-col gap-1 text-sm font-medium">
+
+          <a
+            href="#tentang"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Tentang
+          </a>
+
+          <a
+            href="#pendidikan"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Pendidikan
+          </a>
+
+          <a
+            href="#pengalaman"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Pengalaman
+          </a>
+
+          <a
+            href="#team"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Team
+          </a>
+
+          <a
+            href="#keahlian"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Keahlian
+          </a>
+
+          <a
+            href="#tools"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Tools
+          </a>
+
+          <a
+            href="#prestasi"
+            @click="mobileOpen = false"
+            class="px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Prestasi
+          </a>
+
+          <a
+            href="#kontak"
+            @click="mobileOpen = false"
+            class="mt-2 px-4 py-3 rounded-xl text-white text-center"
+            style="background: rgb(var(--accent-rgb));"
+          >
+            Kontak
+          </a>
+
+        </nav>
+      </div>
     </div>
-
   </header>
-
-
-  <!-- =====================================================
-       MAIN
-  ====================================================== -->
 
   <main>
 
-    <!-- ===================================================
+    <!-- =======================================================
          HERO
-    ==================================================== -->
-
-    <section
-      id="hero"
-      class="relative min-h-screen flex items-center pt-16 overflow-hidden"
-    >
-
-      <div
-        class="parallax-blob absolute top-1/4 right-0 w-96 h-96 bg-accent/15 rounded-full blur-3xl"
-      ></div>
-
-      <div
-        class="parallax-blob absolute bottom-1/4 left-0 w-64 h-64 bg-accent-2/30 dark:bg-accent-2/10 rounded-full blur-3xl"
-      ></div>
-
-
-      <div
-        class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full"
-      >
-
-        <div
-          class="grid md:grid-cols-2 gap-12 items-center"
-        >
+    ======================================================== -->
+    <section id="beranda" class="hero">
+      <div class="container-main">
+        <div class="hero-grid">
 
           <!-- Hero Content -->
-          <div>
+          <div class="hero-content reveal">
 
-            <p
-              class="reveal text-sm font-medium text-accent tracking-widest uppercase mb-4"
-            >
+            <div class="section-label">
               Personal Portfolio
-            </p>
+            </div>
 
-            <h1
-              class="reveal d1 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-6"
-            >
+            <h1 class="hero-title mt-5">
               Halo, saya
-              <span class="text-accent">
-                Ahmat Badali
-              </span>
+              <span>Ahmat Badali</span>
             </h1>
 
-            <p
-              class="reveal d2 text-lg md:text-xl text-zinc-600 dark:text-zinc-400 font-light leading-relaxed max-w-xl mb-8"
-            >
-              Saya mahasiswa Fakultas Teknik Sipil di Universitas Nahdlatul Ulama
-              Kalimantan Selatan. Saat ini saya bekerja di bidang
-              <strong class="font-medium text-zinc-800 dark:text-zinc-200">
-                Keamanan
-              </strong>
-              dan juga merupakan
-              <strong class="font-medium text-zinc-800 dark:text-zinc-200">
-                Founder serta kontributor utama Indonesian Cyber Team (Cyberind.id)
-              </strong>.
-            </p>
-
-
-            <!-- Hero Buttons -->
-            <div class="reveal d3 flex flex-wrap gap-4">
-
-              <a
-                href="#about"
-                class="btn-3d-inset glass-touch inline-flex items-center gap-2 bg-blue-100/80 dark:bg-zinc-800 border border-blue-200/80 dark:border-zinc-700 text-zinc-900 dark:text-white font-medium px-7 py-3.5 rounded-full hover:bg-blue-200/50 transition-colors text-sm"
-              >
-                Lihat Biodata ↓
-              </a>
-
-              <a
-                href="#team"
-                class="btn-3d-inset glass-touch inline-flex items-center gap-2 bg-white/70 dark:bg-zinc-900/80 border border-blue-200/60 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full transition-colors text-sm"
-              >
-                Cyberind.id
-              </a>
-
-            </div>
-
-
-            <!-- Hero Stats -->
-            <div
-              class="reveal d4 flex gap-8 mt-14 pt-8 border-t border-blue-100 dark:border-zinc-900"
-            >
-
-              <div>
-                <p
-                  class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white"
-                >
-                  Mahasiswa
-                </p>
-
-                <p
-                  class="text-xs text-zinc-500 dark:text-zinc-400 mt-1"
-                >
-                  Teknik Sipil
-                </p>
-              </div>
-
-              <div>
-                <p
-                  class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white"
-                >
-                  Founder
-                </p>
-
-                <p
-                  class="text-xs text-zinc-500 dark:text-zinc-400 mt-1"
-                >
-                  Cyberind.id
-                </p>
-              </div>
-
-              <div>
-                <p
-                  class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white"
-                >
-                  Keamanan
-                </p>
-
-                <p
-                  class="text-xs text-zinc-500 dark:text-zinc-400 mt-1"
-                >
-                  Pekerjaan Saat Ini
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- Hero Image -->
-          <div
-            class="reveal d2 flex justify-center md:justify-end"
-          >
-
-            <div
-              class="relative w-80 sm:w-[22rem] md:w-[25rem] aspect-[4/5]"
-            >
-
-              <div
-                class="absolute -inset-5 rounded-[2.75rem] bg-gradient-to-br from-accent/35 via-accent-light/15 to-transparent blur-2xl -z-10"
-              ></div>
-
-              <div
-                class="pf w-full h-full rounded-[2rem] ring-1 ring-white/20 dark:ring-white/10 shadow-2xl shadow-accent/20"
-              >
-
-                <img
-                  src="https://ahmatbadali.my.id/img/Pas-foto-kemaja-formal.jpg"
-                  alt="Ahmat Badali"
-                  loading="eager"
-                >
-
-              </div>
-
-              <div
-                class="glass-touch absolute -bottom-5 -left-5 bg-accent/90 border border-white/20 text-white font-display font-bold text-sm px-5 py-3 rounded-2xl shadow-lg"
-              >
-                Founder • Cyberind.id
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         ABOUT
-    ==================================================== -->
-
-    <section
-      id="about"
-      class="scroll-reveal py-24"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div
-          class="grid md:grid-cols-2 gap-12 items-start"
-        >
-
-          <div>
-
-            <p
-              class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-            >
-              Tentang Saya
-            </p>
-
-            <h2
-              class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-6"
-            >
-              Sedikit Tentang Saya
-            </h2>
-
-          </div>
-
-
-          <div
-            class="reveal d2 text-zinc-600 dark:text-zinc-400 leading-relaxed space-y-5"
-          >
-
-            <p>
-              Saya Ahmat Badali, mahasiswa Fakultas Teknik Sipil di Universitas
-              Nahdlatul Ulama Kalimantan Selatan. Saat ini saya bekerja di
-              bidang Keamanan dan aktif mengembangkan Indonesian Cyber Team
+            <p class="hero-desc">
+              Saya adalah mahasiswa Fakultas Teknik Sipil di
+              Universitas Nahdlatul Ulama Kalimantan Selatan.
+              Selain menjalani pendidikan, saya juga aktif sebagai
+              Founder dan kontributor utama Indonesian Cyber Team
               (Cyberind.id).
             </p>
 
-            <p>
-              Saya memiliki ketertarikan pada teknologi, cybersecurity, dan
-              pengembangan berbagai proyek digital. Melalui Cyberind.id, saya
-              belajar, bereksperimen, dan berkolaborasi dalam berbagai proyek
-              yang berkaitan dengan teknologi dan penetration testing.
+            <div class="hero-actions">
+
+              <a href="#tentang" class="btn-primary">
+                <i class="fa-solid fa-user"></i>
+                Tentang Saya
+              </a>
+
+              <a href="#kontak" class="btn-secondary">
+                <i class="fa-regular fa-envelope"></i>
+                Hubungi Saya
+              </a>
+
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+
+              <div class="stat">
+                <strong>Mahasiswa</strong>
+                <span>Teknik Sipil</span>
+              </div>
+
+              <div class="stat">
+                <strong>Founder</strong>
+                <span>Cyberind.id</span>
+              </div>
+
+              <div class="stat">
+                <strong>Keamanan</strong>
+                <span>Pekerjaan Saat Ini</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Hero Photo -->
+          <div class="hero-photo-wrap reveal">
+
+            <div class="hero-photo-glow"></div>
+
+            <div class="pf">
+
+              <img
+                src="https://ahmatbadali.my.id/img/pas-baru.png"
+                alt="Ahmat Badali"
+                loading="eager"
+              />
+
+              <div class="photo-caption">
+                <div class="text-sm font-bold">
+                  Ahmat Badali
+                </div>
+
+                <div class="text-xs text-white/70 mt-1">
+                  Teknik Sipil • Cyberind.id
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         TENTANG
+    ======================================================== -->
+    <section id="tentang" class="section">
+      <div class="container-main">
+
+        <div class="reveal">
+
+          <div class="section-label">
+            Tentang Saya
+          </div>
+
+          <h2 class="section-title">
+            Sedikit tentang saya
+          </h2>
+
+          <p class="section-desc">
+            Saya merupakan mahasiswa Fakultas Teknik Sipil di
+            Universitas Nahdlatul Ulama Kalimantan Selatan.
+            Saya tertarik untuk terus belajar, mengembangkan
+            kemampuan, dan mendapatkan pengalaman baru baik dalam
+            bidang akademik maupun kegiatan di luar perkuliahan.
+          </p>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5 mt-10">
+
+          <div class="card p-7 reveal">
+
+            <div class="skill-icon mb-5">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <h3 class="text-xl font-bold">
+              Pendidikan
+            </h3>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Saat ini saya menempuh pendidikan di Fakultas Teknik,
+              Program Studi Teknik Sipil, Universitas Nahdlatul
+              Ulama Kalimantan Selatan.
             </p>
 
-            <p>
-              Saya juga memiliki pengalaman di bidang operasional, pergudangan,
-              pelayanan, dan pekerjaan lapangan. Berbagai pengalaman tersebut
-              membantu saya mengembangkan kemampuan komunikasi, kerja sama tim,
-              kepemimpinan, disiplin, dan tanggung jawab.
-            </p>
+          </div>
 
-            <p>
-              Saya terus berusaha mengembangkan kemampuan melalui pengalaman,
-              pekerjaan, pendidikan, dan berbagai proyek yang saya kerjakan.
+          <div class="card p-7 reveal">
+
+            <div class="skill-icon mb-5">
+              <i class="fa-solid fa-code"></i>
+            </div>
+
+            <h3 class="text-xl font-bold">
+              Cyberind.id
+            </h3>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Saya merupakan Founder dan kontributor utama
+              Indonesian Cyber Team (Cyberind.id), sebuah komunitas
+              independen yang bergerak dalam edukasi dan pengembangan
+              berbagai resource teknologi.
             </p>
 
           </div>
 
         </div>
-
       </div>
-
     </section>
 
+    <!-- =======================================================
+         PENDIDIKAN
+    ======================================================== -->
+    <section id="pendidikan" class="section">
+      <div class="container-main">
 
-    <!-- ===================================================
-         EDUCATION
-    ==================================================== -->
-
-    <section
-      id="education"
-      class="scroll-reveal py-24"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div class="mb-14">
-
-          <p
-            class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-          >
+        <div class="reveal">
+          <div class="section-label">
             Pendidikan
-          </p>
+          </div>
 
-          <h2
-            class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white"
-          >
-            Perjalanan Pendidikan
+          <h2 class="section-title">
+            Perjalanan pendidikan
           </h2>
-
         </div>
 
+        <div class="timeline">
 
-        <div class="grid md:grid-cols-2 gap-6">
+          <div class="timeline-item reveal">
 
-          <!-- UNIVERSITAS -->
-          <article
-            class="reveal d1 card-h glass-card glass-touch rounded-2xl p-8"
-          >
+            <div class="timeline-dot"></div>
 
-            <p
-              class="text-xs text-accent font-medium tracking-widest uppercase mb-4"
-            >
-              Saat Ini
-            </p>
+            <div class="card p-6">
 
-            <h3
-              class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-3"
-            >
-              Universitas Nahdlatul Ulama Kalimantan Selatan
-            </h3>
+              <div class="text-sm font-semibold text-accent">
+                Saat Ini
+              </div>
 
-            <p
-              class="text-sm text-accent font-medium mb-3"
-            >
-              Fakultas Teknik Sipil
-            </p>
+              <h3 class="text-xl font-bold mt-2">
+                Universitas Nahdlatul Ulama Kalimantan Selatan
+              </h3>
 
-            <p
-              class="text-zinc-600 dark:text-zinc-400 leading-relaxed"
-            >
-              Saat ini saya sedang menempuh pendidikan di Fakultas Teknik Sipil
-              Universitas Nahdlatul Ulama Kalimantan Selatan.
-            </p>
+              <p class="text-accent font-semibold mt-1">
+                Fakultas Teknik — Program Studi Teknik Sipil
+              </p>
 
-          </article>
+              <p class="text-slate-500 dark:text-slate-400 leading-7 mt-4">
+                Menempuh pendidikan tinggi di bidang Teknik Sipil
+                dan terus mengembangkan pengetahuan serta pengalaman
+                melalui kegiatan akademik maupun non-akademik.
+              </p>
 
+            </div>
+          </div>
 
-          <!-- SMA -->
-          <article
-            class="reveal d2 card-h glass-card glass-touch rounded-2xl p-8"
-          >
+          <div class="timeline-item reveal">
 
-            <p
-              class="text-xs text-accent font-medium tracking-widest uppercase mb-4"
-            >
-              Pendidikan Sebelumnya
-            </p>
+            <div class="timeline-dot"></div>
 
-            <h3
-              class="font-display font-bold text-2xl text-zinc-900 dark:text-white mb-3"
-            >
-              SMA Negeri 1 Aluh-Aluh
-            </h3>
+            <div class="card p-6">
 
-            <p
-              class="text-sm text-accent font-medium mb-3"
-            >
-              Matematika dan Ilmu Pengetahuan Alam (MIPA)
-            </p>
+              <div class="text-sm font-semibold text-accent">
+                Pendidikan Menengah
+              </div>
 
-            <p
-              class="text-zinc-600 dark:text-zinc-400 leading-relaxed"
-            >
-              Aktif dalam berbagai kegiatan dan organisasi sekolah, termasuk
-              MPK/OSIS, Paskibra, PMR, Pramuka, dan Renang.
-            </p>
+              <h3 class="text-xl font-bold mt-2">
+                SMA Negeri 1 Aluh-Aluh
+              </h3>
 
-          </article>
+              <p class="text-slate-500 dark:text-slate-400 mt-2">
+                Jurusan IPA
+              </p>
+
+            </div>
+          </div>
 
         </div>
-
       </div>
-
     </section>
 
+    <!-- =======================================================
+         PENGALAMAN
+    ======================================================== -->
+    <section id="pengalaman" class="section">
+      <div class="container-main">
 
-    <!-- ===================================================
-         EXPERIENCE
-    ==================================================== -->
+        <div class="reveal">
 
-    <section
-      id="experience"
-      class="scroll-reveal py-24"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div class="mb-14">
-
-          <p
-            class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-          >
+          <div class="section-label">
             Pengalaman
-          </p>
+          </div>
 
-          <h2
-            class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white"
-          >
-            Pengalaman Kerja
+          <h2 class="section-title">
+            Pengalaman kerja
           </h2>
+
+          <p class="section-desc">
+            Beberapa pengalaman yang pernah saya jalani sebagai
+            bagian dari proses belajar, bekerja, dan mengembangkan
+            kemampuan.
+          </p>
 
         </div>
 
+        <div class="grid md:grid-cols-2 gap-5 mt-10">
 
-        <div
-          class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+          <!-- Keamanan -->
+          <article class="card p-6 reveal">
 
-          <!-- KEAMANAN -->
-          <article
-            class="reveal d1 card-h glass-card glass-touch rounded-2xl p-8"
-          >
+            <div class="flex items-start justify-between gap-4">
 
-            <span
-              class="inline-flex text-xs bg-blue-100 dark:bg-white/10 text-accent font-medium px-3 py-1 rounded-full mb-5"
-            >
-              Pekerjaan Saat Ini
-            </span>
+              <div>
+                <div class="skill-icon">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+              </div>
 
-            <h3
-              class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2"
-            >
+              <span
+                class="text-xs font-semibold px-3 py-1.5 rounded-full"
+                style="
+                  color: rgb(var(--accent-rgb));
+                  background: rgb(var(--accent-rgb) / .1);
+                "
+              >
+                Saat Ini
+              </span>
+
+            </div>
+
+            <h3 class="text-xl font-bold mt-5">
               Keamanan
             </h3>
 
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed"
-            >
-              Menjalankan pemantauan, menjaga ketertiban, mengikuti prosedur
-              kerja, serta membantu memastikan kegiatan di lapangan berjalan
-              dengan baik.
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Menjalankan pekerjaan di bidang Keamanan dengan
+              mengutamakan kedisiplinan, tanggung jawab, ketelitian,
+              dan komunikasi.
             </p>
 
           </article>
 
+          <!-- Indogrosir -->
+          <article class="card p-6 reveal">
 
-          <!-- CLERK LOGISTIK -->
-          <article
-            class="reveal d2 card-h glass-card glass-touch rounded-2xl p-8"
-          >
+            <div class="skill-icon">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
 
-            <span
-              class="inline-flex text-xs bg-blue-100 dark:bg-white/10 text-accent font-medium px-3 py-1 rounded-full mb-5"
-            >
-              Logistik
-            </span>
-
-            <h3
-              class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2"
-            >
+            <h3 class="text-xl font-bold mt-5">
               Clerk Logistik
             </h3>
 
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed"
-            >
-              Menangani picking dan scanning, melakukan pengecekan data barang,
-              serta membantu kelancaran operasional logistik.
+            <p class="text-accent font-semibold mt-1">
+              PT Inti Cakrawala Citra — Indogrosir
+            </p>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Pengalaman selama kurang lebih 6 bulan dengan tugas
+              membantu proses logistik dan warehouse, picking,
+              scanning, serta pekerjaan operasional lainnya.
             </p>
 
           </article>
 
+          <!-- J&T -->
+          <article class="card p-6 reveal">
 
-          <!-- CREW OUTLET -->
-          <article
-            class="reveal d3 card-h glass-card glass-touch rounded-2xl p-8"
-          >
+            <div class="skill-icon">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
 
-            <span
-              class="inline-flex text-xs bg-blue-100 dark:bg-white/10 text-accent font-medium px-3 py-1 rounded-full mb-5"
-            >
-              Outlet
-            </span>
-
-            <h3
-              class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2"
-            >
-              Crew Outlet
-            </h3>
-
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed"
-            >
-              Menangani pelayanan pelanggan, pembuatan makanan dan minuman,
-              pengecekan stok, pengelolaan gudang outlet, serta menjaga
-              kebersihan area kerja.
-            </p>
-
-          </article>
-
-
-          <!-- WAREHOUSE -->
-          <article
-            class="reveal d4 card-h glass-card glass-touch rounded-2xl p-8"
-          >
-
-            <span
-              class="inline-flex text-xs bg-blue-100 dark:bg-white/10 text-accent font-medium px-3 py-1 rounded-full mb-5"
-            >
-              Pergudangan
-            </span>
-
-            <h3
-              class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-2"
-            >
+            <h3 class="text-xl font-bold mt-5">
               Warehouse Worker
             </h3>
 
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed"
-            >
-              Menangani sorting paket, loading dan unloading barang,
-              pengecekan data serta kondisi paket, dan menjaga kerapian
-              area gudang.
+            <p class="text-accent font-semibold mt-1">
+              J&T Express
+            </p>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Melakukan proses sorting berdasarkan area, loading dan
+              unloading barang, memastikan kondisi paket serta
+              membantu menjaga ketertiban area kerja.
+            </p>
+
+          </article>
+
+          <!-- Roti'O -->
+          <article class="card p-6 reveal">
+
+            <div class="skill-icon">
+              <i class="fa-solid fa-mug-hot"></i>
+            </div>
+
+            <h3 class="text-xl font-bold mt-5">
+              Staff Outlet
+            </h3>
+
+            <p class="text-accent font-semibold mt-1">
+              Roti'O
+            </p>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Memiliki pengalaman sebagai Staff Outlet, Baker,
+              Barista, serta membantu pekerjaan warehouse outlet.
             </p>
 
           </article>
 
         </div>
-
       </div>
-
     </section>
 
-
-    <!-- ===================================================
-         TEAM / CYBERIND.ID
-    ==================================================== -->
-
-    <section
-      id="team"
-      class="scroll-reveal py-24"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div
-          class="glass-card rounded-3xl p-8 md:p-14 relative overflow-hidden"
-        >
-
-          <div
-            class="absolute top-0 right-0 w-80 h-80 bg-accent/15 rounded-full blur-3xl -z-10"
-          ></div>
-
-
-          <div
-            class="grid md:grid-cols-2 gap-10 items-center"
-          >
-
-            <div>
-
-              <span
-                class="inline-flex text-xs bg-accent/10 text-accent font-medium px-3.5 py-1.5 rounded-full mb-6"
-              >
-                Founder & Kontributor Utama
-              </span>
-
-              <h2
-                class="font-display font-bold text-3xl md:text-4xl text-zinc-900 dark:text-white mb-4"
-              >
-                Indonesian Cyber Team (Cyberind.id)
-              </h2>
-
-              <p
-                class="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6"
-              >
-                Saya merupakan Founder dan kontributor utama Indonesian Cyber
-                Team (Cyberind.id). Team ini saya kembangkan sebagai wadah untuk
-                belajar, berbagi, bereksperimen, dan berkolaborasi dalam berbagai
-                hal yang berkaitan dengan teknologi dan cybersecurity.
-              </p>
-
-              <p
-                class="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6"
-              >
-                Melalui Cyberind.id, saya terus mengeksplorasi teknologi,
-                mengembangkan proyek digital, serta mempelajari berbagai hal
-                di bidang cybersecurity dan penetration testing.
-              </p>
-
-
-              <div class="flex flex-wrap gap-4 items-center">
-
-                <a
-                  href="https://cyberind.my.id"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-3d-inset glass-touch inline-flex items-center gap-3 bg-accent text-white font-medium px-7 py-3.5 rounded-full hover:bg-accent-light transition-colors text-sm"
-                >
-
-                  <span>
-                    Kunjungi Cyberind.id
-                  </span>
-
-                  <i
-                    class="fa-solid fa-arrow-up-right-from-square text-xs"
-                  ></i>
-
-                </a>
-
-              </div>
-
-            </div>
-
-
-            <div class="flex justify-center">
-
-              <div
-                class="relative w-64 sm:w-72 md:w-80 aspect-square"
-              >
-
-                <div
-                  class="absolute -inset-4 rounded-3xl bg-gradient-to-br from-accent/30 to-transparent blur-xl -z-10"
-                ></div>
-
-                <div
-                  class="w-full h-full rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/20 dark:ring-white/10 bg-zinc-900 flex items-center justify-center p-4"
-                >
-
-                  <img
-                    src="https://www.cyberind.my.id/assets/images/logo-cyberind.id.png"
-                    alt="Logo Indonesian Cyber Team Cyberind.id"
-                    class="max-w-full max-h-full object-contain rounded-xl"
-                  >
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         SKILLS
-    ==================================================== -->
-
-    <section
-      id="skills"
-      class="scroll-reveal py-24"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div class="mb-14">
-
-          <p
-            class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-          >
-            Keahlian
-          </p>
-
-          <h2
-            class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white"
-          >
-            Kemampuan Saya
-          </h2>
-
-        </div>
-
-
-        <div
-          class="reveal d2 flex flex-wrap gap-3"
-        >
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Keamanan & Ketertiban
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Komunikasi
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Kerja Sama Tim
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Kepemimpinan
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Manajemen Stok
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Pelayanan Pelanggan
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Operasional Gudang
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Picking & Scanning
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Basic Web Development
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            IT Fundamentals
-          </span>
-
-          <span class="glass-card glass-touch px-5 py-3 rounded-full text-zinc-800 dark:text-zinc-200 font-medium text-sm">
-            Time Management
-          </span>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         TOOLS
-    ==================================================== -->
-
-    <section
-      id="tools"
-      class="scroll-reveal py-24"
-      x-data="randomTool()"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div
-          class="reveal card-h glass-card glass-touch rounded-3xl p-10 md:p-14"
-        >
-
-          <div
-            class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8"
-          >
-
-            <div>
-
-              <p
-                class="text-xs font-medium text-accent tracking-widest uppercase mb-3"
-              >
-                Cybersecurity & Pentesting
-              </p>
-
-              <h2
-                class="font-display font-bold text-3xl md:text-4xl text-zinc-900 dark:text-white mb-3"
-              >
-                Security Tools
-              </h2>
-
-              <p
-                class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl"
-              >
-                Beberapa tools yang saya buat untuk belajar, bereksperimen,
-                dan membantu berbagai kebutuhan dalam cybersecurity dan
-                penetration testing.
-              </p>
-
-            </div>
-
-
-            <a
-              href="https://ahmatbadali.my.id/tools/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-3d-inset glass-touch inline-flex items-center gap-3 bg-accent text-white font-medium px-8 py-4 rounded-full hover:bg-accent-light transition-colors text-sm shrink-0"
-            >
-
-              <span>
-                Buka Semua Tools
-              </span>
-
-              <i
-                class="fa-solid fa-arrow-up-right-from-square text-xs"
-              ></i>
-
-            </a>
-
-          </div>
-
-
-          <div
-            class="border-t border-blue-100 dark:border-zinc-800/80 pt-8 mt-6"
-          >
+    <!-- =======================================================
+         TEAM / CYBERIND
+    ======================================================== -->
+    <section id="team" class="section">
+      <div class="container-main">
+
+        <div class="card p-7 md:p-10 reveal">
+
+          <div class="grid md:grid-cols-[auto_1fr_auto] gap-7 items-center">
 
             <div
-              class="flex items-center justify-between mb-4"
+              class="w-24 h-24 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white grid place-items-center"
             >
-
-              <p
-                class="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider"
-              >
-                Featured Tool
-              </p>
-
-              <span
-                class="text-[11px] bg-accent/10 text-accent font-medium px-3 py-1 rounded-full"
-                x-text="tool.category"
-              ></span>
-
+              <img
+                src="https://www.cyberind.my.id/assets/images/logo-cyberind.id.png"
+                alt="Cyberind.id"
+                class="w-full h-full object-contain"
+                loading="lazy"
+              />
             </div>
 
+            <div>
 
-            <div class="grid sm:grid-cols-1 gap-4">
-
-              <div
-                class="glass-card glass-touch p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-              >
-
-                <div class="flex items-start gap-4">
-
-                  <div
-                    class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 mt-1 sm:mt-0"
-                  >
-                    <i
-                      :class="tool.icon"
-                      class="text-lg"
-                    ></i>
-                  </div>
-
-                  <div>
-
-                    <h3
-                      class="font-display font-bold text-zinc-900 dark:text-white text-base mb-1"
-                      x-text="tool.name"
-                    ></h3>
-
-                    <p
-                      class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed"
-                      x-text="tool.desc"
-                    ></p>
-
-                  </div>
-
-                </div>
-
-
-                <a
-                  :href="tool.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-3d-inset glass-touch inline-flex items-center gap-2 bg-blue-100/70 dark:bg-zinc-800 border border-blue-200/80 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-medium px-5 py-2.5 rounded-xl hover:bg-blue-200/50 transition-colors shrink-0 self-end sm:self-center"
-                >
-
-                  <span>
-                    Coba Tool
-                  </span>
-
-                  <i
-                    class="fa-solid fa-arrow-right text-[10px]"
-                  ></i>
-
-                </a>
-
+              <div class="section-label">
+                Indonesian Cyber Team
               </div>
 
+              <h2 class="text-2xl md:text-3xl font-bold mt-4">
+                Cyberind.id
+              </h2>
+
+              <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+                Saya merupakan Founder dan kontributor utama
+                Indonesian Cyber Team (Cyberind.id), komunitas
+                independen yang telah hadir sejak 2018.
+              </p>
+
+              <p class="text-slate-500 dark:text-slate-400 leading-7 mt-2">
+                Cyberind berfokus pada edukasi, informasi, teknologi,
+                serta pengembangan tools dan resource untuk kebutuhan
+                pembelajaran keamanan siber.
+              </p>
+
+            </div>
+
+            <div>
+              <a
+                href="https://cyberind.my.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-primary"
+              >
+                Kunjungi Cyberind
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
             </div>
 
           </div>
 
         </div>
-
       </div>
-
     </section>
 
+    <!-- =======================================================
+         KEAHLIAN
+    ======================================================== -->
+    <section id="keahlian" class="section">
+      <div class="container-main">
 
-    <!-- ===================================================
-         ACHIEVEMENTS
-    ==================================================== -->
+        <div class="reveal">
 
-    <section
-      id="achievements"
-      class="scroll-reveal py-24"
-    >
+          <div class="section-label">
+            Keahlian
+          </div>
 
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div class="mb-14">
-
-          <p
-            class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-          >
-            Prestasi
-          </p>
-
-          <h2
-            class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white"
-          >
-            Prestasi
+          <h2 class="section-title">
+            Hal yang sedang saya kembangkan
           </h2>
 
-        </div>
-
-
-        <div class="grid md:grid-cols-3 gap-5">
-
-          <!-- PRESTASI 1 -->
-          <div
-            class="reveal d1 glass-card glass-touch rounded-2xl p-7"
-          >
-
-            <p class="text-accent font-bold text-sm mb-2">
-              01
-            </p>
-
-            <h3
-              class="font-display font-bold text-xl mb-2 text-zinc-900 dark:text-white"
-            >
-              Duta Lingkungan Sekolah
-            </h3>
-
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400"
-            >
-              Meraih Juara 1 sekaligus terpilih sebagai Duta Lingkungan Sekolah.
-            </p>
-
-          </div>
-
-
-          <!-- PRESTASI 2 -->
-          <div
-            class="reveal d2 glass-card glass-touch rounded-2xl p-7"
-          >
-
-            <p class="text-accent font-bold text-sm mb-2">
-              02
-            </p>
-
-            <h3
-              class="font-display font-bold text-xl mb-2 text-zinc-900 dark:text-white"
-            >
-              Fashion Show Daur Ulang
-            </h3>
-
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400"
-            >
-              Meraih prestasi dalam kompetisi fashion show dengan konsep kreatif
-              berbahan barang daur ulang.
-            </p>
-
-          </div>
-
-
-          <!-- PRESTASI 3 -->
-          <div
-            class="reveal d3 glass-card glass-touch rounded-2xl p-7"
-          >
-
-            <p class="text-accent font-bold text-sm mb-2">
-              03
-            </p>
-
-            <h3
-              class="font-display font-bold text-xl mb-2 text-zinc-900 dark:text-white"
-            >
-              Juara 1 Presentasi Karya
-            </h3>
-
-            <p
-              class="text-sm text-zinc-600 dark:text-zinc-400"
-            >
-              Meraih Juara 1 dalam kompetisi presentasi karya tingkat Kabupaten Banjar.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         HOBBIES
-    ==================================================== -->
-
-    <section
-      id="hobbies"
-      class="scroll-reveal py-24"
-    >
-
-      <div class="max-w-6xl mx-auto px-6">
-
-        <div
-          class="reveal glass-card glass-touch rounded-3xl p-10 md:p-14"
-        >
-
-          <p
-            class="text-xs font-medium text-accent tracking-widest uppercase mb-3"
-          >
-            Minat & Hobi
+          <p class="section-desc">
+            Kemampuan yang saya gunakan dan terus saya kembangkan
+            melalui pendidikan, pekerjaan, serta berbagai project.
           </p>
 
-          <h2
-            class="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white mb-8"
-          >
-            Hal yang Saya Suka
-          </h2>
+        </div>
 
-          <div class="flex flex-wrap gap-4">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
 
-            <span
-              class="glass-card glass-touch px-6 py-3 rounded-full text-zinc-900 dark:text-white font-medium"
-            >
-              🏃 Running
-            </span>
+          <div class="card skill reveal">
+            <div class="skill-icon">
+              <i class="fa-solid fa-building"></i>
+            </div>
 
-            <span
-              class="glass-card glass-touch px-6 py-3 rounded-full text-zinc-900 dark:text-white font-medium"
-            >
-              🏊 Swimming
-            </span>
+            <h3 class="font-bold text-lg mt-5">
+              Teknik Sipil
+            </h3>
 
-            <span
-              class="glass-card glass-touch px-6 py-3 rounded-full text-zinc-900 dark:text-white font-medium"
-            >
-              🏋️ Gym
-            </span>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Dasar pengetahuan dan proses pembelajaran di bidang
+              Teknik Sipil.
+            </p>
+          </div>
 
+          <div class="card skill reveal">
+            <div class="skill-icon">
+              <i class="fa-solid fa-laptop-code"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Web Development
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Membuat dan mengembangkan website menggunakan teknologi
+              web modern.
+            </p>
+          </div>
+
+          <div class="card skill reveal">
+            <div class="skill-icon">
+              <i class="fa-solid fa-terminal"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Tools &amp; Technology
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Eksplorasi berbagai tools dan teknologi untuk
+              pembelajaran serta pengembangan project.
+            </p>
+          </div>
+
+          <div class="card skill reveal">
+            <div class="skill-icon">
+              <i class="fa-solid fa-pen-ruler"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Design
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Membuat tampilan website yang sederhana, modern,
+              responsif, dan mudah digunakan.
+            </p>
+          </div>
+
+          <div class="card skill reveal">
+            <div class="skill-icon">
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Kerja Tim
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Terbiasa bekerja bersama tim dan berkomunikasi dalam
+              menyelesaikan pekerjaan.
+            </p>
+          </div>
+
+          <div class="card skill reveal">
+            <div class="skill-icon">
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Problem Solving
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Mencoba memahami masalah dan mencari solusi yang
+              sederhana serta dapat diterapkan.
+            </p>
           </div>
 
         </div>
-
       </div>
-
     </section>
 
+    <!-- =======================================================
+         TOOLS
+    ======================================================== -->
+    <section id="tools" class="section">
+      <div class="container-main">
 
-    <!-- ===================================================
-         CONTACT
-    ==================================================== -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5 reveal">
 
-    <section
-      id="contact"
-      class="scroll-reveal py-24"
-    >
+          <div>
 
-      <div class="max-w-6xl mx-auto px-6">
+            <div class="section-label">
+              Tools
+            </div>
 
-        <div
-          class="glass-card rounded-3xl p-10 md:p-16 relative overflow-hidden"
-        >
-
-          <div
-            class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl"
-          ></div>
-
-
-          <div class="relative z-10">
-
-            <p
-              class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3"
-            >
-              Kontak & Lokasi
-            </p>
-
-            <h2
-              class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight mb-5"
-            >
-              Mari terhubung.
+            <h2 class="section-title">
+              Project &amp; tools
             </h2>
 
-            <p
-              class="reveal d2 text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl mb-10"
-            >
-              Jika ingin menghubungi saya atau melihat aktivitas saya di platform
-              lain, silakan gunakan tautan di bawah ini.
+            <p class="section-desc">
+              Beberapa tools yang saya kembangkan dan kumpulkan
+              untuk kebutuhan pembelajaran dan eksplorasi teknologi.
             </p>
 
+          </div>
 
-            <!--
-              CONTACT GRID
-              Instagram dihapus.
-              Sekarang hanya:
-              1. Email
-              2. TikTok
-              3. Lokasi
-            -->
+          <a
+            href="https://ahmatbadali.my.id/tools/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary shrink-0"
+          >
+            Lihat Semua Tools
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
 
-            <div
-              class="reveal d3 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
-            >
+        </div>
 
-              <!-- EMAIL -->
-              <a
-                href="mailto:ahmtbadali@gmail.com"
-                class="icon-link glass-card glass-touch group rounded-2xl p-5 hover:border-accent/60 transition-all"
-              >
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
 
-                <div class="text-2xl text-accent mb-3">
-                  <i class="fa-solid fa-envelope"></i>
-                </div>
+          <!-- NMAP -->
+          <a
+            href="https://ahmatbadali.my.id/tools/nmap-scanner.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card tool-card reveal"
+          >
 
-                <p class="text-xs text-zinc-500 mb-1">
-                  Email
-                </p>
-
-                <p
-                  class="text-zinc-900 dark:text-white font-medium text-sm break-all"
-                >
-                  ahmtbadali@gmail.com
-                </p>
-
-              </a>
-
-
-              <!-- TIKTOK -->
-              <a
-                href="https://www.tiktok.com/@ahmatbadali"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="icon-link glass-card glass-touch group rounded-2xl p-5 hover:border-accent/60 transition-all"
-              >
-
-                <div class="text-2xl text-accent mb-3">
-                  <i class="fa-brands fa-tiktok"></i>
-                </div>
-
-                <p class="text-xs text-zinc-500 mb-1">
-                  TikTok
-                </p>
-
-                <p
-                  class="text-zinc-900 dark:text-white font-medium"
-                >
-                  @ahmatbadali
-                </p>
-
-              </a>
-
-
-              <!-- LOCATION -->
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=Kalimantan+Selatan+Indonesia"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="icon-link glass-card glass-touch group rounded-2xl p-5 hover:border-accent/60 transition-all"
-              >
-
-                <div class="text-2xl text-accent mb-3">
-                  <i class="fa-solid fa-location-dot"></i>
-                </div>
-
-                <p class="text-xs text-zinc-500 mb-1">
-                  Lokasi
-                </p>
-
-                <p
-                  class="text-zinc-900 dark:text-white font-medium text-sm"
-                >
-                  Kalimantan Selatan, Indonesia
-                </p>
-
-              </a>
-
+            <div class="tool-icon">
+              <i class="fa-solid fa-network-wired"></i>
             </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              NMAP Scanner
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Tool berbasis web untuk eksplorasi informasi jaringan
+              menggunakan NMAP.
+            </p>
+
+          </a>
+
+          <!-- RDAP -->
+          <a
+            href="https://ahmatbadali.my.id/tools/rdap-lookup.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card tool-card reveal"
+          >
+
+            <div class="tool-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              RDAP Lookup
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Melihat informasi registrasi domain atau alamat IP
+              menggunakan RDAP.
+            </p>
+
+          </a>
+
+          <!-- BASE64 -->
+          <a
+            href="https://ahmatbadali.my.id/tools/base64-encoder-decoder.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card tool-card reveal"
+          >
+
+            <div class="tool-icon">
+              <i class="fa-solid fa-code"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Base64 Encoder / Decoder
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Encode dan decode data menggunakan format Base64.
+            </p>
+
+          </a>
+
+          <!-- URL -->
+          <a
+            href="https://ahmatbadali.my.id/tools/url-encoder-decoder.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card tool-card reveal"
+          >
+
+            <div class="tool-icon">
+              <i class="fa-solid fa-link"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              URL Encoder / Decoder
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Encode dan decode URL dengan cepat melalui browser.
+            </p>
+
+          </a>
+
+          <!-- HASH -->
+          <a
+            href="https://ahmatbadali.my.id/tools/hash-generator.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card tool-card reveal"
+          >
+
+            <div class="tool-icon">
+              <i class="fa-solid fa-hashtag"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Hash Generator
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Membuat hash dari teks menggunakan berbagai algoritma
+              yang tersedia.
+            </p>
+
+          </a>
+
+          <!-- SUBDOMAIN -->
+          <a
+            href="https://ahmatbadali.my.id/tools/subdomain-lookup.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card tool-card reveal"
+          >
+
+            <div class="tool-icon">
+              <i class="fa-solid fa-sitemap"></i>
+            </div>
+
+            <h3 class="font-bold text-lg mt-5">
+              Subdomain Lookup
+            </h3>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-6">
+              Membantu melakukan pencarian informasi subdomain untuk
+              kebutuhan pembelajaran.
+            </p>
+
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         PRESTASI / AKTIVITAS
+    ======================================================== -->
+    <section id="prestasi" class="section">
+      <div class="container-main">
+
+        <div class="reveal">
+
+          <div class="section-label">
+            Prestasi &amp; Aktivitas
+          </div>
+
+          <h2 class="section-title">
+            Beberapa aktivitas saya
+          </h2>
+
+          <p class="section-desc">
+            Selain pendidikan dan pekerjaan, saya juga aktif
+            mengembangkan project pribadi dan berkontribusi dalam
+            berbagai kegiatan teknologi.
+          </p>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5 mt-10">
+
+          <div class="card p-7 reveal">
+
+            <div class="skill-icon">
+              <i class="fa-solid fa-users"></i>
+            </div>
+
+            <h3 class="text-xl font-bold mt-5">
+              Indonesian Cyber Team
+            </h3>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Founder dan kontributor utama Cyberind.id sejak 2018,
+              dengan fokus pada pengembangan komunitas, konten,
+              tools, dan resource pembelajaran.
+            </p>
+
+          </div>
+
+          <div class="card p-7 reveal">
+
+            <div class="skill-icon">
+              <i class="fa-solid fa-laptop"></i>
+            </div>
+
+            <h3 class="text-xl font-bold mt-5">
+              Pengembangan Project
+            </h3>
+
+            <p class="text-slate-500 dark:text-slate-400 leading-7 mt-3">
+              Mengembangkan berbagai project berbasis web sebagai
+              media belajar sekaligus tempat bereksperimen dengan
+              teknologi baru.
+            </p>
 
           </div>
 
         </div>
-
       </div>
+    </section>
 
+    <!-- =======================================================
+         HOBI
+    ======================================================== -->
+    <section id="hobi" class="section">
+      <div class="container-main">
+
+        <div class="reveal">
+
+          <div class="section-label">
+            Di Luar Aktivitas
+          </div>
+
+          <h2 class="section-title">
+            Hobi &amp; keseharian
+          </h2>
+
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-10">
+
+          <div class="card p-6 text-center reveal">
+
+            <div class="skill-icon mx-auto">
+              <i class="fa-solid fa-person-running"></i>
+            </div>
+
+            <h3 class="font-bold mt-4">
+              Lari
+            </h3>
+
+          </div>
+
+          <div class="card p-6 text-center reveal">
+
+            <div class="skill-icon mx-auto">
+              <i class="fa-solid fa-person-swimming"></i>
+            </div>
+
+            <h3 class="font-bold mt-4">
+              Berenang
+            </h3>
+
+          </div>
+
+          <div class="card p-6 text-center reveal">
+
+            <div class="skill-icon mx-auto">
+              <i class="fa-solid fa-dumbbell"></i>
+            </div>
+
+            <h3 class="font-bold mt-4">
+              Gym
+            </h3>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         KONTAK
+    ======================================================== -->
+    <section id="kontak" class="section">
+      <div class="container-main">
+
+        <div class="reveal">
+
+          <div class="section-label">
+            Kontak
+          </div>
+
+          <h2 class="section-title">
+            Mari terhubung
+          </h2>
+
+          <p class="section-desc">
+            Jika ingin menghubungi saya atau melihat aktivitas saya
+            di platform lain, silakan gunakan tautan di bawah ini.
+          </p>
+
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+
+          <!-- EMAIL -->
+          <a
+            href="mailto:ahmtbadali@gmail.com"
+            class="card contact-card reveal"
+          >
+
+            <div class="contact-icon">
+              <i class="fa-regular fa-envelope"></i>
+            </div>
+
+            <div class="contact-info">
+              <strong>Email</strong>
+              <span>
+                ahmtbadali@gmail.com
+              </span>
+            </div>
+
+          </a>
+
+          <!-- TIKTOK -->
+          <a
+            href="https://www.tiktok.com/@ahmatbadali"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card contact-card reveal"
+          >
+
+            <div class="contact-icon">
+              <i class="fa-brands fa-tiktok"></i>
+            </div>
+
+            <div class="contact-info">
+              <strong>TikTok</strong>
+              <span>
+                @ahmatbadali
+              </span>
+            </div>
+
+          </a>
+
+          <!-- LOCATION -->
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Kalimantan+Selatan+Indonesia"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="card contact-card reveal"
+          >
+
+            <div class="contact-icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div class="contact-info">
+              <strong>Lokasi</strong>
+              <span>
+                Kalimantan Selatan, Indonesia
+              </span>
+            </div>
+
+          </a>
+
+        </div>
+      </div>
     </section>
 
   </main>
 
-
-  <!-- =====================================================
+  <!-- =========================================================
        FOOTER
-  ====================================================== -->
+  ========================================================== -->
+  <footer class="py-8">
 
-  <footer
-    class="border-t border-blue-100 dark:border-zinc-900"
-  >
+    <div class="container-main">
 
-    <div
-      class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4"
-    >
-
-      <p
-        class="text-sm text-zinc-500 dark:text-zinc-400"
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
-        ©
-        <span id="yr"></span>
-        Ahmat Badali. Personal Portfolio.
-      </p>
 
-      <p class="text-xs text-zinc-500">
-        Founder & Kontributor Utama Cyberind.id • Mahasiswa Teknik Sipil UNU Kalsel
-      </p>
+        <div>
+
+          <div class="font-bold">
+            Ahmat Badali
+          </div>
+
+          <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Founder &amp; Kontributor Utama Cyberind.id
+            • Mahasiswa Teknik Sipil UNU Kalsel
+          </div>
+
+        </div>
+
+        <div class="text-sm text-slate-500 dark:text-slate-400">
+          © <span id="yr"></span> Ahmat Badali.
+          Personal Portfolio.
+        </div>
+
+      </div>
 
     </div>
 
   </footer>
 
-
-  <!-- =====================================================
+  <!-- =========================================================
        JAVASCRIPT
-  ====================================================== -->
-
+  ========================================================== -->
   <script>
-
-    /* =====================================================
-       RANDOM TOOLS
-    ====================================================== */
-
-    function randomTool() {
-
-      const tools = [
-
-        {
-          name: 'NMAP Scanner',
-          category: 'Network Pentesting',
-          url: 'https://ahmatbadali.my.id/tools/nmap-scanner.html',
-          icon: 'fa-solid fa-network-wired',
-          desc: 'Tools untuk melakukan pemindaian port dan membantu pengecekan keamanan jaringan.'
-        },
-
-        {
-          name: 'RDAP Lookup',
-          category: 'Reconnaissance',
-          url: 'https://ahmatbadali.my.id/tools/rdap-lookup.html',
-          icon: 'fa-solid fa-globe',
-          desc: 'Membantu mencari informasi registrasi IP, ASN, dan domain.'
-        },
-
-        {
-          name: 'Base64 Encoder/Decoder',
-          category: 'Data Utility',
-          url: 'https://ahmatbadali.my.id/tools/base64-encoder-decoder.html',
-          icon: 'fa-solid fa-code',
-          desc: 'Membantu mengubah teks ke format Base64 dan mengembalikannya ke bentuk semula.'
-        },
-
-        {
-          name: 'URL Encoder/Decoder',
-          category: 'Web Security',
-          url: 'https://ahmatbadali.my.id/tools/url-encoder-decoder.html',
-          icon: 'fa-solid fa-link',
-          desc: 'Membantu melakukan encoding dan decoding karakter khusus pada URL.'
-        },
-
-        {
-          name: 'Hash Generator',
-          category: 'Cryptographic Tool',
-          url: 'https://ahmatbadali.my.id/tools/hash-generator.html',
-          icon: 'fa-solid fa-key',
-          desc: 'Membantu menghasilkan nilai hash seperti MD5, SHA-256, dan algoritma lainnya.'
-        },
-
-        {
-          name: 'Subdomain Lookup',
-          category: 'Reconnaissance',
-          url: 'https://ahmatbadali.my.id/tools/subdomain-lookup.html',
-          icon: 'fa-solid fa-magnifying-glass-chart',
-          desc: 'Membantu menemukan dan memetakan subdomain untuk kebutuhan analisis keamanan.'
-        }
-
-      ];
-
-      const selected =
-        tools[Math.floor(Math.random() * tools.length)];
-
-      return {
-        tool: selected
-      };
-    }
-
-
-    /* =====================================================
-       MAIN APP
-    ====================================================== */
-
     function app() {
-
       return {
-
         dark: false,
-        mm: false,
-        sc: false,
-
-
-        /* =================================================
-           INIT
-        ================================================= */
 
         init() {
+          this.loadTheme();
+          this.setupReveal();
+          this.setupScrollProgress();
+          this.setupParallax();
+          this.setYear();
+        },
 
-          /* ===============================================
-             THEME
-          =============================================== */
+        /* =====================================================
+           THEME
+        ====================================================== */
 
-          const savedTheme =
-            localStorage.getItem('theme');
+        loadTheme() {
+          const savedTheme = localStorage.getItem("theme");
 
-          this.dark =
-            savedTheme === 'dark' ||
-            (
-              !savedTheme &&
-              window.matchMedia(
-                '(prefers-color-scheme: dark)'
-              ).matches
-            );
-
-
-          this.$watch(
-            'dark',
-            value => {
-
-              localStorage.setItem(
-                'theme',
-                value ? 'dark' : 'light'
-              );
-
-            }
-          );
-
-
-          /* ===============================================
-             BASIC REVEAL
-          =============================================== */
-
-          const revealObserver =
-            new IntersectionObserver(
-              entries => {
-
-                entries.forEach(entry => {
-
-                  if (entry.isIntersecting) {
-
-                    entry.target.classList.add('in');
-
-                    revealObserver.unobserve(
-                      entry.target
-                    );
-
-                  }
-
-                });
-
-              },
-              {
-                threshold: 0.1,
-                rootMargin: '0px 0px -40px 0px'
-              }
-            );
-
-
-          document
-            .querySelectorAll('.reveal')
-            .forEach(element => {
-
-              revealObserver.observe(element);
-
-            });
-
-
-          /* ===============================================
-             SCROLL REVEAL
-          =============================================== */
-
-          const scrollObserver =
-            new IntersectionObserver(
-              entries => {
-
-                entries.forEach(entry => {
-
-                  if (entry.isIntersecting) {
-
-                    entry.target.classList.add('show');
-
-                    scrollObserver.unobserve(
-                      entry.target
-                    );
-
-                  }
-
-                });
-
-              },
-              {
-                threshold: 0.08,
-                rootMargin: '0px 0px -50px 0px'
-              }
-            );
-
-
-          document
-            .querySelectorAll('.scroll-reveal')
-            .forEach(element => {
-
-              scrollObserver.observe(element);
-
-            });
-
-
-          /* ===============================================
-             CURRENT YEAR
-          =============================================== */
-
-          const yearElement =
-            document.getElementById('yr');
-
-          if (yearElement) {
-
-            yearElement.textContent =
-              new Date().getFullYear();
-
+          if (savedTheme === "dark") {
+            this.dark = true;
+            document.documentElement.classList.add("dark");
+            return;
           }
 
+          if (savedTheme === "light") {
+            this.dark = false;
+            document.documentElement.classList.remove("dark");
+            return;
+          }
 
-          /* ===============================================
-             TOUCH EFFECT
-          =============================================== */
+          const prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-          document
-            .querySelectorAll('.glass-touch')
-            .forEach(element => {
+          this.dark = prefersDark;
 
-              element.addEventListener(
-                'touchstart',
-                () => {
+          document.documentElement.classList.toggle(
+            "dark",
+            prefersDark
+          );
+        },
 
-                  element.classList.add(
-                    'touched'
-                  );
+        toggleDark() {
+          this.dark = !this.dark;
 
-                },
-                {
-                  passive: true
-                }
-              );
-
-
-              element.addEventListener(
-                'touchend',
-                () => {
-
-                  setTimeout(
-                    () => {
-
-                      element.classList.remove(
-                        'touched'
-                      );
-
-                    },
-                    500
-                  );
-
-                }
-              );
-
-            });
-
-
-          /* ===============================================
-             SCROLL PROGRESS
-          =============================================== */
-
-          const progressBar =
-            document.getElementById(
-              'scrollProgress'
-            );
-
-
-          const heroBlobs =
-            document.querySelectorAll(
-              '.parallax-blob'
-            );
-
-
-          let ticking = false;
-
-
-          const onScroll = () => {
-
-            const scrollTop =
-              window.scrollY;
-
-
-            const documentHeight =
-              document.documentElement.scrollHeight -
-              window.innerHeight;
-
-
-            const percentage =
-              documentHeight > 0
-                ? (scrollTop / documentHeight) * 100
-                : 0;
-
-
-            if (progressBar) {
-
-              progressBar.style.width =
-                percentage + '%';
-
-            }
-
-
-            heroBlobs.forEach(
-              (element, index) => {
-
-                const speed =
-                  index % 2 === 0
-                    ? 0.12
-                    : -0.08;
-
-                element.style.transform =
-                  `translateY(${scrollTop * speed}px)`;
-
-              }
-            );
-
-
-            ticking = false;
-
-          };
-
-
-          /* ===============================================
-             WINDOW SCROLL
-          =============================================== */
-
-          window.addEventListener(
-            'scroll',
-            () => {
-
-              this.sc =
-                window.scrollY > 20;
-
-
-              if (!ticking) {
-
-                window.requestAnimationFrame(
-                  onScroll
-                );
-
-                ticking = true;
-
-              }
-
-            },
-            {
-              passive: true
-            }
+          document.documentElement.classList.toggle(
+            "dark",
+            this.dark
           );
 
-        }
+          localStorage.setItem(
+            "theme",
+            this.dark ? "dark" : "light"
+          );
+        },
 
+        /* =====================================================
+           REVEAL ANIMATION
+        ====================================================== */
+
+        setupReveal() {
+          const elements =
+            document.querySelectorAll(".reveal");
+
+          if (!("IntersectionObserver" in window)) {
+            elements.forEach((el) => {
+              el.classList.add("show");
+            });
+
+            return;
+          }
+
+          const observer =
+            new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    observer.unobserve(entry.target);
+                  }
+                });
+              },
+              {
+                threshold: 0.12,
+              }
+            );
+
+          elements.forEach((el) => {
+            observer.observe(el);
+          });
+        },
+
+        /* =====================================================
+           SCROLL PROGRESS
+        ====================================================== */
+
+        setupScrollProgress() {
+          const progress =
+            document.getElementById("scroll-progress");
+
+          const updateProgress = () => {
+            const scrollTop =
+              window.scrollY ||
+              document.documentElement.scrollTop;
+
+            const height =
+              document.documentElement.scrollHeight -
+              document.documentElement.clientHeight;
+
+            const percentage =
+              height > 0
+                ? (scrollTop / height) * 100
+                : 0;
+
+            progress.style.width =
+              percentage + "%";
+          };
+
+          window.addEventListener(
+            "scroll",
+            updateProgress,
+            { passive: true }
+          );
+
+          updateProgress();
+        },
+
+        /* =====================================================
+           PARALLAX
+        ====================================================== */
+
+        setupParallax() {
+          const blobs =
+            document.querySelectorAll(".blob");
+
+          if (
+            window.matchMedia &&
+            window.matchMedia(
+              "(prefers-reduced-motion: reduce)"
+            ).matches
+          ) {
+            return;
+          }
+
+          window.addEventListener(
+            "scroll",
+            () => {
+              const scrollY = window.scrollY;
+
+              blobs.forEach((blob, index) => {
+                const speed =
+                  (index + 1) * 0.025;
+
+                blob.style.transform =
+                  `translate3d(0, ${scrollY * speed}px, 0)`;
+              });
+            },
+            { passive: true }
+          );
+        },
+
+        /* =====================================================
+           YEAR
+        ====================================================== */
+
+        setYear() {
+          const year =
+            document.getElementById("yr");
+
+          if (year) {
+            year.textContent =
+              new Date().getFullYear();
+          }
+        },
       };
-
     }
 
+    /* =========================================================
+       TOUCH EFFECT
+    ========================================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+        const cards =
+          document.querySelectorAll(
+            ".card, .btn-primary, .btn-secondary"
+          );
+
+        cards.forEach((card) => {
+
+          card.addEventListener(
+            "touchstart",
+            () => {
+              card.style.transform =
+                "translateY(-2px)";
+            },
+            { passive: true }
+          );
+
+          card.addEventListener(
+            "touchend",
+            () => {
+              setTimeout(() => {
+                card.style.transform = "";
+              }, 150);
+            },
+            { passive: true }
+          );
+
+        });
+      }
+    );
   </script>
 
 </body>
