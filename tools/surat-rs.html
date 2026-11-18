@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editor Surat Kontrol RS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap');
+body{font-family:'DM Sans',sans-serif;background:#f1f5f9}.paper{font:10px 'PT Sans',serif;background:white;color:#111;width:210mm;min-height:297mm;padding:9mm;margin:auto;box-sizing:border-box}.paper table{width:100%;border-collapse:collapse}.paper td,.paper th{border:1px solid #222;padding:4px;vertical-align:middle}.paper .plain td{border:0}.paper .sec{font-weight:bold;background:#eee}.paper input,.paper textarea{width:100%;border:0;outline:0;background:transparent;font:inherit;color:inherit}.paper .logo{max-width:22mm;max-height:20mm;object-fit:contain}
+@media print{@page{size:A4;margin:0}body{background:white}body *{visibility:hidden}#print,#print *{visibility:visible}#print{position:absolute;left:0;top:0}.paper{margin:0;box-shadow:none}.no-print{display:none!important}}
+</style></head>
+<body class="p-3 md:p-6">
+<header class="no-print max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 mb-5">
+<div><h1 class="text-xl font-bold text-slate-900">Editor Surat Kontrol Rumah Sakit</h1><p class="text-sm text-slate-500">Ubah identitas RS, logo, isi surat, dan bagian pengesahan.</p></div>
+<button onclick="print()" class="rounded-xl bg-blue-600 text-white px-5 py-3 font-bold">Cetak / Simpan PDF</button></header>
+<main class="no-print max-w-7xl mx-auto grid lg:grid-cols-[390px_1fr] gap-5">
+<aside class="space-y-4">
+<div class="bg-blue-50 text-blue-900 p-4 rounded-xl text-sm">Isi formulir di bawah. Pratinjau akan berubah otomatis. Untuk PDF pilih kertas A4 dan skala 100%.</div>
+<div id="form" class="space-y-4"></div>
+</aside>
+<section><div class="mb-2 font-bold">Pratinjau A4</div><div class="overflow-auto bg-slate-300 p-3 rounded-xl"><article id="print" class="paper shadow-xl">
+<table class="plain"><tr><td style="width:23mm;text-align:center"><img id="p-logo" class="logo" hidden></td><td style="text-align:center"><b id="p-rs" style="font-size:16px"></b><br><span id="p-address"></span><br><span id="p-phone"></span><br><span id="p-web"></span></td><td style="width:23mm"></td></tr></table>
+<table><tr><th colspan="4" id="p-title" style="font-size:16px;letter-spacing:2px"></th></tr>
+<tr><td><b>NAMA PASIEN</b></td><td id="p-name"></td><td><b>DOKTER (DPJP)</b></td><td id="p-doctor"></td></tr>
+<tr><td>TANGGAL LAHIR</td><td id="p-birth"></td><td>RUANG</td><td id="p-room"></td></tr>
+<tr><td>JENIS KELAMIN</td><td id="p-sex"></td><td>TANGGAL MRS</td><td id="p-mrs"></td></tr>
+<tr><td>No. RM</td><td id="p-rm"></td><td>TANGGAL KRS</td><td id="p-krs"></td></tr>
+<tr><td>ALAMAT</td><td id="p-paddress"></td><td>DIAGNOSA MEDIS</td><td id="p-diagnosis"></td></tr>
+<tr><td colspan="4" class="sec">KONDISI PASIEN</td></tr>
+<tr><td colspan="4">TD: <span id="p-td"></span> &nbsp; SUHU: <span id="p-temp"></span> °C &nbsp; NADI: <span id="p-pulse"></span> x/mnt &nbsp; RR: <span id="p-rr"></span> x/mnt &nbsp; BB: <span id="p-weight"></span> kg</td></tr>
+<tr><td class="sec">KEADAAN WAKTU PULANG</td><td colspan="3" id="p-discharge"></td></tr>
+<tr><td class="sec">KESADARAN</td><td colspan="3" id="p-conscious"></td></tr><tr><td class="sec">AKTIVITAS SEHARI HARI</td><td colspan="3" id="p-activity"></td></tr>
+<tr><td class="sec">DIET</td><td colspan="3" id="p-diet"></td></tr><tr><td class="sec">STATUS PULANG</td><td colspan="3" id="p-status"></td></tr>
+<tr><td colspan="2" class="sec">ALAT KESEHATAN / PERAWATAN YANG DIBAWA PULANG</td><td colspan="2">Tanggal Pemasangan</td></tr><tr><td colspan="2" id="p-equipment"></td><td colspan="2" id="p-equipment-date"></td></tr>
+<tr><td colspan="4" class="sec">PENGOBATAN YANG DILANJUTKAN DI RUMAH</td></tr><tr><th>NO</th><th colspan="2">NAMA</th><th>DOSIS</th></tr><tbody id="p-meds"></tbody>
+<tr><td colspan="4" class="sec">HASIL PEMERIKSAAN DAN DOKUMEN YANG DI BAWA PULANG</td></tr><tr><td colspan="4" id="p-documents" style="white-space:pre-line"></td></tr>
+<tr><td colspan="4" class="sec">BIMBINGAN DAN NASEHAT</td></tr><tr><td colspan="4" id="p-advice" style="white-space:pre-line"></td></tr>
+<tr><td colspan="4" class="sec">KONTROL</td></tr><tr><td colspan="4">Tanggal: <span id="p-date"></span> &nbsp; Di Poli: <span id="p-clinic"></span> &nbsp; Dokter: <span id="p-followdoctor"></span></td></tr>
+<tr><td colspan="4" id="p-bring" style="white-space:pre-line"></td></tr><tr><td colspan="4" id="p-emergency" style="text-align:center;font-weight:bold"></td></tr><tr><td colspan="4" id="p-hours" style="text-align:center;font-weight:bold"></td></tr>
+</table>
+<table class="plain" style="margin-top:10px"><tr><td colspan="2" style="text-align:right" id="p-place"></td></tr><tr><td style="text-align:center">Yang Diberi Penjelasan<br><span id="p-family"></span></td><td style="text-align:center">Yang Memberi Penjelasan<br><span id="p-staff"></span></td></tr><tr><td style="height:75px"></td><td></td></tr><tr><td style="text-align:center" id="p-familyname"></td><td style="text-align:center" id="p-staffname"></td></tr></table>
+</article></div></section></main>
+<script>
+const fields=[
+['Identitas Rumah Sakit',[['rs','Nama rumah sakit','RUMAH SAKIT UTAMA HUSADA'],['address','Alamat','Jalan Manggar 134 Tegalsari - Ambulu'],['phone','Telepon / Fax','Telp. (0336) 881186, 881187 - Fax. 881434'],['web','Website / Email','Website : www.utamahusada.com - Email : utamahusada@yahoo.com'],['title','Judul dokumen','SURAT KONTROL']]],
+['Identitas Pasien',[['name','Nama pasien'],['doctor','Dokter (DPJP)'],['birth','Tanggal lahir'],['room','Ruang'],['sex','Jenis kelamin'],['mrs','Tanggal MRS'],['rm','Nomor rekam medis'],['krs','Tanggal KRS'],['paddress','Alamat pasien'],['diagnosis','Diagnosis medis']]],
+['Kondisi Pasien',[['td','Tekanan darah'],['temp','Suhu'],['pulse','Nadi'],['rr','RR'],['weight','Berat badan'],['discharge','Keadaan waktu pulang','Sembuh / Merujuk dengan obat jalan / Pulang paksa / Meninggal / Lainnya'],['conscious','Kesadaran','Sadar Baik / Kesadaran Menurun / Tidak Sadar'],['activity','Aktivitas sehari-hari','Mandiri / Dibantu orang lain'],['diet','Diet','Normal / Khusus'],['status','Status pulang','KRS / APS / PP']]],
+['Alat, Obat, dan Dokumen',[['equipment','Alat kesehatan / perawatan (satu item per baris)'],['equipment-date','Tanggal pemasangan (satu item per baris)'],['meds','Obat lanjutan (format: nama | dosis, satu item per baris)'],['documents','Hasil pemeriksaan / dokumen yang dibawa pulang'],['advice','Bimbingan dan nasihat']]],
+['Kontrol dan Pengesahan',[['date','Tanggal kontrol'],['clinic','Poli'],['followdoctor','Dokter kontrol'],['bring','Dokumen/barang yang harus dibawa'],['emergency','Pesan kegawatdaruratan'],['hours','Jam layanan IGD'],['place','Kota dan tanggal surat'],['family','Label pihak pasien/keluarga'],['staff','Label pihak petugas/perawat'],['familyname','Nama pasien/keluarga penanda tangan'],['staffname','Nama petugas penanda tangan']]]
+];
+const defaults={emergency:'Bila terjadi kegawatdaruratan dimohon segera datang ke IGD rumah sakit',hours:'(Buka pelayanan 24 jam)',family:'Pasien / Keluarga',staff:'Perawat',documents:'□ Laboratorium\\n□ Foto Rontgen\\n□ USG\\n□ CT Scan\\n□ Surat Keterangan dirawat\\n□ Surat Keterangan sakit\\n□ Surat Keterangan lahir\\n□ Lainnya',advice:'□ Balutan jangan sampai basah\\n□ Hindari mengangkat beban berat\\n□ Melakukan aktivitas secara bertahap sampai kesehatan pulih',bring:'Dengan membawa:\\n1. Lembar perencanaan pasien pulang (surat kontrol)\\n2. Hasil pemeriksaan penunjang\\n3. Obat-obatan yang masih ada'};
+const form=document.getElementById('form');let values={...defaults};
+fields.forEach(([title,items])=>{let box=document.createElement('section');box.className='bg-white rounded-xl border p-4 shadow-sm';box.innerHTML='<h2 class="font-bold mb-3">'+title+'</h2>';items.forEach(([key,label,def])=>{let wrap=document.createElement('label');wrap.className='block text-sm font-semibold text-slate-700 mb-3';wrap.textContent=label;let input=(key==='documents'||key==='advice'||key==='bring'||key==='equipment'||key==='equipment-date'||key==='meds'||key==='diagnosis')?document.createElement('textarea'):document.createElement('input');input.className='mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 font-normal';input.rows=key==='documents'||key==='advice'||key==='bring'?4:2;input.value=def||defaults[key]||'';values[key]=input.value;input.addEventListener('input',()=>{values[key]=input.value;render()});wrap.appendChild(input);box.appendChild(wrap)});form.appendChild(box)});
+let logoData='';let logo=document.createElement('section');logo.className='bg-white rounded-xl border p-4 shadow-sm';logo.innerHTML='<h2 class="font-bold mb-2">Logo rumah sakit</h2><input type="file" accept="image/*" class="block w-full text-sm" id="logoInput">';form.insertBefore(logo,form.children[1]);document.getElementById('logoInput').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{logoData=r.result;render()};r.readAsDataURL(f)};
+const ids=['rs','address','phone','web','title','name','doctor','birth','room','sex','mrs','rm','krs','paddress','diagnosis','td','temp','pulse','rr','weight','discharge','conscious','activity','diet','status','documents','advice','date','clinic','followdoctor','bring','emergency','hours','place','family','staff','familyname','staffname'];
+function render(){ids.forEach(k=>{let el=document.getElementById('p-'+k);if(el)el.textContent=values[k]||''});let img=document.getElementById('p-logo');img.src=logoData;img.hidden=!logoData;let eq=(values.equipment||'').split('\\n');let dt=(values['equipment-date']||'').split('\\n');document.getElementById('p-equipment').textContent=eq.join('\\n');document.getElementById('p-equipment-date').textContent=dt.join('\\n');let meds=(values.meds||'').split('\\n').filter(Boolean);document.getElementById('p-meds').innerHTML=meds.map((x,i)=>{let a=x.split('|');return '<tr><td>'+(i+1)+'</td><td colspan="2">'+esc(a[0]||'')+'</td><td>'+esc(a[1]||'')+'</td></tr>'}).join('')}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}render();
+</script></body></html>
